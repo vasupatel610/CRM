@@ -1,0 +1,997 @@
+customer_id,segment_name,segment_description,total_spent,total_transactions,avg_quantity_per_transaction,recency_days,num_returns,avg_sentiment_score,is_churned,customer_age,customer_gender,customer_location_region,assigned_year
+CUST0567,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2662863.26,8,1.95,105,4,0.27,0,49,Female,Kisumu,2023
+CUST0466,Loyal,"Consistent purchasers, frequent interactions.",5825626.06,9,1.72,121,2,0.83,0,39,Male,Eldoret,2023
+CUST0847,High-Value,Customers with high total spending and frequent purchases.,4063447.39,8,2.09,8,2,0.86,0,74,Male,Nairobi,2023
+CUST0013,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3389177.11,6,1.91,85,5,0.54,0,28,Male,Kisumu,2023
+CUST0324,New,"Recently acquired customers, often with 1-2 purchases.",3810166.36,7,2.0,249,0,0.87,1,64,Female,Eldoret,2023
+CUST0961,Loyal,"Consistent purchasers, frequent interactions.",2949146.44,7,1.87,27,4,0.0,1,34,Other,Nakuru,2023
+CUST0489,New,"Recently acquired customers, often with 1-2 purchases.",5020980.21,9,2.15,61,2,1.0,1,58,Other,Kisumu,2023
+CUST0633,Promising,Newer customers with high initial engagement or spending potential.,1042005.15,3,1.8,1,0,1.0,0,73,Male,Mombasa,2024
+CUST0357,New,"Recently acquired customers, often with 1-2 purchases.",645908.38,3,1.75,136,2,0.2,0,22,Male,Nakuru,2023
+CUST0175,New,"Recently acquired customers, often with 1-2 purchases.",1970694.75,5,1.81,194,2,0.75,0,63,Other,Mombasa,2023
+CUST0909,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3219388.34,7,1.68,226,3,0.6,0,65,Other,Eldoret,2023
+CUST0424,High-Value,Customers with high total spending and frequent purchases.,3059832.92,9,1.62,0,3,0.85,0,65,Male,Kisumu,2023
+CUST0015,Loyal,"Consistent purchasers, frequent interactions.",3329092.72,6,2.18,3,1,0.64,0,71,Other,Nairobi,2023
+CUST0659,Loyal,"Consistent purchasers, frequent interactions.",2881488.03,9,1.76,20,3,0.33,1,40,Other,Mombasa,2023
+CUST0586,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4808042.83,8,1.89,198,2,0.86,0,22,Female,Mombasa,2023
+CUST0076,High-Value,Customers with high total spending and frequent purchases.,4094157.09,6,2.05,10,4,0.38,0,53,Other,Nairobi,2023
+CUST0618,High-Value,Customers with high total spending and frequent purchases.,3600661.0,9,1.71,27,4,0.6,1,57,Other,Eldoret,2023
+CUST0428,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1782561.06,6,1.75,127,3,0.78,0,57,Male,Nakuru,2023
+CUST0624,Loyal,"Consistent purchasers, frequent interactions.",2965050.3,8,1.45,11,0,0.8,0,44,Male,Nairobi,2023
+CUST0541,High-Value,Customers with high total spending and frequent purchases.,4972739.51,7,1.85,43,1,0.88,0,38,Other,Eldoret,2023
+CUST0759,High-Value,Customers with high total spending and frequent purchases.,3172531.77,7,1.67,14,2,0.87,0,45,Male,Kisumu,2023
+CUST0349,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1503557.82,5,1.81,395,2,0.56,1,50,Male,Nairobi,2023
+CUST0662,New,"Recently acquired customers, often with 1-2 purchases.",1147543.59,3,1.67,576,1,0.75,1,74,Other,Nakuru,2023
+CUST0069,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3855070.11,8,1.79,88,5,0.11,1,56,Female,Eldoret,2023
+CUST0665,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3173891.99,5,1.47,4,2,0.75,1,60,Female,Mombasa,2023
+CUST0366,New,"Recently acquired customers, often with 1-2 purchases.",2761939.6,5,2.0,79,2,0.78,1,31,Other,Kisumu,2023
+CUST0199,New,"Recently acquired customers, often with 1-2 purchases.",3138804.1,6,2.36,187,1,0.6,1,19,Female,Eldoret,2023
+CUST0975,New,"Recently acquired customers, often with 1-2 purchases.",912428.91,4,1.64,153,2,0.67,0,22,Female,Kisumu,2023
+CUST0531,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3981429.51,6,2.1,134,5,0.5,0,43,Other,Mombasa,2023
+CUST0766,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2448352.32,4,2.27,121,3,0.67,0,68,Female,Nairobi,2023
+CUST0636,New,"Recently acquired customers, often with 1-2 purchases.",4458819.29,7,2.14,108,2,0.64,0,68,Other,Eldoret,2023
+CUST0845,High-Value,Customers with high total spending and frequent purchases.,4733139.83,8,2.3,48,4,0.25,1,19,Male,Kisumu,2023
+CUST0439,Loyal,"Consistent purchasers, frequent interactions.",2191947.39,7,1.88,15,1,1.0,0,67,Other,Mombasa,2023
+CUST0704,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4435901.61,6,2.0,223,3,0.82,0,38,Female,Mombasa,2023
+CUST0497,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2736112.09,6,1.73,213,7,0.45,1,63,Other,Nairobi,2023
+CUST0510,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3925120.92,9,1.73,73,8,0.45,1,64,Male,Eldoret,2023
+CUST0132,New,"Recently acquired customers, often with 1-2 purchases.",2856304.52,5,1.61,441,2,0.75,1,44,Male,Mombasa,2023
+CUST0177,Promising,Newer customers with high initial engagement or spending potential.,5046725.45,7,1.97,71,2,0.62,0,61,Other,Eldoret,2023
+CUST0118,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1910659.61,3,2.62,185,2,0.5,0,46,Male,Eldoret,2023
+CUST0379,Loyal,"Consistent purchasers, frequent interactions.",804804.71,4,1.57,105,0,1.0,0,58,Other,Nairobi,2023
+CUST0327,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1743642.53,3,1.88,610,1,1.0,0,53,Female,Nairobi,2023
+CUST0835,High-Value,Customers with high total spending and frequent purchases.,3053517.81,6,2.1,17,1,1.0,0,37,Other,Mombasa,2023
+CUST0060,Loyal,"Consistent purchasers, frequent interactions.",5185576.54,4,2.3,38,2,0.71,0,33,Female,Eldoret,2023
+CUST0169,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4386076.63,8,2.18,186,3,0.33,1,72,Other,Nakuru,2023
+CUST0042,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1829200.78,6,1.57,95,3,0.8,0,40,Other,Nakuru,2023
+CUST0320,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2880982.49,5,1.67,45,3,0.33,0,44,Other,Mombasa,2023
+CUST0850,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2999601.01,6,2.0,203,3,0.71,0,73,Female,Eldoret,2023
+CUST0999,New,"Recently acquired customers, often with 1-2 purchases.",422711.02,2,1.33,521,0,1.0,1,20,Other,Nakuru,2023
+CUST0122,Loyal,"Consistent purchasers, frequent interactions.",2060817.56,6,2.12,17,1,1.0,0,63,Male,Nakuru,2023
+CUST0222,New,"Recently acquired customers, often with 1-2 purchases.",2191931.45,6,2.0,132,1,0.6,0,70,Female,Eldoret,2023
+CUST0227,New,"Recently acquired customers, often with 1-2 purchases.",892727.84,5,1.4,284,1,0.5,1,19,Other,Mombasa,2023
+CUST0805,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2636356.84,6,1.86,199,3,0.8,0,19,Other,Nairobi,2023
+CUST0828,Loyal,"Consistent purchasers, frequent interactions.",1470031.83,5,1.27,24,1,0.75,0,29,Other,Nairobi,2023
+CUST0031,New,"Recently acquired customers, often with 1-2 purchases.",3709873.23,6,2.57,120,1,0.71,0,70,Other,Nairobi,2023
+CUST0125,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2602283.14,7,2.11,232,1,1.0,0,43,Male,Mombasa,2023
+CUST0142,Loyal,"Consistent purchasers, frequent interactions.",3689583.42,7,1.81,19,4,0.2,0,32,Other,Mombasa,2023
+CUST0840,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1927253.41,5,1.81,479,3,0.43,0,63,Other,Mombasa,2023
+CUST0857,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2164402.05,7,2.16,105,2,0.75,1,71,Other,Nakuru,2023
+CUST0454,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3724463.87,8,1.88,106,4,0.67,1,73,Other,Nakuru,2023
+CUST0414,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3871536.41,9,1.68,75,4,0.67,0,62,Male,Nakuru,2023
+CUST0444,Promising,Newer customers with high initial engagement or spending potential.,852488.5,3,1.67,152,1,0.0,0,74,Other,Kisumu,2023
+CUST0478,Loyal,"Consistent purchasers, frequent interactions.",3522004.51,9,1.56,1,2,1.0,1,57,Female,Nairobi,2023
+CUST0932,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2124997.6,5,1.61,231,4,0.14,0,71,Female,Kisumu,2023
+CUST0037,Loyal,"Consistent purchasers, frequent interactions.",1749747.44,3,1.23,91,0,1.0,0,71,Female,Eldoret,2023
+CUST0514,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4681467.28,6,2.0,140,5,0.17,1,30,Male,Kisumu,2023
+CUST0928,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3033872.96,7,1.63,224,3,0.56,1,48,Female,Mombasa,2023
+CUST0265,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3684262.47,6,1.95,168,3,0.56,0,74,Other,Nakuru,2023
+CUST0450,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2230820.69,5,1.84,132,1,0.8,1,33,Other,Eldoret,2023
+CUST0572,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2647495.77,8,1.78,217,0,1.0,1,46,Other,Mombasa,2023
+CUST0149,New,"Recently acquired customers, often with 1-2 purchases.",3101071.16,5,1.75,204,3,0.67,1,18,Other,Nairobi,2023
+CUST0915,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1708327.64,4,1.53,464,2,0.5,1,30,Female,Kisumu,2023
+CUST0241,Loyal,"Consistent purchasers, frequent interactions.",5334440.44,8,1.93,27,1,0.89,0,21,Male,Kisumu,2023
+CUST0753,Loyal,"Consistent purchasers, frequent interactions.",4431349.11,11,1.83,52,2,0.65,1,36,Male,Nakuru,2023
+CUST0496,Promising,Newer customers with high initial engagement or spending potential.,2461576.62,4,2.11,1,1,0.43,0,27,Other,Mombasa,2023
+CUST0459,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",997901.33,4,1.82,539,1,0.75,0,38,Female,Kisumu,2023
+CUST0433,Loyal,"Consistent purchasers, frequent interactions.",3596192.51,6,1.74,17,3,0.86,0,24,Female,Nakuru,2023
+CUST0700,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4468260.51,7,2.11,182,4,0.71,1,41,Male,Kisumu,2023
+CUST0139,Loyal,"Consistent purchasers, frequent interactions.",3576835.66,8,2.0,8,4,0.64,0,53,Other,Nakuru,2023
+CUST0948,New,"Recently acquired customers, often with 1-2 purchases.",628567.66,3,1.8,111,0,1.0,0,52,Female,Nakuru,2023
+CUST0189,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",5580799.2,6,2.41,70,3,0.71,0,54,Male,Mombasa,2023
+CUST0732,Loyal,"Consistent purchasers, frequent interactions.",780520.65,3,2.25,104,0,1.0,0,50,Other,Nairobi,2023
+CUST0622,New,"Recently acquired customers, often with 1-2 purchases.",3575793.32,6,1.85,168,4,0.5,0,34,Female,Kisumu,2023
+CUST0931,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1335575.84,3,2.0,105,3,0.33,0,59,Male,Eldoret,2023
+CUST0239,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2724745.18,5,2.06,2,2,0.5,1,35,Female,Nakuru,2024
+CUST0334,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",506947.36,5,1.5,295,0,1.0,1,50,Other,Nakuru,2023
+CUST0244,High-Value,Customers with high total spending and frequent purchases.,3042217.31,8,1.89,41,1,0.8,0,75,Other,Nakuru,2023
+CUST0305,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2433024.55,5,1.71,303,3,0.78,1,36,Other,Kisumu,2023
+CUST0383,Loyal,"Consistent purchasers, frequent interactions.",6141964.05,7,2.19,63,2,0.67,0,69,Other,Nakuru,2023
+CUST0969,High-Value,Customers with high total spending and frequent purchases.,8054097.69,10,2.19,21,8,0.37,0,45,Female,Mombasa,2023
+CUST0647,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3527977.32,6,1.7,220,2,0.69,0,41,Other,Kisumu,2023
+CUST0954,High-Value,Customers with high total spending and frequent purchases.,5000843.15,12,1.59,6,2,0.76,0,20,Male,Eldoret,2023
+CUST0898,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1753018.54,4,1.77,316,2,1.0,0,49,Other,Mombasa,2023
+CUST0131,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1854191.67,4,2.0,27,3,0.6,0,73,Other,Mombasa,2023
+CUST0561,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1476516.09,4,1.38,200,0,1.0,0,66,Female,Eldoret,2023
+CUST0684,New,"Recently acquired customers, often with 1-2 purchases.",4505418.82,10,1.7,154,5,0.88,1,72,Female,Nakuru,2023
+CUST0152,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4781893.96,7,2.08,82,4,0.67,0,40,Female,Mombasa,2023
+CUST0053,Loyal,"Consistent purchasers, frequent interactions.",3963917.87,9,1.42,67,2,0.75,0,71,Female,Nairobi,2023
+CUST0606,New,"Recently acquired customers, often with 1-2 purchases.",2050182.47,3,1.5,126,1,0.67,0,47,Male,Mombasa,2023
+CUST0709,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2238867.84,5,1.64,339,2,0.6,1,51,Male,Mombasa,2023
+CUST0578,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1806894.13,6,1.45,65,4,0.6,1,36,Other,Kisumu,2023
+CUST0893,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3385472.57,5,1.88,23,4,1.0,0,36,Male,Kisumu,2023
+CUST0854,New,"Recently acquired customers, often with 1-2 purchases.",3904812.94,10,1.84,97,3,0.64,1,29,Female,Mombasa,2023
+CUST0712,New,"Recently acquired customers, often with 1-2 purchases.",2203314.09,3,3.0,93,2,0.33,0,68,Male,Kisumu,2023
+CUST0362,High-Value,Customers with high total spending and frequent purchases.,4330782.87,9,1.93,1,3,0.68,0,65,Other,Nairobi,2023
+CUST0797,Loyal,"Consistent purchasers, frequent interactions.",2455246.78,5,2.53,73,0,1.0,0,39,Female,Nairobi,2023
+CUST0499,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4431790.5,11,1.89,210,2,0.68,1,26,Other,Nairobi,2023
+CUST0749,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1229882.57,4,2.5,11,4,0.0,1,65,Female,Nakuru,2023
+CUST0354,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3573741.65,5,1.7,107,4,0.33,0,58,Female,Eldoret,2023
+CUST0480,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",172009.14,2,2.0,16,0,1.0,1,23,Male,Eldoret,2023
+CUST0456,Loyal,"Consistent purchasers, frequent interactions.",5092912.84,9,2.21,31,10,0.07,0,47,Other,Kisumu,2023
+CUST0779,High-Value,Customers with high total spending and frequent purchases.,2197900.67,7,1.94,15,2,0.75,0,46,Female,Mombasa,2023
+CUST0460,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3881239.71,11,2.09,121,5,0.4,0,73,Female,Eldoret,2023
+CUST0457,Promising,Newer customers with high initial engagement or spending potential.,1542286.93,5,1.42,38,1,0.6,0,71,Other,Kisumu,2023
+CUST0491,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3579978.75,5,1.84,171,2,0.4,1,63,Male,Nairobi,2023
+CUST0604,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2964292.19,7,1.53,363,3,0.67,1,73,Female,Eldoret,2023
+CUST0158,New,"Recently acquired customers, often with 1-2 purchases.",3387807.41,4,2.07,87,4,0.33,0,19,Other,Nairobi,2023
+CUST0140,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1241553.94,6,1.58,182,1,1.0,1,69,Other,Eldoret,2023
+CUST0799,Loyal,"Consistent purchasers, frequent interactions.",842781.77,5,1.44,1,1,0.5,0,52,Female,Nairobi,2023
+CUST0479,Loyal,"Consistent purchasers, frequent interactions.",2446319.03,4,1.8,92,1,0.78,0,61,Female,Kisumu,2023
+CUST0325,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4795956.24,7,2.36,193,3,0.6,1,56,Male,Nakuru,2023
+CUST0965,High-Value,Customers with high total spending and frequent purchases.,2872493.08,6,1.71,20,1,0.56,0,65,Female,Eldoret,2023
+CUST0237,New,"Recently acquired customers, often with 1-2 purchases.",6003340.28,11,1.97,292,6,0.5,1,19,Male,Kisumu,2023
+CUST0673,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3165551.92,8,1.73,67,4,0.56,0,24,Other,Eldoret,2023
+CUST0852,High-Value,Customers with high total spending and frequent purchases.,3424279.3,8,1.74,46,4,0.33,0,75,Other,Nairobi,2023
+CUST0369,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2396541.28,4,1.62,227,1,1.0,0,20,Female,Eldoret,2023
+CUST0340,High-Value,Customers with high total spending and frequent purchases.,2671154.28,6,1.88,29,0,1.0,0,47,Other,Mombasa,2023
+CUST0885,New,"Recently acquired customers, often with 1-2 purchases.",1687753.91,4,2.07,284,2,0.71,1,51,Other,Kisumu,2023
+CUST0741,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4640135.95,10,1.81,102,3,0.57,0,44,Other,Mombasa,2023
+CUST0691,Promising,Newer customers with high initial engagement or spending potential.,1985841.04,2,2.0,4,0,1.0,0,29,Female,Eldoret,2023
+CUST0793,New,"Recently acquired customers, often with 1-2 purchases.",789834.04,2,2.0,246,0,0.6,1,46,Female,Nakuru,2023
+CUST0878,Loyal,"Consistent purchasers, frequent interactions.",2216534.81,6,1.61,99,1,0.8,0,52,Female,Eldoret,2023
+CUST0451,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3195962.39,6,1.82,77,5,0.33,1,43,Male,Nairobi,2023
+CUST0856,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2827908.54,6,2.0,279,4,0.14,1,35,Other,Nairobi,2023
+CUST0154,New,"Recently acquired customers, often with 1-2 purchases.",2123524.0,5,1.67,13,3,0.2,0,62,Female,Nairobi,2023
+CUST0565,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2891606.71,5,1.88,356,3,0.71,0,75,Male,Eldoret,2023
+CUST0725,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1556465.7,5,2.0,140,3,0.6,1,27,Other,Nairobi,2023
+CUST0116,Loyal,"Consistent purchasers, frequent interactions.",1215675.69,7,1.62,102,2,0.67,0,49,Other,Nairobi,2023
+CUST0238,New,"Recently acquired customers, often with 1-2 purchases.",3278768.41,6,1.85,125,4,0.67,1,74,Male,Nairobi,2023
+CUST0418,New,"Recently acquired customers, often with 1-2 purchases.",5223309.8,10,1.95,94,2,1.0,0,23,Female,Nairobi,2023
+CUST0143,High-Value,Customers with high total spending and frequent purchases.,4466516.76,7,1.81,18,2,0.88,0,69,Male,Nakuru,2023
+CUST0612,New,"Recently acquired customers, often with 1-2 purchases.",4335006.39,7,2.46,152,3,0.33,0,31,Female,Mombasa,2023
+CUST0573,Promising,Newer customers with high initial engagement or spending potential.,716373.98,2,2.0,13,1,0.5,0,31,Male,Eldoret,2023
+CUST0343,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3362905.31,7,1.76,81,3,0.71,0,46,Female,Eldoret,2023
+CUST0072,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3969894.62,6,1.72,385,2,0.83,0,34,Female,Eldoret,2023
+CUST0219,Loyal,"Consistent purchasers, frequent interactions.",1614486.98,4,2.09,77,1,0.71,0,54,Male,Eldoret,2023
+CUST0057,High-Value,Customers with high total spending and frequent purchases.,2902845.07,6,2.0,3,1,1.0,0,68,Female,Eldoret,2023
+CUST0283,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3925559.75,10,1.88,67,5,0.67,0,74,Female,Kisumu,2023
+CUST0363,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1327212.68,5,1.85,317,3,0.6,1,61,Female,Kisumu,2023
+CUST0846,New,"Recently acquired customers, often with 1-2 purchases.",2308886.32,4,2.09,275,0,1.0,0,24,Female,Kisumu,2023
+CUST0848,High-Value,Customers with high total spending and frequent purchases.,2736628.94,6,1.45,23,3,0.5,0,23,Male,Nakuru,2023
+CUST0502,High-Value,Customers with high total spending and frequent purchases.,2090395.7,7,1.94,0,0,1.0,0,68,Female,Nakuru,2023
+CUST0278,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1330933.38,5,1.6,92,2,0.43,1,18,Female,Eldoret,2023
+CUST0748,Loyal,"Consistent purchasers, frequent interactions.",1617404.88,7,1.75,123,1,0.75,0,25,Male,Mombasa,2023
+CUST0081,New,"Recently acquired customers, often with 1-2 purchases.",2790621.32,5,1.65,377,2,0.67,1,57,Male,Nakuru,2023
+CUST0584,High-Value,Customers with high total spending and frequent purchases.,3217933.7,9,1.65,44,1,1.0,0,30,Female,Nakuru,2023
+CUST0159,High-Value,Customers with high total spending and frequent purchases.,7964025.04,11,1.97,6,4,0.83,0,18,Female,Nakuru,2023
+CUST0671,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2750124.4,4,1.87,370,0,1.0,0,69,Other,Nakuru,2023
+CUST0146,High-Value,Customers with high total spending and frequent purchases.,5144109.76,7,2.37,2,3,0.69,1,34,Female,Nakuru,2023
+CUST0006,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1117520.51,3,1.67,601,2,1.0,1,49,Female,Kisumu,2023
+CUST0516,Promising,Newer customers with high initial engagement or spending potential.,1759215.37,4,1.8,30,1,0.71,0,71,Male,Nakuru,2023
+CUST0395,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2345250.61,4,1.64,12,3,0.43,1,29,Female,Kisumu,2023
+CUST0330,Loyal,"Consistent purchasers, frequent interactions.",1013991.91,4,1.25,68,2,0.6,0,53,Other,Nairobi,2023
+CUST0938,New,"Recently acquired customers, often with 1-2 purchases.",1924524.36,6,1.89,236,3,0.6,0,27,Female,Nairobi,2023
+CUST0515,Promising,Newer customers with high initial engagement or spending potential.,1745766.47,4,1.79,22,2,0.33,0,53,Female,Nakuru,2023
+CUST0268,High-Value,Customers with high total spending and frequent purchases.,4634598.58,9,1.76,40,2,0.87,1,66,Other,Eldoret,2023
+CUST0010,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3860438.67,9,1.74,198,4,0.56,0,68,Female,Nairobi,2023
+CUST0697,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2965119.22,5,1.61,6,3,0.6,1,52,Male,Eldoret,2023
+CUST0318,New,"Recently acquired customers, often with 1-2 purchases.",2704196.85,5,2.31,139,1,0.78,0,54,Male,Nairobi,2023
+CUST0623,High-Value,Customers with high total spending and frequent purchases.,5450761.33,9,1.83,14,3,0.5,0,59,Female,Mombasa,2023
+CUST0685,High-Value,Customers with high total spending and frequent purchases.,2176058.6,6,1.88,41,8,-0.14,1,33,Male,Mombasa,2023
+CUST0761,New,"Recently acquired customers, often with 1-2 purchases.",2704734.97,4,2.06,266,3,0.5,0,25,Other,Nakuru,2023
+CUST0571,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2639026.33,5,1.56,270,0,1.0,0,45,Male,Nairobi,2023
+CUST0449,Loyal,"Consistent purchasers, frequent interactions.",5331459.34,9,1.77,15,1,1.0,0,28,Male,Eldoret,2023
+CUST0223,High-Value,Customers with high total spending and frequent purchases.,3338887.04,7,2.15,8,2,0.75,0,31,Other,Kisumu,2024
+CUST0231,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1296920.98,5,1.56,13,3,0.5,0,58,Other,Eldoret,2023
+CUST0602,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3223556.2,6,1.8,220,1,1.0,1,31,Other,Kisumu,2023
+CUST0946,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2285206.12,3,2.1,469,3,0.33,1,27,Male,Kisumu,2023
+CUST0011,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1559206.27,5,1.75,305,0,0.67,0,58,Male,Eldoret,2023
+CUST0397,Loyal,"Consistent purchasers, frequent interactions.",5716645.94,11,1.83,23,7,0.62,1,41,Female,Mombasa,2023
+CUST0297,Loyal,"Consistent purchasers, frequent interactions.",2098107.45,5,2.18,17,1,0.33,0,65,Other,Eldoret,2023
+CUST0258,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2049270.61,5,1.86,96,3,0.71,0,42,Other,Eldoret,2023
+CUST0134,Loyal,"Consistent purchasers, frequent interactions.",4267168.02,8,1.7,98,2,0.82,0,43,Male,Kisumu,2023
+CUST0488,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3112365.56,4,2.06,408,1,0.82,1,45,Male,Kisumu,2023
+CUST0509,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1571992.93,4,1.77,41,2,1.0,1,39,Male,Nairobi,2023
+CUST0866,High-Value,Customers with high total spending and frequent purchases.,5088566.78,8,2.12,4,0,0.75,0,26,Male,Kisumu,2023
+CUST0977,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1325666.52,5,1.85,209,2,0.33,1,40,Female,Nakuru,2023
+CUST0627,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1352859.06,3,2.0,503,1,0.5,0,35,Female,Nakuru,2023
+CUST0257,New,"Recently acquired customers, often with 1-2 purchases.",2106082.51,6,2.14,191,1,0.6,1,36,Male,Kisumu,2023
+CUST0833,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1070906.67,2,2.4,188,0,1.0,1,61,Female,Nairobi,2023
+CUST0086,Loyal,"Consistent purchasers, frequent interactions.",2603592.37,7,1.65,88,2,0.78,0,43,Other,Nakuru,2023
+CUST0707,Promising,Newer customers with high initial engagement or spending potential.,3236414.55,6,1.67,69,2,1.0,0,22,Female,Nairobi,2023
+CUST0525,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3050760.98,6,1.68,164,2,0.71,1,56,Male,Mombasa,2023
+CUST0778,New,"Recently acquired customers, often with 1-2 purchases.",2302088.52,4,1.73,131,1,0.5,0,33,Female,Mombasa,2023
+CUST0605,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4256358.1,7,1.67,273,2,0.54,1,25,Other,Nakuru,2023
+CUST0981,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",664367.49,3,1.9,456,2,0.5,1,25,Male,Nairobi,2023
+CUST0284,Loyal,"Consistent purchasers, frequent interactions.",1750945.1,4,1.71,40,1,0.75,0,70,Other,Kisumu,2023
+CUST0335,High-Value,Customers with high total spending and frequent purchases.,2019370.22,7,1.79,17,2,0.56,0,35,Other,Mombasa,2023
+CUST0883,New,"Recently acquired customers, often with 1-2 purchases.",918732.1,4,1.3,220,1,1.0,0,23,Other,Mombasa,2023
+CUST0481,Loyal,"Consistent purchasers, frequent interactions.",5035160.12,7,2.07,87,2,1.0,0,27,Other,Nakuru,2023
+CUST0442,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1489669.47,4,1.8,187,3,0.0,1,74,Female,Eldoret,2023
+CUST0945,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",395179.12,2,1.5,310,0,1.0,1,51,Male,Kisumu,2024
+CUST0295,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",704746.86,3,1.5,200,0,1.0,0,62,Other,Eldoret,2023
+CUST0391,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2197124.65,4,2.25,220,1,0.71,0,65,Other,Nairobi,2023
+CUST0405,Loyal,"Consistent purchasers, frequent interactions.",3165331.62,5,2.21,9,1,0.67,0,54,Female,Mombasa,2023
+CUST0464,New,"Recently acquired customers, often with 1-2 purchases.",2674916.35,5,1.4,128,2,0.33,0,66,Male,Eldoret,2023
+CUST0498,High-Value,Customers with high total spending and frequent purchases.,1935941.61,6,1.44,3,1,0.71,0,55,Other,Eldoret,2023
+CUST0758,New,"Recently acquired customers, often with 1-2 purchases.",913284.14,3,2.0,375,0,0.6,0,57,Female,Eldoret,2023
+CUST0739,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1210704.03,3,1.36,191,1,0.67,1,64,Female,Mombasa,2024
+CUST0710,New,"Recently acquired customers, often with 1-2 purchases.",2114185.24,4,1.75,263,0,1.0,0,71,Other,Mombasa,2023
+CUST0763,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2758393.62,5,1.94,129,3,0.6,0,40,Male,Nairobi,2023
+CUST0895,High-Value,Customers with high total spending and frequent purchases.,2083617.33,5,1.67,108,0,1.0,0,74,Male,Mombasa,2023
+CUST0581,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3408488.97,8,1.69,68,2,0.82,1,34,Male,Nakuru,2023
+CUST0213,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2235596.59,5,2.0,202,3,0.25,0,45,Other,Nairobi,2023
+CUST0091,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2845960.73,5,1.37,228,4,0.25,0,72,Male,Eldoret,2023
+CUST0062,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",658658.33,2,2.0,283,0,1.0,1,69,Other,Kisumu,2023
+CUST0097,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2504650.41,10,1.79,200,2,0.67,1,30,Other,Mombasa,2023
+CUST0133,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1844227.37,4,2.08,99,1,0.5,0,68,Male,Eldoret,2023
+CUST0322,Loyal,"Consistent purchasers, frequent interactions.",1850049.86,5,1.88,14,1,1.0,0,46,Male,Nairobi,2023
+CUST0521,New,"Recently acquired customers, often with 1-2 purchases.",1956794.64,6,1.94,225,1,0.8,0,70,Female,Mombasa,2023
+CUST0661,High-Value,Customers with high total spending and frequent purchases.,3589694.55,10,1.88,53,1,1.0,0,34,Other,Mombasa,2023
+CUST0004,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",994650.48,3,1.38,315,2,0.0,1,72,Female,Mombasa,2023
+CUST0994,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2948465.62,5,2.13,366,1,0.78,1,32,Other,Nairobi,2023
+CUST0431,Loyal,"Consistent purchasers, frequent interactions.",2759239.51,5,1.74,132,2,0.64,0,29,Male,Kisumu,2023
+CUST0328,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2838695.74,6,1.65,122,2,0.8,1,45,Other,Nakuru,2023
+CUST0321,High-Value,Customers with high total spending and frequent purchases.,2763961.6,7,1.64,12,2,0.89,0,70,Male,Nakuru,2023
+CUST0773,High-Value,Customers with high total spending and frequent purchases.,3332454.93,8,2.21,113,2,0.2,0,66,Female,Kisumu,2023
+CUST0632,Loyal,"Consistent purchasers, frequent interactions.",3704801.64,7,1.81,54,3,0.82,1,73,Other,Kisumu,2023
+CUST0035,High-Value,Customers with high total spending and frequent purchases.,206517.68,3,1.25,166,0,0.0,0,20,Other,Nairobi,2023
+CUST0905,High-Value,Customers with high total spending and frequent purchases.,2777698.65,7,1.84,153,1,1.0,0,25,Female,Mombasa,2023
+CUST0410,New,"Recently acquired customers, often with 1-2 purchases.",4750440.5,12,1.89,259,6,0.88,1,47,Female,Eldoret,2023
+CUST0507,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3627125.3,8,1.81,210,3,0.6,0,48,Male,Eldoret,2023
+CUST0317,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",952840.49,6,1.44,470,1,0.6,1,18,Other,Nairobi,2023
+CUST0441,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1967562.16,6,1.79,126,1,1.0,1,64,Other,Kisumu,2023
+CUST0312,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2899950.79,4,2.22,37,3,0.6,1,19,Male,Mombasa,2023
+CUST0109,New,"Recently acquired customers, often with 1-2 purchases.",3432937.95,6,1.84,81,4,0.47,0,36,Female,Nairobi,2023
+CUST0214,High-Value,Customers with high total spending and frequent purchases.,4837144.35,8,1.92,44,6,0.43,0,52,Female,Nairobi,2023
+CUST0995,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1970930.5,6,1.38,251,3,0.33,0,69,Female,Kisumu,2023
+CUST0290,New,"Recently acquired customers, often with 1-2 purchases.",2884900.23,9,1.78,149,2,1.0,0,73,Other,Nakuru,2023
+CUST0083,Loyal,"Consistent purchasers, frequent interactions.",5186331.16,8,2.0,140,2,0.67,0,32,Other,Nakuru,2023
+CUST0532,High-Value,Customers with high total spending and frequent purchases.,4513908.75,10,1.89,28,3,0.8,0,61,Female,Mombasa,2023
+CUST0813,New,"Recently acquired customers, often with 1-2 purchases.",1306222.92,4,1.36,109,1,1.0,0,35,Male,Mombasa,2023
+CUST0862,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2134291.28,3,1.62,136,1,1.0,1,41,Male,Mombasa,2023
+CUST0275,New,"Recently acquired customers, often with 1-2 purchases.",612318.27,2,2.6,188,1,1.0,0,26,Male,Kisumu,2023
+CUST0123,Loyal,"Consistent purchasers, frequent interactions.",2657116.7,6,1.74,24,5,0.25,1,61,Male,Mombasa,2023
+CUST0703,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2474980.11,6,1.74,315,2,0.83,0,61,Other,Nairobi,2023
+CUST0377,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2644738.41,5,1.9,475,3,0.82,1,32,Female,Nairobi,2023
+CUST0625,New,"Recently acquired customers, often with 1-2 purchases.",2563450.04,7,2.25,146,1,0.71,0,28,Male,Mombasa,2023
+CUST0540,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1714903.87,6,1.75,208,4,0.71,1,47,Female,Kisumu,2023
+CUST0138,Loyal,"Consistent purchasers, frequent interactions.",1220858.21,4,2.14,61,1,1.0,0,29,Female,Nairobi,2023
+CUST0717,New,"Recently acquired customers, often with 1-2 purchases.",2415640.43,7,1.89,224,0,1.0,0,28,Male,Nairobi,2023
+CUST0752,High-Value,Customers with high total spending and frequent purchases.,1847820.28,6,1.69,7,2,0.2,0,73,Male,Eldoret,2023
+CUST0657,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2121565.22,4,1.71,271,3,0.56,0,36,Other,Eldoret,2023
+CUST0513,Loyal,"Consistent purchasers, frequent interactions.",3723961.53,5,2.12,72,1,0.78,0,18,Female,Kisumu,2023
+CUST0934,Loyal,"Consistent purchasers, frequent interactions.",4046277.98,9,1.88,53,4,0.67,0,39,Other,Nakuru,2023
+CUST0984,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1838793.08,3,1.75,240,1,1.0,0,41,Female,Nakuru,2023
+CUST0635,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",588178.99,4,1.18,270,2,1.0,0,27,Male,Mombasa,2023
+CUST0329,New,"Recently acquired customers, often with 1-2 purchases.",3871132.19,7,1.78,109,2,0.82,0,55,Other,Nakuru,2023
+CUST0785,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2070277.07,6,1.53,96,4,0.25,0,68,Female,Nairobi,2023
+CUST0423,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3570828.56,7,1.96,81,3,0.67,0,28,Other,Eldoret,2023
+CUST0518,High-Value,Customers with high total spending and frequent purchases.,2603854.97,6,1.89,5,3,0.67,0,68,Female,Kisumu,2023
+CUST0477,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1572663.52,4,1.4,200,2,0.5,0,69,Female,Nairobi,2023
+CUST0736,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1963493.01,3,2.1,248,2,1.0,0,70,Male,Nakuru,2023
+CUST0248,High-Value,Customers with high total spending and frequent purchases.,3831795.64,8,1.87,52,1,0.71,0,28,Other,Mombasa,2023
+CUST0432,High-Value,Customers with high total spending and frequent purchases.,3592964.46,9,1.73,24,1,0.71,0,39,Male,Nairobi,2023
+CUST0339,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2502944.51,4,1.75,8,2,1.0,1,69,Other,Nakuru,2023
+CUST0100,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",565475.34,2,1.5,645,0,1.0,1,41,Male,Nakuru,2023
+CUST0406,High-Value,Customers with high total spending and frequent purchases.,2063301.05,6,1.9,46,3,0.57,0,33,Female,Nakuru,2023
+CUST0016,New,"Recently acquired customers, often with 1-2 purchases.",1100405.92,3,2.0,173,0,1.0,0,73,Male,Eldoret,2023
+CUST0313,Promising,Newer customers with high initial engagement or spending potential.,973534.44,1,1.4,28,0,1.0,0,31,Other,Kisumu,2023
+CUST0281,New,"Recently acquired customers, often with 1-2 purchases.",3112117.69,5,1.77,45,3,0.83,0,42,Other,Kisumu,2024
+CUST0968,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3098929.97,9,1.91,259,1,0.89,0,67,Female,Eldoret,2023
+CUST0045,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3441897.79,6,2.11,284,8,0.09,0,75,Other,Eldoret,2023
+CUST0453,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2501453.06,4,2.46,315,2,0.6,1,35,Other,Nakuru,2023
+CUST0818,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2368887.3,6,1.83,65,1,1.0,1,23,Female,Nakuru,2023
+CUST0234,New,"Recently acquired customers, often with 1-2 purchases.",4135739.41,7,1.85,151,3,0.5,1,67,Male,Nairobi,2023
+CUST0682,Loyal,"Consistent purchasers, frequent interactions.",704433.64,4,1.4,29,1,1.0,0,36,Male,Nairobi,2023
+CUST0614,High-Value,Customers with high total spending and frequent purchases.,2410544.63,7,1.44,1,1,0.82,0,70,Female,Mombasa,2023
+CUST0738,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1490464.62,4,1.46,212,1,0.78,0,59,Male,Mombasa,2023
+CUST0716,High-Value,Customers with high total spending and frequent purchases.,2801720.99,7,1.59,49,1,0.5,0,37,Male,Kisumu,2023
+CUST0420,Loyal,"Consistent purchasers, frequent interactions.",2929582.02,6,1.79,43,0,1.0,0,43,Male,Mombasa,2023
+CUST0770,New,"Recently acquired customers, often with 1-2 purchases.",4516410.09,6,2.33,182,1,0.71,0,40,Female,Nairobi,2023
+CUST0950,New,"Recently acquired customers, often with 1-2 purchases.",2923055.63,7,1.8,295,0,0.67,0,45,Other,Nairobi,2023
+CUST0421,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",5083802.11,10,1.62,104,6,0.45,0,44,Male,Eldoret,2023
+CUST0492,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4238690.11,7,1.72,166,4,0.6,1,19,Other,Nairobi,2023
+CUST0247,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2257221.04,3,2.11,230,1,0.67,0,73,Other,Eldoret,2023
+CUST0871,Promising,Newer customers with high initial engagement or spending potential.,1937951.4,2,2.0,4,0,1.0,0,39,Male,Eldoret,2024
+CUST0500,New,"Recently acquired customers, often with 1-2 purchases.",971453.39,5,1.7,9,3,0.0,0,60,Female,Kisumu,2023
+CUST0065,High-Value,Customers with high total spending and frequent purchases.,4711663.77,11,1.82,48,4,0.73,0,72,Other,Nakuru,2023
+CUST0600,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4095345.12,8,1.9,91,3,0.56,1,30,Female,Nairobi,2023
+CUST0448,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4308999.26,7,2.25,508,5,0.2,1,29,Female,Mombasa,2023
+CUST0028,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3169015.38,4,1.64,101,3,0.14,1,23,Other,Eldoret,2023
+CUST0253,New,"Recently acquired customers, often with 1-2 purchases.",2821471.1,6,2.05,105,2,0.83,0,60,Other,Nakuru,2023
+CUST0980,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2466958.12,4,1.93,324,3,0.2,0,43,Other,Nairobi,2023
+CUST0446,High-Value,Customers with high total spending and frequent purchases.,1328752.34,6,1.93,44,1,0.56,0,46,Female,Eldoret,2023
+CUST0601,Promising,Newer customers with high initial engagement or spending potential.,2487628.47,4,2.12,22,1,0.6,0,41,Male,Nairobi,2023
+CUST0800,Loyal,"Consistent purchasers, frequent interactions.",2227932.06,4,2.0,13,2,0.67,0,41,Male,Mombasa,2023
+CUST0482,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2017141.29,5,2.0,17,1,0.5,1,58,Female,Kisumu,2023
+CUST0306,Loyal,"Consistent purchasers, frequent interactions.",1306507.58,4,1.31,12,0,1.0,0,29,Other,Eldoret,2023
+CUST0251,Loyal,"Consistent purchasers, frequent interactions.",3853243.85,9,1.88,4,4,0.47,0,47,Other,Kisumu,2023
+CUST0858,High-Value,Customers with high total spending and frequent purchases.,2930206.34,8,1.77,26,3,0.67,0,52,Other,Mombasa,2023
+CUST0695,High-Value,Customers with high total spending and frequent purchases.,3023083.0,7,1.94,1,0,1.0,0,39,Male,Nairobi,2023
+CUST0615,New,"Recently acquired customers, often with 1-2 purchases.",786196.88,2,1.57,473,1,0.0,1,27,Other,Nairobi,2023
+CUST0538,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1973572.74,6,1.53,264,1,0.82,0,37,Female,Nakuru,2023
+CUST0302,Loyal,"Consistent purchasers, frequent interactions.",3251864.34,6,2.05,47,2,0.82,0,75,Other,Mombasa,2023
+CUST0631,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1408891.0,5,1.41,157,2,0.78,1,19,Male,Kisumu,2023
+CUST0447,Promising,Newer customers with high initial engagement or spending potential.,1818098.03,3,1.88,6,0,0.6,0,47,Other,Eldoret,2023
+CUST0796,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1550537.35,5,1.67,96,1,0.78,0,75,Female,Kisumu,2023
+CUST0882,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1502407.65,3,1.7,461,0,1.0,1,39,Female,Kisumu,2023
+CUST0786,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2080967.53,4,1.86,254,4,0.33,1,50,Male,Kisumu,2023
+CUST0260,High-Value,Customers with high total spending and frequent purchases.,3902208.63,6,1.75,45,4,0.75,0,55,Female,Mombasa,2023
+CUST0233,New,"Recently acquired customers, often with 1-2 purchases.",2010310.12,4,1.64,44,2,1.0,1,64,Female,Nairobi,2023
+CUST0648,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1049930.63,5,1.25,283,0,1.0,1,30,Male,Kisumu,2023
+CUST0992,Promising,Newer customers with high initial engagement or spending potential.,1885768.47,4,1.6,21,0,0.67,0,63,Male,Nairobi,2023
+CUST0348,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2277102.37,5,2.0,11,3,0.67,0,55,Other,Eldoret,2023
+CUST0979,High-Value,Customers with high total spending and frequent purchases.,5156441.36,10,1.97,9,3,0.87,0,61,Male,Mombasa,2023
+CUST0844,Loyal,"Consistent purchasers, frequent interactions.",2968535.2,7,1.46,20,3,0.5,0,71,Female,Nairobi,2023
+CUST0095,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2186482.65,4,1.8,454,2,0.75,0,37,Other,Nairobi,2023
+CUST0203,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2951741.96,7,1.79,127,5,0.5,1,22,Other,Mombasa,2023
+CUST0795,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1620448.04,3,1.83,225,1,0.6,0,19,Female,Nairobi,2023
+CUST0935,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2931851.67,7,1.93,110,4,0.71,1,58,Other,Kisumu,2023
+CUST0720,High-Value,Customers with high total spending and frequent purchases.,2451147.6,7,1.41,17,3,0.75,0,42,Other,Nakuru,2023
+CUST0867,New,"Recently acquired customers, often with 1-2 purchases.",132025.71,1,1.67,579,1,0.33,1,29,Female,Kisumu,2023
+CUST0672,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1996914.64,3,2.2,233,0,1.0,0,74,Male,Eldoret,2023
+CUST0930,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1707634.86,4,1.86,400,2,0.33,0,32,Male,Nairobi,2023
+CUST0032,High-Value,Customers with high total spending and frequent purchases.,3390152.89,7,2.22,1,3,0.69,0,58,Male,Nairobi,2023
+CUST0505,Loyal,"Consistent purchasers, frequent interactions.",2088932.55,6,1.87,114,2,1.0,0,24,Female,Eldoret,2023
+CUST0522,Loyal,"Consistent purchasers, frequent interactions.",2329922.53,6,1.65,38,4,0.67,0,30,Female,Eldoret,2024
+CUST0245,Loyal,"Consistent purchasers, frequent interactions.",1833474.52,6,1.67,11,4,0.14,0,20,Other,Nairobi,2023
+CUST0747,Loyal,"Consistent purchasers, frequent interactions.",4243086.13,9,1.79,2,6,0.37,1,20,Male,Nairobi,2023
+CUST0829,New,"Recently acquired customers, often with 1-2 purchases.",2115828.85,5,1.69,14,3,0.75,0,63,Female,Nakuru,2024
+CUST0178,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1928811.89,5,1.71,286,2,0.78,1,53,Female,Nakuru,2023
+CUST0914,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1974755.94,5,1.86,322,2,1.0,1,26,Female,Nairobi,2023
+CUST0734,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1530720.98,3,1.8,283,0,0.6,0,63,Other,Mombasa,2023
+CUST0114,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3017090.36,6,2.06,60,3,0.56,0,56,Female,Nakuru,2023
+CUST0099,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3234486.59,6,1.71,160,4,0.58,0,70,Other,Nakuru,2023
+CUST0754,Promising,Newer customers with high initial engagement or spending potential.,1132890.21,5,1.44,50,2,0.2,0,39,Other,Mombasa,2023
+CUST0088,New,"Recently acquired customers, often with 1-2 purchases.",585387.37,2,1.5,374,1,0.33,0,67,Other,Kisumu,2023
+CUST0374,Loyal,"Consistent purchasers, frequent interactions.",3849210.22,8,1.72,45,2,0.85,0,63,Male,Nairobi,2023
+CUST0307,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2647757.99,6,1.48,96,2,0.8,1,60,Male,Kisumu,2023
+CUST0473,High-Value,Customers with high total spending and frequent purchases.,3399003.09,7,1.63,8,4,0.11,0,27,Male,Nairobi,2023
+CUST0173,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2836660.01,5,2.18,244,1,0.83,1,54,Other,Kisumu,2023
+CUST0760,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2889891.3,4,1.94,18,3,0.17,1,45,Male,Nakuru,2023
+CUST0546,Loyal,"Consistent purchasers, frequent interactions.",4768124.75,11,2.12,10,1,0.9,0,42,Male,Nakuru,2023
+CUST0798,New,"Recently acquired customers, often with 1-2 purchases.",572705.27,2,1.5,122,1,0.33,1,41,Other,Nairobi,2023
+CUST0226,Promising,Newer customers with high initial engagement or spending potential.,1039996.79,4,1.56,15,1,0.71,0,50,Female,Nairobi,2023
+CUST0687,Loyal,"Consistent purchasers, frequent interactions.",1455222.56,3,1.4,100,2,0.2,0,45,Male,Nairobi,2023
+CUST0299,New,"Recently acquired customers, often with 1-2 purchases.",2417159.94,6,2.62,122,3,1.0,1,26,Other,Mombasa,2023
+CUST0991,High-Value,Customers with high total spending and frequent purchases.,3895813.22,7,1.69,45,5,0.78,0,49,Other,Eldoret,2023
+CUST0996,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1467070.19,4,2.25,279,1,1.0,1,59,Male,Eldoret,2023
+CUST0465,High-Value,Customers with high total spending and frequent purchases.,1842154.12,7,1.71,24,3,0.33,0,48,Other,Eldoret,2023
+CUST0104,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1763063.79,6,1.91,579,1,0.75,0,21,Other,Nairobi,2023
+CUST0261,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1094296.27,3,1.45,449,2,0.33,0,40,Other,Mombasa,2023
+CUST0071,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3009177.65,5,1.68,115,0,0.54,1,71,Other,Mombasa,2023
+CUST0692,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3144226.09,5,1.83,102,5,0.6,0,44,Female,Mombasa,2023
+CUST0925,Loyal,"Consistent purchasers, frequent interactions.",4334284.1,8,1.97,24,7,0.37,1,64,Other,Nakuru,2023
+CUST0603,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1826339.76,5,2.0,242,0,1.0,1,35,Other,Nakuru,2023
+CUST0940,New,"Recently acquired customers, often with 1-2 purchases.",3073253.09,5,1.89,222,2,0.56,0,58,Male,Kisumu,2023
+CUST0171,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1656570.55,4,1.44,256,0,0.6,0,57,Other,Eldoret,2023
+CUST0167,Loyal,"Consistent purchasers, frequent interactions.",2227849.45,7,1.67,6,4,0.27,0,38,Male,Mombasa,2023
+CUST0309,Promising,Newer customers with high initial engagement or spending potential.,2217061.07,4,1.46,12,1,0.5,0,52,Other,Nairobi,2023
+CUST0743,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1625960.04,5,2.09,108,2,0.33,0,33,Female,Nakuru,2023
+CUST0504,High-Value,Customers with high total spending and frequent purchases.,3103392.12,9,1.77,11,4,0.64,0,24,Female,Nakuru,2023
+CUST0102,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3023225.28,5,1.89,39,3,0.69,0,47,Other,Kisumu,2023
+CUST0474,Loyal,"Consistent purchasers, frequent interactions.",4092776.14,9,1.87,15,2,0.83,1,69,Female,Eldoret,2023
+CUST0291,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2289839.18,5,1.67,289,2,0.67,0,24,Female,Eldoret,2023
+CUST0044,Promising,Newer customers with high initial engagement or spending potential.,1403072.0,4,1.43,61,1,1.0,0,57,Male,Nakuru,2023
+CUST0552,New,"Recently acquired customers, often with 1-2 purchases.",3564811.15,5,2.46,646,3,0.71,1,32,Female,Nairobi,2023
+CUST0831,High-Value,Customers with high total spending and frequent purchases.,1768821.51,6,2.2,36,5,-0.25,0,47,Male,Mombasa,2023
+CUST0757,High-Value,Customers with high total spending and frequent purchases.,3434009.71,6,2.0,47,5,0.73,0,68,Female,Nakuru,2023
+CUST0819,New,"Recently acquired customers, often with 1-2 purchases.",1975026.84,7,1.59,242,4,0.27,1,33,Male,Mombasa,2023
+CUST0792,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2059358.71,6,2.33,211,3,-0.11,1,51,Male,Eldoret,2023
+CUST0982,High-Value,Customers with high total spending and frequent purchases.,4634171.08,11,1.75,29,1,1.0,0,43,Other,Nakuru,2023
+CUST0838,New,"Recently acquired customers, often with 1-2 purchases.",4506572.85,8,1.77,221,3,0.69,0,67,Male,Kisumu,2023
+CUST0462,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2399506.07,7,1.75,199,1,0.67,1,64,Male,Eldoret,2023
+CUST0364,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1232711.89,4,1.42,2,3,0.67,0,69,Other,Nairobi,2023
+CUST0163,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1583950.11,6,1.45,215,2,1.0,0,41,Other,Mombasa,2023
+CUST0112,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3186853.41,5,2.13,9,2,0.56,1,20,Female,Eldoret,2023
+CUST0067,Promising,Newer customers with high initial engagement or spending potential.,2853981.5,5,2.2,51,2,0.67,0,24,Other,Nairobi,2023
+CUST0976,High-Value,Customers with high total spending and frequent purchases.,3070072.72,8,1.67,40,2,0.73,1,25,Female,Mombasa,2023
+CUST0061,New,"Recently acquired customers, often with 1-2 purchases.",2325957.0,5,2.21,484,1,0.67,0,31,Other,Nairobi,2023
+CUST0936,New,"Recently acquired customers, often with 1-2 purchases.",1477359.92,7,1.79,114,3,0.4,0,30,Female,Nakuru,2024
+CUST0675,Loyal,"Consistent purchasers, frequent interactions.",2666819.77,6,1.57,153,2,0.6,0,62,Other,Mombasa,2023
+CUST0896,Loyal,"Consistent purchasers, frequent interactions.",2826286.57,10,1.76,16,2,0.87,0,64,Other,Nairobi,2023
+CUST0806,High-Value,Customers with high total spending and frequent purchases.,1057056.83,4,1.71,121,0,1.0,0,40,Female,Nakuru,2023
+CUST0184,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1325220.66,4,1.67,214,2,0.56,1,29,Female,Eldoret,2023
+CUST0860,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3322683.39,5,2.15,145,4,0.45,0,73,Male,Nakuru,2023
+CUST0588,Loyal,"Consistent purchasers, frequent interactions.",2387303.21,6,1.76,1,2,0.33,0,36,Male,Eldoret,2023
+CUST0566,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",7304567.35,13,1.67,93,4,0.62,1,27,Female,Nakuru,2023
+CUST0534,New,"Recently acquired customers, often with 1-2 purchases.",1283717.08,3,2.11,496,1,1.0,0,58,Male,Eldoret,2023
+CUST0953,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2725098.65,4,2.33,45,4,0.0,0,60,Female,Nakuru,2023
+CUST0388,New,"Recently acquired customers, often with 1-2 purchases.",1750803.95,3,1.64,335,0,1.0,0,42,Male,Eldoret,2023
+CUST0590,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1656306.71,3,1.71,137,0,1.0,1,63,Female,Mombasa,2023
+CUST0782,Loyal,"Consistent purchasers, frequent interactions.",3105044.44,7,1.5,48,2,0.6,0,69,Other,Eldoret,2023
+CUST0246,Promising,Newer customers with high initial engagement or spending potential.,948622.86,3,1.5,16,1,1.0,0,28,Male,Eldoret,2023
+CUST0267,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1472371.87,3,1.7,240,3,0.67,0,43,Male,Kisumu,2023
+CUST0282,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1806279.93,4,2.4,80,4,0.33,0,29,Female,Nakuru,2023
+CUST0582,Loyal,"Consistent purchasers, frequent interactions.",2219184.18,4,1.69,10,0,1.0,0,27,Male,Mombasa,2023
+CUST0983,High-Value,Customers with high total spending and frequent purchases.,2321624.04,7,2.1,4,1,0.83,0,70,Male,Nakuru,2023
+CUST0440,Loyal,"Consistent purchasers, frequent interactions.",6929408.33,13,1.83,1,0,0.71,0,65,Female,Nairobi,2023
+CUST0298,High-Value,Customers with high total spending and frequent purchases.,2775112.17,8,1.77,46,2,0.87,0,37,Male,Nairobi,2023
+CUST0907,New,"Recently acquired customers, often with 1-2 purchases.",2649832.43,6,1.86,98,3,0.8,0,20,Female,Nairobi,2023
+CUST0398,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",831027.8,4,2.2,276,1,1.0,1,62,Other,Mombasa,2023
+CUST0355,Promising,Newer customers with high initial engagement or spending potential.,2243745.47,5,2.25,71,0,1.0,0,35,Other,Mombasa,2023
+CUST0558,New,"Recently acquired customers, often with 1-2 purchases.",2624433.63,4,1.85,113,3,0.71,0,25,Other,Nairobi,2023
+CUST0903,High-Value,Customers with high total spending and frequent purchases.,3275733.28,6,2.0,11,0,1.0,0,22,Female,Nairobi,2023
+CUST0436,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2446027.64,4,2.08,146,2,0.67,0,66,Female,Kisumu,2023
+CUST0121,Loyal,"Consistent purchasers, frequent interactions.",2644711.5,6,1.94,29,2,1.0,0,62,Female,Eldoret,2023
+CUST0708,Loyal,"Consistent purchasers, frequent interactions.",2476065.74,8,1.71,73,0,1.0,0,44,Other,Nakuru,2023
+CUST0093,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2322164.16,6,1.53,108,3,0.78,0,40,Other,Nakuru,2023
+CUST0679,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2788640.47,6,1.86,82,3,0.82,0,21,Male,Kisumu,2023
+CUST0985,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3406062.84,9,1.59,321,1,0.71,1,53,Other,Eldoret,2023
+CUST0082,New,"Recently acquired customers, often with 1-2 purchases.",3218039.16,7,1.77,234,2,0.86,0,70,Other,Kisumu,2023
+CUST0589,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4139784.42,6,2.18,140,1,1.0,1,75,Male,Mombasa,2023
+CUST0651,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1231069.64,3,1.75,250,0,0.6,0,66,Female,Nairobi,2023
+CUST0390,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1854805.77,5,2.0,345,1,0.5,1,27,Other,Kisumu,2023
+CUST0346,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2088433.95,5,1.81,263,4,0.4,0,20,Female,Nakuru,2023
+CUST0727,High-Value,Customers with high total spending and frequent purchases.,2201497.57,7,1.67,44,3,0.75,0,41,Male,Mombasa,2023
+CUST0788,Promising,Newer customers with high initial engagement or spending potential.,1773653.26,3,1.88,57,0,1.0,0,64,Other,Mombasa,2023
+CUST0381,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4411555.05,7,1.81,215,4,0.57,1,74,Male,Eldoret,2023
+CUST0359,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",716861.63,2,1.33,805,0,1.0,1,74,Female,Nakuru,2023
+CUST0517,High-Value,Customers with high total spending and frequent purchases.,1840312.7,5,1.56,99,0,1.0,0,37,Other,Mombasa,2023
+CUST0191,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3774419.75,9,1.82,248,1,1.0,0,22,Male,Nairobi,2023
+CUST0373,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2097623.86,5,1.47,15,3,0.67,0,63,Female,Nairobi,2023
+CUST0585,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2963475.44,4,1.71,221,1,0.8,0,19,Female,Kisumu,2023
+CUST0197,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1772738.53,6,1.4,308,6,0.33,1,32,Other,Nakuru,2023
+CUST0029,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1430873.27,2,1.44,491,0,1.0,0,64,Male,Kisumu,2023
+CUST0910,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",792576.79,2,1.86,135,1,1.0,1,32,Male,Eldoret,2023
+CUST0933,Loyal,"Consistent purchasers, frequent interactions.",5269793.11,8,1.67,103,2,0.64,0,21,Other,Kisumu,2023
+CUST0242,Loyal,"Consistent purchasers, frequent interactions.",2253138.84,6,1.81,40,6,0.2,0,42,Female,Mombasa,2023
+CUST0804,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2076094.82,6,1.81,226,3,0.5,0,70,Female,Mombasa,2023
+CUST0639,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",821997.77,3,1.67,23,2,0.5,1,55,Other,Nakuru,2023
+CUST0580,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1962670.02,5,1.44,392,0,1.0,0,68,Female,Nakuru,2023
+CUST0913,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2393180.39,3,2.09,456,2,0.71,1,34,Other,Mombasa,2023
+CUST0650,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2155232.43,5,1.71,95,4,0.33,0,37,Female,Nakuru,2023
+CUST0681,New,"Recently acquired customers, often with 1-2 purchases.",1728216.7,3,1.92,430,2,0.5,0,31,Male,Eldoret,2023
+CUST0353,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1532021.85,3,1.82,286,1,1.0,0,46,Other,Kisumu,2023
+CUST0230,Loyal,"Consistent purchasers, frequent interactions.",4834644.33,9,1.97,2,4,0.25,0,64,Female,Mombasa,2023
+CUST0402,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",233677.6,2,1.75,362,2,1.0,0,27,Other,Eldoret,2023
+CUST0270,Loyal,"Consistent purchasers, frequent interactions.",1840109.57,4,2.09,49,1,0.0,0,52,Other,Nakuru,2023
+CUST0056,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3496919.51,6,1.95,154,2,0.69,1,48,Other,Kisumu,2023
+CUST0089,Promising,Newer customers with high initial engagement or spending potential.,1112497.7,3,2.11,49,0,1.0,0,28,Male,Kisumu,2023
+CUST0296,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1733602.51,5,1.69,155,2,0.67,0,31,Male,Nairobi,2023
+CUST0842,Loyal,"Consistent purchasers, frequent interactions.",2756227.42,4,2.12,19,2,0.71,0,51,Female,Kisumu,2023
+CUST0022,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2562696.86,4,1.5,262,2,0.75,1,26,Female,Mombasa,2023
+CUST0269,Promising,Newer customers with high initial engagement or spending potential.,1142528.16,4,2.0,89,2,0.71,0,26,Female,Nairobi,2023
+CUST0103,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",919130.81,3,1.89,218,1,0.43,0,57,Male,Eldoret,2023
+CUST0947,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2845697.67,7,2.05,286,2,0.87,1,37,Female,Kisumu,2023
+CUST0653,High-Value,Customers with high total spending and frequent purchases.,2670993.66,3,1.69,110,0,0.5,0,19,Male,Mombasa,2023
+CUST0077,High-Value,Customers with high total spending and frequent purchases.,3119811.49,6,1.95,5,5,0.33,0,62,Female,Mombasa,2023
+CUST0520,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4170359.92,8,1.58,520,4,0.6,1,48,Male,Kisumu,2023
+CUST0577,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1364567.4,4,1.88,343,3,1.0,0,64,Other,Eldoret,2023
+CUST0193,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3616812.89,6,2.31,225,4,0.78,1,29,Other,Nakuru,2023
+CUST0794,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2259386.2,8,1.7,314,3,0.8,0,40,Male,Eldoret,2023
+CUST0469,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2538832.24,5,2.0,251,1,0.67,0,34,Male,Mombasa,2023
+CUST0471,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1533242.62,4,1.6,105,3,0.33,1,75,Male,Nairobi,2023
+CUST0162,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2041687.05,5,1.56,200,1,1.0,0,49,Female,Kisumu,2023
+CUST0470,High-Value,Customers with high total spending and frequent purchases.,4114838.72,6,2.47,15,5,1.0,0,48,Male,Mombasa,2023
+CUST0960,Promising,Newer customers with high initial engagement or spending potential.,1756310.3,4,1.92,89,2,0.6,0,40,Female,Eldoret,2023
+CUST0338,High-Value,Customers with high total spending and frequent purchases.,2456610.37,7,2.25,14,1,1.0,0,49,Male,Nakuru,2023
+CUST0019,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1967546.11,6,1.67,218,4,0.33,0,19,Female,Nakuru,2023
+CUST0493,High-Value,Customers with high total spending and frequent purchases.,3133782.16,6,1.83,51,3,0.78,0,53,Female,Nakuru,2023
+CUST0674,Loyal,"Consistent purchasers, frequent interactions.",4677786.21,9,1.86,32,3,0.69,0,65,Male,Kisumu,2023
+CUST0264,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2791533.76,5,2.0,78,3,0.85,1,38,Female,Kisumu,2023
+CUST0821,New,"Recently acquired customers, often with 1-2 purchases.",3180921.88,5,2.06,29,4,1.0,0,41,Female,Nakuru,2023
+CUST0392,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3015562.35,6,1.64,278,4,0.71,0,45,Male,Nakuru,2023
+CUST0326,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",616598.78,4,1.67,271,2,1.0,0,39,Female,Nairobi,2023
+CUST0644,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",843386.07,3,1.57,549,2,0.5,1,53,Male,Eldoret,2023
+CUST0386,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",975561.79,2,2.75,96,1,0.0,1,46,Other,Kisumu,2023
+CUST0974,Loyal,"Consistent purchasers, frequent interactions.",3401375.82,8,1.88,11,2,0.5,0,29,Female,Nairobi,2023
+CUST0669,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2914024.9,5,1.92,353,0,1.0,1,33,Other,Kisumu,2023
+CUST0277,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2617662.22,4,1.76,155,3,0.78,1,18,Male,Kisumu,2023
+CUST0713,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2540371.15,7,1.48,160,4,1.0,0,35,Female,Mombasa,2023
+CUST0085,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",5435335.12,8,1.96,224,1,1.0,0,39,Female,Nakuru,2023
+CUST0559,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",5102655.81,8,2.08,91,3,1.0,0,57,Female,Kisumu,2023
+CUST0106,Loyal,"Consistent purchasers, frequent interactions.",1252981.32,5,1.67,47,2,0.71,0,53,Female,Nairobi,2023
+CUST0544,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1906287.38,2,2.0,333,1,1.0,1,37,Male,Eldoret,2023
+CUST0416,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3777065.52,7,1.87,291,2,0.5,1,37,Other,Eldoret,2023
+CUST0150,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",805234.7,4,1.67,211,0,0.33,1,39,Female,Mombasa,2023
+CUST0361,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2989111.8,5,2.14,94,3,0.71,0,22,Other,Mombasa,2023
+CUST0404,High-Value,Customers with high total spending and frequent purchases.,3509014.67,8,1.61,1,4,0.64,0,28,Female,Nakuru,2023
+CUST0912,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2145822.71,4,2.24,229,1,0.56,0,44,Other,Kisumu,2023
+CUST0229,New,"Recently acquired customers, often with 1-2 purchases.",353345.43,2,1.2,616,0,1.0,0,35,Female,Nakuru,2023
+CUST0332,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1912911.01,3,3.0,197,0,1.0,0,28,Other,Eldoret,2023
+CUST0111,Promising,Newer customers with high initial engagement or spending potential.,2680371.33,4,1.92,37,1,1.0,0,37,Male,Kisumu,2023
+CUST0637,High-Value,Customers with high total spending and frequent purchases.,4453372.28,7,2.1,11,2,0.8,1,38,Female,Kisumu,2023
+CUST0899,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",214333.66,1,1.0,289,1,0.0,0,49,Other,Nairobi,2023
+CUST0430,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2636078.63,5,2.06,1,4,0.45,0,25,Other,Nairobi,2023
+CUST0046,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1447315.83,4,1.86,219,1,1.0,0,41,Female,Eldoret,2023
+CUST0378,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2654811.44,5,2.44,221,3,0.67,0,19,Other,Kisumu,2023
+CUST0172,Promising,Newer customers with high initial engagement or spending potential.,580412.81,2,2.67,43,2,-1.0,0,19,Other,Mombasa,2023
+CUST0401,Promising,Newer customers with high initial engagement or spending potential.,1476411.94,2,2.25,46,0,1.0,0,44,Other,Kisumu,2023
+CUST0881,Loyal,"Consistent purchasers, frequent interactions.",2640145.41,5,1.9,98,2,0.6,0,55,Female,Mombasa,2023
+CUST0417,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2375770.4,5,1.85,235,1,0.71,1,45,Other,Nakuru,2023
+CUST0294,Loyal,"Consistent purchasers, frequent interactions.",5192792.68,10,1.96,16,3,1.0,1,69,Other,Kisumu,2023
+CUST0890,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1590555.22,3,1.93,521,0,1.0,0,75,Female,Kisumu,2023
+CUST0737,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3725314.72,5,2.05,103,1,1.0,0,34,Other,Eldoret,2023
+CUST0630,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3920060.74,7,2.05,144,3,0.69,0,61,Female,Kisumu,2023
+CUST0803,New,"Recently acquired customers, often with 1-2 purchases.",3484153.3,7,1.75,224,4,0.45,0,58,Other,Mombasa,2023
+CUST0894,High-Value,Customers with high total spending and frequent purchases.,2412798.12,6,1.82,3,1,0.67,0,56,Other,Eldoret,2023
+CUST0256,New,"Recently acquired customers, often with 1-2 purchases.",3991282.81,8,2.0,151,6,0.78,1,52,Other,Nairobi,2023
+CUST0592,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1917810.26,4,1.85,280,1,0.71,1,50,Other,Eldoret,2023
+CUST0629,High-Value,Customers with high total spending and frequent purchases.,1321519.57,5,2.07,97,0,0.75,0,35,Male,Nakuru,2023
+CUST0664,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1506791.84,4,1.91,365,0,1.0,1,31,Male,Nairobi,2023
+CUST0075,High-Value,Customers with high total spending and frequent purchases.,6558185.69,9,2.0,15,4,0.45,1,62,Male,Mombasa,2023
+CUST0952,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1549875.69,5,1.33,304,3,0.71,1,38,Other,Eldoret,2023
+CUST0718,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2827862.63,5,2.0,254,2,0.5,1,61,Other,Eldoret,2023
+CUST0643,Loyal,"Consistent purchasers, frequent interactions.",3199821.28,6,2.25,4,2,0.69,0,44,Female,Mombasa,2023
+CUST0693,New,"Recently acquired customers, often with 1-2 purchases.",1139212.45,3,2.11,316,5,0.6,0,49,Male,Eldoret,2023
+CUST0973,Promising,Newer customers with high initial engagement or spending potential.,2108432.48,5,1.88,43,1,1.0,0,29,Other,Nairobi,2023
+CUST0755,Promising,Newer customers with high initial engagement or spending potential.,1829589.04,4,2.18,50,0,1.0,0,23,Male,Mombasa,2023
+CUST0236,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2265719.93,6,1.62,182,4,0.17,0,48,Male,Kisumu,2023
+CUST0655,Loyal,"Consistent purchasers, frequent interactions.",1105907.89,4,1.73,29,2,1.0,0,69,Other,Nairobi,2023
+CUST0740,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1596982.93,4,1.93,97,4,0.11,0,34,Female,Kisumu,2023
+CUST0549,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1273861.89,3,1.82,474,3,0.2,1,18,Female,Kisumu,2023
+CUST0676,Promising,Newer customers with high initial engagement or spending potential.,734222.48,3,1.14,164,2,0.2,0,62,Female,Eldoret,2023
+CUST0483,Loyal,"Consistent purchasers, frequent interactions.",1489766.08,4,2.0,3,0,1.0,0,55,Male,Eldoret,2023
+CUST0092,Loyal,"Consistent purchasers, frequent interactions.",3310310.61,6,2.0,38,4,0.65,0,20,Female,Nairobi,2023
+CUST0458,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1928965.42,5,1.53,235,0,0.67,0,49,Male,Nakuru,2023
+CUST0347,High-Value,Customers with high total spending and frequent purchases.,2823431.49,7,2.0,4,3,0.67,1,52,Female,Nairobi,2023
+CUST0997,New,"Recently acquired customers, often with 1-2 purchases.",935537.73,3,1.33,169,1,1.0,1,34,Male,Kisumu,2023
+CUST0642,Loyal,"Consistent purchasers, frequent interactions.",5132601.21,9,1.78,12,6,0.57,1,20,Other,Nakuru,2023
+CUST0990,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2295453.09,4,1.64,100,4,0.2,0,24,Other,Nakuru,2023
+CUST0345,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2381362.44,3,2.0,41,3,0.2,0,23,Female,Mombasa,2023
+CUST0413,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2290453.39,7,2.0,123,2,0.45,1,66,Other,Kisumu,2023
+CUST0074,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4009531.88,6,2.08,416,3,0.23,1,59,Female,Eldoret,2023
+CUST0020,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2145077.53,4,1.67,17,4,0.33,0,59,Female,Mombasa,2023
+CUST0210,Loyal,"Consistent purchasers, frequent interactions.",2113666.63,5,1.77,9,1,0.75,0,48,Male,Nakuru,2023
+CUST0221,Promising,Newer customers with high initial engagement or spending potential.,1767458.43,4,1.75,89,0,1.0,0,58,Male,Kisumu,2023
+CUST0921,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4443323.56,6,2.43,249,2,1.0,0,26,Female,Nakuru,2023
+CUST0735,Loyal,"Consistent purchasers, frequent interactions.",5013088.34,8,1.66,67,2,0.89,0,71,Male,Eldoret,2023
+CUST0259,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3744620.48,7,1.91,101,2,1.0,1,18,Female,Eldoret,2023
+CUST0765,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2524843.46,5,1.78,104,2,0.33,1,73,Female,Mombasa,2023
+CUST0023,Promising,Newer customers with high initial engagement or spending potential.,1024899.95,2,1.89,18,2,0.43,0,60,Other,Kisumu,2024
+CUST0472,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2192149.18,3,2.2,291,0,0.67,1,38,Male,Kisumu,2023
+CUST0403,New,"Recently acquired customers, often with 1-2 purchases.",4575982.41,8,1.74,93,1,1.0,0,62,Male,Eldoret,2023
+CUST0670,New,"Recently acquired customers, often with 1-2 purchases.",1158697.8,5,1.0,105,2,1.0,0,56,Female,Eldoret,2023
+CUST0098,New,"Recently acquired customers, often with 1-2 purchases.",2990749.5,6,1.8,211,2,0.69,0,33,Other,Nairobi,2023
+CUST0812,Loyal,"Consistent purchasers, frequent interactions.",2633824.72,7,2.06,114,2,0.83,0,58,Female,Mombasa,2023
+CUST0382,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3057341.06,6,2.25,133,2,1.0,1,74,Other,Nakuru,2023
+CUST0978,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1423640.05,4,1.78,287,0,1.0,0,75,Female,Kisumu,2023
+CUST0957,New,"Recently acquired customers, often with 1-2 purchases.",2041754.65,4,1.69,98,1,1.0,1,26,Female,Nakuru,2023
+CUST0595,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1090458.33,3,2.0,350,0,1.0,0,22,Other,Mombasa,2023
+CUST0849,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",957286.88,2,1.17,389,0,1.0,1,44,Other,Kisumu,2023
+CUST0080,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",796700.01,2,1.8,470,1,0.5,0,72,Female,Nakuru,2023
+CUST0927,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",5676705.7,8,1.74,61,6,0.27,0,24,Female,Kisumu,2023
+CUST0181,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2389850.09,8,1.77,227,4,0.0,0,31,Other,Nairobi,2023
+CUST0524,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3492478.64,4,2.2,49,5,1.0,1,72,Female,Eldoret,2023
+CUST0533,Loyal,"Consistent purchasers, frequent interactions.",1051360.84,4,1.71,28,1,0.33,0,70,Male,Mombasa,2023
+CUST0619,High-Value,Customers with high total spending and frequent purchases.,6933359.79,9,2.35,22,1,0.87,0,66,Other,Mombasa,2023
+CUST0211,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1695772.24,4,1.9,166,3,0.2,1,32,Male,Eldoret,2023
+CUST0218,New,"Recently acquired customers, often with 1-2 purchases.",4081926.95,8,1.76,212,2,0.6,1,24,Female,Mombasa,2023
+CUST0038,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3130286.95,6,1.42,93,5,0.14,0,63,Male,Eldoret,2023
+CUST0007,High-Value,Customers with high total spending and frequent purchases.,2880984.56,7,1.68,38,4,0.38,1,54,Other,Kisumu,2023
+CUST0617,High-Value,Customers with high total spending and frequent purchases.,1923372.7,7,1.43,22,2,0.86,1,46,Female,Mombasa,2023
+CUST0535,Loyal,"Consistent purchasers, frequent interactions.",1900503.89,7,1.55,32,0,1.0,0,49,Female,Mombasa,2023
+CUST0070,New,"Recently acquired customers, often with 1-2 purchases.",1782375.06,5,1.8,291,1,0.8,1,24,Female,Nakuru,2023
+CUST0694,Promising,Newer customers with high initial engagement or spending potential.,141177.04,3,2.5,65,0,1.0,0,69,Male,Nairobi,2023
+CUST0880,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1737183.92,3,2.29,378,0,1.0,0,32,Female,Nakuru,2023
+CUST0810,High-Value,Customers with high total spending and frequent purchases.,401131.04,2,3.0,96,2,0.0,0,31,Male,Eldoret,2023
+CUST0937,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2762790.65,4,2.0,140,0,1.0,1,29,Other,Nakuru,2023
+CUST0942,New,"Recently acquired customers, often with 1-2 purchases.",3142530.4,5,2.29,140,4,0.43,0,58,Male,Eldoret,2023
+CUST0789,High-Value,Customers with high total spending and frequent purchases.,4237808.47,7,1.93,39,3,0.6,0,33,Male,Eldoret,2023
+CUST0380,Promising,Newer customers with high initial engagement or spending potential.,2422308.1,3,1.73,53,1,0.5,0,39,Female,Nairobi,2024
+CUST0962,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2970296.73,6,1.94,217,3,0.5,0,39,Other,Mombasa,2023
+CUST0467,Loyal,"Consistent purchasers, frequent interactions.",2567578.85,7,1.72,156,1,0.56,0,54,Female,Nairobi,2023
+CUST0767,New,"Recently acquired customers, often with 1-2 purchases.",2625515.01,8,1.67,146,3,0.29,0,62,Male,Mombasa,2023
+CUST0292,New,"Recently acquired customers, often with 1-2 purchases.",3055906.1,7,1.58,75,2,1.0,1,30,Male,Nakuru,2023
+CUST0547,Loyal,"Consistent purchasers, frequent interactions.",987735.55,5,1.6,37,0,1.0,0,36,Female,Kisumu,2023
+CUST0033,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3012784.37,7,1.78,278,4,0.38,1,58,Female,Nairobi,2023
+CUST0904,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1912005.36,4,2.11,218,2,0.2,0,21,Other,Kisumu,2023
+CUST0351,High-Value,Customers with high total spending and frequent purchases.,5433160.41,8,1.87,12,2,0.86,0,23,Male,Nairobi,2023
+CUST0579,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3756177.87,4,1.81,62,3,0.5,1,37,Female,Nakuru,2023
+CUST0621,High-Value,Customers with high total spending and frequent purchases.,4402573.32,8,1.66,145,2,0.87,0,47,Female,Kisumu,2023
+CUST0791,New,"Recently acquired customers, often with 1-2 purchases.",1989954.11,4,2.08,91,2,0.71,0,24,Other,Nairobi,2023
+CUST0873,High-Value,Customers with high total spending and frequent purchases.,3710138.56,6,2.12,17,7,0.38,1,33,Male,Mombasa,2023
+CUST0008,New,"Recently acquired customers, often with 1-2 purchases.",2435114.51,4,1.88,17,3,0.43,1,66,Other,Nakuru,2023
+CUST0356,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1054384.38,4,1.55,130,1,1.0,1,60,Female,Nairobi,2023
+CUST0287,Promising,Newer customers with high initial engagement or spending potential.,1305888.95,4,1.58,9,1,0.71,0,63,Male,Nakuru,2023
+CUST0861,Promising,Newer customers with high initial engagement or spending potential.,1792998.88,4,1.46,53,1,1.0,0,26,Female,Kisumu,2023
+CUST0200,Promising,Newer customers with high initial engagement or spending potential.,449794.17,2,2.0,34,1,1.0,0,53,Other,Nairobi,2023
+CUST0529,High-Value,Customers with high total spending and frequent purchases.,3331066.37,9,1.71,10,3,0.67,0,27,Other,Mombasa,2023
+CUST0371,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",937957.33,3,1.44,213,1,1.0,0,45,Male,Nakuru,2023
+CUST0702,Promising,Newer customers with high initial engagement or spending potential.,967075.72,3,1.14,10,0,1.0,0,47,Male,Nairobi,2023
+CUST0784,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1468120.8,2,2.17,772,0,1.0,0,73,Female,Eldoret,2023
+CUST0192,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4283644.02,9,2.54,213,2,0.45,0,25,Male,Nairobi,2023
+CUST0153,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2015807.17,6,1.95,312,3,0.43,1,63,Other,Kisumu,2023
+CUST0289,Promising,Newer customers with high initial engagement or spending potential.,3164629.14,5,2.06,78,1,1.0,0,65,Male,Kisumu,2023
+CUST0276,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3461015.69,9,1.92,70,4,0.67,0,36,Other,Nakuru,2023
+CUST0254,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2248395.4,6,1.86,310,1,0.5,0,48,Other,Eldoret,2023
+CUST0137,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2613060.97,5,2.31,137,2,0.33,1,59,Female,Nairobi,2023
+CUST0476,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2621619.62,5,2.33,320,3,0.71,0,19,Male,Nakuru,2023
+CUST0593,Loyal,"Consistent purchasers, frequent interactions.",1168023.54,4,1.5,52,1,0.67,0,25,Female,Mombasa,2023
+CUST0360,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1222572.76,2,1.86,392,1,0.5,0,18,Other,Eldoret,2023
+CUST0924,High-Value,Customers with high total spending and frequent purchases.,3899834.94,9,1.7,19,1,1.0,0,18,Other,Nakuru,2023
+CUST0809,Loyal,"Consistent purchasers, frequent interactions.",1298958.31,5,1.53,9,1,1.0,0,54,Male,Eldoret,2023
+CUST0308,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",92861.52,2,1.25,202,2,1.0,0,38,Female,Nairobi,2023
+CUST0698,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2076033.73,4,2.73,311,3,0.67,1,47,Other,Nairobi,2023
+CUST0780,Promising,Newer customers with high initial engagement or spending potential.,1288414.06,4,1.64,75,1,0.8,0,32,Other,Kisumu,2023
+CUST0113,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",301247.05,1,2.0,467,0,0.0,0,45,Other,Kisumu,2023
+CUST0575,Promising,Newer customers with high initial engagement or spending potential.,2406167.56,5,1.62,87,1,0.8,0,42,Other,Eldoret,2023
+CUST0174,High-Value,Customers with high total spending and frequent purchases.,6118479.05,9,2.17,1,0,0.71,0,32,Female,Nairobi,2023
+CUST0832,New,"Recently acquired customers, often with 1-2 purchases.",2013469.43,3,2.0,173,2,1.0,1,24,Male,Nakuru,2023
+CUST0310,Promising,Newer customers with high initial engagement or spending potential.,1336798.87,3,2.71,36,1,1.0,0,59,Female,Eldoret,2023
+CUST0452,Loyal,"Consistent purchasers, frequent interactions.",2033479.71,6,1.93,62,2,1.0,0,56,Other,Kisumu,2023
+CUST0853,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3380964.61,9,1.56,128,6,0.8,1,32,Female,Kisumu,2023
+CUST0422,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2300281.38,5,1.67,622,1,1.0,0,73,Male,Mombasa,2023
+CUST0958,New,"Recently acquired customers, often with 1-2 purchases.",1076758.98,6,1.43,217,1,1.0,0,18,Male,Kisumu,2023
+CUST0678,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2452569.9,4,2.43,402,0,0.0,0,65,Other,Mombasa,2023
+CUST0884,High-Value,Customers with high total spending and frequent purchases.,2604865.36,6,1.83,52,3,0.71,0,20,Male,Mombasa,2023
+CUST0911,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",913558.94,1,1.6,223,2,0.33,1,62,Other,Nakuru,2023
+CUST0198,Promising,Newer customers with high initial engagement or spending potential.,2628307.8,5,1.64,68,2,1.0,0,74,Male,Nairobi,2023
+CUST0350,Loyal,"Consistent purchasers, frequent interactions.",2967879.46,5,2.4,44,2,0.43,0,49,Female,Mombasa,2023
+CUST0877,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1747052.14,3,1.91,216,0,1.0,0,38,Female,Nairobi,2023
+CUST0014,Loyal,"Consistent purchasers, frequent interactions.",4436067.47,7,2.14,77,2,1.0,0,68,Male,Eldoret,2023
+CUST0823,High-Value,Customers with high total spending and frequent purchases.,2146885.34,6,1.81,20,3,0.71,0,43,Male,Nakuru,2023
+CUST0542,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4637245.05,8,1.96,121,4,0.75,1,58,Other,Mombasa,2023
+CUST0699,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1072258.46,3,1.18,456,1,1.0,1,25,Other,Nakuru,2023
+CUST0874,Promising,Newer customers with high initial engagement or spending potential.,491363.78,2,1.4,6,2,0.33,0,56,Other,Eldoret,2023
+CUST0170,Loyal,"Consistent purchasers, frequent interactions.",2309190.09,5,1.71,31,2,0.75,0,45,Other,Nakuru,2023
+CUST0875,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2855812.98,6,1.81,248,0,1.0,1,53,Other,Nakuru,2023
+CUST0180,High-Value,Customers with high total spending and frequent purchases.,2721014.02,8,1.59,15,5,0.44,0,19,Other,Nairobi,2023
+CUST0272,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2323626.78,7,1.63,177,2,0.5,0,66,Other,Nakuru,2023
+CUST0764,High-Value,Customers with high total spending and frequent purchases.,7166290.05,8,1.94,42,5,0.58,0,59,Male,Nairobi,2023
+CUST0550,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",6317994.88,10,2.06,110,7,0.44,0,64,Male,Kisumu,2023
+CUST0202,High-Value,Customers with high total spending and frequent purchases.,3780221.53,7,2.05,18,3,1.0,0,46,Other,Nakuru,2023
+CUST0772,High-Value,Customers with high total spending and frequent purchases.,3335693.88,7,1.77,36,2,0.87,0,47,Female,Nakuru,2023
+CUST0372,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4151625.78,7,1.95,107,1,0.78,0,21,Female,Nairobi,2023
+CUST0790,Promising,Newer customers with high initial engagement or spending potential.,1830337.37,4,1.86,45,1,0.78,0,45,Male,Kisumu,2023
+CUST0967,High-Value,Customers with high total spending and frequent purchases.,4566358.34,7,2.21,12,5,0.38,0,40,Female,Mombasa,2023
+CUST0157,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2009454.89,7,1.44,93,2,0.33,1,70,Other,Nairobi,2023
+CUST0105,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1745320.2,6,2.27,376,1,0.71,1,42,Other,Kisumu,2023
+CUST0816,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1843256.51,4,1.88,465,2,0.2,1,30,Other,Nairobi,2023
+CUST0705,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2954857.18,7,1.88,274,2,0.45,0,71,Female,Kisumu,2023
+CUST0012,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1134672.24,1,3.0,444,1,1.0,0,21,Male,Eldoret,2023
+CUST0811,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1110251.15,3,2.0,342,0,0.5,0,37,Male,Nakuru,2023
+CUST0243,New,"Recently acquired customers, often with 1-2 purchases.",1483878.06,3,2.0,226,2,0.75,1,42,Male,Eldoret,2024
+CUST0769,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3360413.64,5,2.0,29,4,0.4,0,69,Female,Kisumu,2023
+CUST0148,New,"Recently acquired customers, often with 1-2 purchases.",1531810.67,4,1.56,200,0,1.0,0,64,Male,Nairobi,2023
+CUST0412,Promising,Newer customers with high initial engagement or spending potential.,1749561.8,4,1.86,48,0,0.71,0,71,Female,Eldoret,2023
+CUST0654,New,"Recently acquired customers, often with 1-2 purchases.",1072248.73,3,2.3,101,0,1.0,0,54,Female,Nairobi,2023
+CUST0822,High-Value,Customers with high total spending and frequent purchases.,2656105.81,6,1.89,93,1,0.8,0,50,Male,Mombasa,2023
+CUST0859,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4100795.15,7,1.71,216,3,0.5,1,21,Other,Nairobi,2023
+CUST0217,High-Value,Customers with high total spending and frequent purchases.,2243764.07,6,1.67,17,3,0.43,0,54,Other,Nakuru,2024
+CUST0225,New,"Recently acquired customers, often with 1-2 purchases.",4554009.78,9,1.86,122,5,0.67,1,64,Female,Nairobi,2023
+CUST0368,High-Value,Customers with high total spending and frequent purchases.,2482832.73,6,1.85,0,2,0.6,0,59,Female,Mombasa,2023
+CUST0719,New,"Recently acquired customers, often with 1-2 purchases.",1404457.94,5,2.08,152,2,1.0,1,63,Male,Nakuru,2023
+CUST0526,High-Value,Customers with high total spending and frequent purchases.,2560408.86,8,1.62,10,1,0.71,0,50,Other,Mombasa,2023
+CUST0385,Loyal,"Consistent purchasers, frequent interactions.",2133049.13,5,1.82,66,2,1.0,0,57,Male,Eldoret,2023
+CUST0232,Promising,Newer customers with high initial engagement or spending potential.,1859977.89,4,2.21,32,1,0.2,0,43,Other,Nakuru,2023
+CUST0668,New,"Recently acquired customers, often with 1-2 purchases.",1298874.37,3,1.78,189,0,1.0,0,32,Other,Kisumu,2023
+CUST0101,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4289604.52,8,1.88,92,4,0.71,0,74,Male,Eldoret,2023
+CUST0155,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2376735.51,4,1.6,239,0,1.0,0,36,Male,Kisumu,2023
+CUST0537,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2510765.78,4,1.82,31,2,0.0,1,54,Other,Nakuru,2023
+CUST0824,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2721947.74,5,1.81,385,1,0.64,0,50,Other,Nakuru,2023
+CUST0408,High-Value,Customers with high total spending and frequent purchases.,3031065.52,7,1.45,21,6,0.64,1,74,Male,Eldoret,2023
+CUST0135,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1909010.1,4,2.08,453,3,0.33,1,36,Male,Eldoret,2023
+CUST0963,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1972596.01,5,1.69,1,4,0.25,1,24,Other,Nakuru,2023
+CUST0628,High-Value,Customers with high total spending and frequent purchases.,1793126.88,5,1.64,105,1,0.5,0,35,Male,Nakuru,2023
+CUST0776,Promising,Newer customers with high initial engagement or spending potential.,3035117.3,4,1.94,38,2,0.78,0,75,Female,Mombasa,2023
+CUST0888,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1753595.11,3,2.1,219,0,1.0,0,63,Female,Nakuru,2024
+CUST0486,Promising,Newer customers with high initial engagement or spending potential.,2157623.57,3,1.93,22,1,0.75,0,23,Female,Kisumu,2023
+CUST0263,Promising,Newer customers with high initial engagement or spending potential.,1115975.26,2,1.75,76,2,0.5,0,18,Other,Mombasa,2023
+CUST0286,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3173300.83,7,1.8,98,4,0.67,1,23,Female,Eldoret,2023
+CUST0168,High-Value,Customers with high total spending and frequent purchases.,2909930.03,7,1.6,40,3,0.75,0,48,Male,Kisumu,2023
+CUST0733,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4317188.48,7,1.88,61,5,0.45,1,30,Male,Kisumu,2023
+CUST0437,Loyal,"Consistent purchasers, frequent interactions.",3211845.84,8,1.62,49,1,0.8,0,38,Other,Eldoret,2023
+CUST0228,High-Value,Customers with high total spending and frequent purchases.,4201799.41,9,2.04,8,3,0.64,0,43,Female,Nakuru,2023
+CUST1000,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",834058.94,4,1.5,367,0,1.0,0,75,Female,Mombasa,2023
+CUST0040,Loyal,"Consistent purchasers, frequent interactions.",4080498.34,9,1.83,43,5,0.44,0,68,Other,Kisumu,2023
+CUST0187,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1008091.71,3,1.71,222,1,1.0,0,67,Other,Eldoret,2023
+CUST0827,High-Value,Customers with high total spending and frequent purchases.,741411.86,3,1.75,92,0,1.0,0,74,Other,Nairobi,2023
+CUST0064,High-Value,Customers with high total spending and frequent purchases.,2403352.34,6,1.82,23,1,1.0,0,71,Male,Mombasa,2023
+CUST0415,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3186954.68,6,1.88,88,3,0.6,0,30,Other,Eldoret,2023
+CUST0209,Promising,Newer customers with high initial engagement or spending potential.,2255691.92,1,2.25,43,1,1.0,0,58,Female,Mombasa,2023
+CUST0429,High-Value,Customers with high total spending and frequent purchases.,3912347.26,7,1.87,18,1,0.78,0,33,Male,Kisumu,2023
+CUST0407,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1413462.29,4,2.0,242,2,0.5,0,21,Other,Nakuru,2023
+CUST0591,High-Value,Customers with high total spending and frequent purchases.,2160010.52,7,2.0,49,1,1.0,0,27,Female,Nakuru,2023
+CUST0722,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1289609.28,3,1.36,326,0,0.0,0,47,Male,Nakuru,2023
+CUST0280,Promising,Newer customers with high initial engagement or spending potential.,2615656.67,5,2.0,77,2,0.5,0,51,Other,Mombasa,2023
+CUST0506,High-Value,Customers with high total spending and frequent purchases.,2900218.9,7,1.88,2,3,0.57,0,71,Female,Nairobi,2023
+CUST0047,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1331902.07,2,2.29,751,0,1.0,1,46,Male,Nakuru,2023
+CUST0711,Loyal,"Consistent purchasers, frequent interactions.",2935141.09,10,1.89,1,1,0.33,0,57,Male,Nairobi,2023
+CUST0025,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1521236.15,5,1.75,218,2,1.0,1,60,Female,Kisumu,2023
+CUST0696,New,"Recently acquired customers, often with 1-2 purchases.",1888198.32,6,1.73,357,0,0.6,1,39,Male,Mombasa,2023
+CUST0922,High-Value,Customers with high total spending and frequent purchases.,2873310.24,7,1.67,12,2,1.0,0,66,Other,Nakuru,2023
+CUST0419,Promising,Newer customers with high initial engagement or spending potential.,2278503.34,3,1.43,45,2,1.0,0,53,Female,Mombasa,2023
+CUST0555,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",752513.2,2,1.83,155,1,1.0,1,44,Male,Mombasa,2023
+CUST0087,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",732759.12,2,1.6,247,1,1.0,1,45,Female,Nakuru,2023
+CUST0523,New,"Recently acquired customers, often with 1-2 purchases.",3671517.1,5,2.0,198,4,0.2,1,60,Other,Kisumu,2024
+CUST0271,New,"Recently acquired customers, often with 1-2 purchases.",6299718.5,9,1.83,103,3,0.73,1,42,Female,Nakuru,2023
+CUST0554,High-Value,Customers with high total spending and frequent purchases.,4646061.93,6,1.59,105,1,1.0,0,33,Other,Eldoret,2023
+CUST0814,High-Value,Customers with high total spending and frequent purchases.,5239060.77,6,2.13,12,2,0.85,0,27,Male,Eldoret,2023
+CUST0660,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1527063.07,4,2.0,213,2,0.6,1,58,Male,Nakuru,2023
+CUST0503,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2614074.12,4,1.38,37,3,0.6,0,38,Other,Nakuru,2023
+CUST0587,Promising,Newer customers with high initial engagement or spending potential.,1965031.51,4,1.71,66,2,0.6,0,64,Female,Nairobi,2023
+CUST0886,Loyal,"Consistent purchasers, frequent interactions.",1773973.52,4,1.58,53,2,1.0,0,25,Other,Mombasa,2024
+CUST0039,High-Value,Customers with high total spending and frequent purchases.,2855592.44,7,1.73,26,1,0.71,0,41,Other,Eldoret,2023
+CUST0553,High-Value,Customers with high total spending and frequent purchases.,1301762.22,6,1.5,31,0,1.0,0,49,Male,Kisumu,2023
+CUST0425,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1315747.86,4,1.69,349,1,0.71,0,50,Male,Nairobi,2023
+CUST0569,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",647740.35,3,1.6,578,1,0.0,1,57,Female,Mombasa,2023
+CUST0188,High-Value,Customers with high total spending and frequent purchases.,2963651.43,6,1.62,48,4,0.0,1,45,Other,Eldoret,2023
+CUST0279,High-Value,Customers with high total spending and frequent purchases.,2248045.25,6,1.89,8,4,0.0,1,25,Female,Mombasa,2023
+CUST0570,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1480523.06,4,1.43,18,1,0.5,1,32,Other,Nairobi,2023
+CUST0250,New,"Recently acquired customers, often with 1-2 purchases.",3014442.03,6,2.05,95,3,0.8,1,75,Male,Nairobi,2023
+CUST0443,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1724708.1,5,1.75,163,4,0.43,1,18,Other,Kisumu,2023
+CUST0216,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2068465.99,6,1.94,141,3,0.33,1,43,Other,Eldoret,2023
+CUST0145,Loyal,"Consistent purchasers, frequent interactions.",2790068.7,4,2.07,62,2,0.43,0,51,Female,Nakuru,2023
+CUST0079,New,"Recently acquired customers, often with 1-2 purchases.",1130294.37,2,2.33,596,0,0.5,0,41,Female,Nairobi,2023
+CUST0597,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1869792.5,2,2.0,439,2,-0.2,0,51,Other,Mombasa,2023
+CUST0463,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3343273.31,5,2.0,115,3,0.71,0,46,Male,Mombasa,2023
+CUST0583,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3068124.01,5,2.33,193,2,0.78,1,68,Male,Eldoret,2023
+CUST0049,Loyal,"Consistent purchasers, frequent interactions.",1567082.87,6,1.83,80,0,1.0,0,72,Male,Nairobi,2023
+CUST0923,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2405517.27,3,2.0,684,1,1.0,0,65,Male,Nairobi,2023
+CUST0144,High-Value,Customers with high total spending and frequent purchases.,2474825.72,6,2.0,22,1,0.5,0,44,Female,Nairobi,2023
+CUST0715,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",577549.25,3,1.86,245,0,1.0,0,19,Other,Eldoret,2023
+CUST0611,High-Value,Customers with high total spending and frequent purchases.,3917983.47,7,1.92,0,5,0.43,0,29,Other,Kisumu,2023
+CUST0409,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1601275.26,2,1.44,101,3,0.33,0,20,Other,Nairobi,2023
+CUST0815,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4345981.24,6,1.9,186,3,0.86,0,68,Female,Eldoret,2023
+CUST0656,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1014040.9,2,2.25,655,2,-0.2,1,52,Male,Eldoret,2023
+CUST0530,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",628899.77,2,2.67,325,1,1.0,1,74,Other,Nakuru,2023
+CUST0120,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",705206.84,3,2.0,242,0,1.0,1,18,Female,Kisumu,2023
+CUST0876,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",961155.85,2,1.8,235,0,1.0,0,74,Male,Nakuru,2023
+CUST0147,New,"Recently acquired customers, often with 1-2 purchases.",1496505.33,3,1.6,80,3,0.5,1,35,Male,Mombasa,2023
+CUST0688,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1594100.95,4,1.5,0,3,0.5,0,54,Female,Kisumu,2023
+CUST0777,Promising,Newer customers with high initial engagement or spending potential.,283303.0,2,1.0,7,0,0.0,0,54,Other,Kisumu,2023
+CUST0970,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2611706.69,9,2.0,285,2,0.67,1,21,Other,Nakuru,2023
+CUST0034,High-Value,Customers with high total spending and frequent purchases.,3022638.83,7,2.11,29,2,0.69,0,21,Other,Nairobi,2023
+CUST0165,Promising,Newer customers with high initial engagement or spending potential.,2140022.72,4,2.0,10,1,0.6,0,43,Male,Eldoret,2023
+CUST0634,Loyal,"Consistent purchasers, frequent interactions.",3687402.75,5,2.0,70,2,0.8,0,43,Other,Kisumu,2023
+CUST0613,New,"Recently acquired customers, often with 1-2 purchases.",70783.5,1,3.0,561,0,1.0,1,41,Female,Nakuru,2024
+CUST0119,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4368075.9,6,2.08,183,3,0.76,0,53,Other,Eldoret,2023
+CUST0939,Promising,Newer customers with high initial engagement or spending potential.,659766.7,3,1.38,32,1,0.0,0,54,Female,Nakuru,2023
+CUST0557,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1906032.06,4,1.69,264,0,1.0,0,55,Male,Nakuru,2023
+CUST0756,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",375014.63,2,1.6,269,0,1.0,1,73,Female,Mombasa,2023
+CUST0490,High-Value,Customers with high total spending and frequent purchases.,4521893.71,9,1.63,43,5,0.0,0,59,Female,Nakuru,2023
+CUST0393,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1373911.51,6,1.67,121,4,0.5,0,60,Other,Mombasa,2023
+CUST0084,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1607408.05,5,1.6,90,3,0.33,0,44,Female,Nairobi,2023
+CUST0050,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2945692.44,9,1.97,76,4,0.82,1,51,Female,Mombasa,2023
+CUST0336,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3181882.85,7,1.83,218,4,0.71,1,19,Female,Nakuru,2023
+CUST0501,New,"Recently acquired customers, often with 1-2 purchases.",4388416.13,8,2.76,70,4,0.54,0,38,Other,Kisumu,2023
+CUST0667,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1186266.22,3,2.0,280,2,1.0,0,73,Other,Nakuru,2023
+CUST0610,Loyal,"Consistent purchasers, frequent interactions.",2061594.72,5,1.93,6,2,0.56,0,57,Male,Mombasa,2023
+CUST0560,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2180220.34,4,1.75,49,3,0.14,0,57,Female,Kisumu,2023
+CUST0129,Loyal,"Consistent purchasers, frequent interactions.",3084306.46,6,1.78,61,0,1.0,0,18,Female,Mombasa,2023
+CUST0365,New,"Recently acquired customers, often with 1-2 purchases.",3029959.28,4,1.9,205,1,0.43,0,19,Male,Nakuru,2023
+CUST0987,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1775780.82,6,1.54,244,2,1.0,1,73,Female,Nakuru,2024
+CUST0052,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",497909.4,1,1.6,719,0,-1.0,0,59,Male,Eldoret,2023
+CUST0641,Loyal,"Consistent purchasers, frequent interactions.",3959605.33,6,2.14,90,2,0.75,0,58,Female,Kisumu,2023
+CUST0964,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1204242.52,4,2.22,215,0,1.0,0,45,Other,Mombasa,2023
+CUST0663,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1473732.93,4,1.9,310,0,1.0,1,62,Male,Nairobi,2023
+CUST0834,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1643660.42,3,3.0,305,1,1.0,0,65,Other,Nakuru,2023
+CUST0825,New,"Recently acquired customers, often with 1-2 purchases.",3914273.37,5,2.24,100,1,0.64,0,70,Female,Kisumu,2023
+CUST0115,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1080699.87,3,2.2,304,0,1.0,1,19,Other,Nakuru,2023
+CUST0108,Promising,Newer customers with high initial engagement or spending potential.,2794529.72,6,2.0,79,2,1.0,0,46,Male,Mombasa,2023
+CUST0341,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4049166.13,8,1.59,70,3,0.57,0,39,Male,Kisumu,2023
+CUST0311,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3802349.04,7,1.74,263,3,0.85,0,25,Male,Mombasa,2023
+CUST0128,High-Value,Customers with high total spending and frequent purchases.,3074738.33,6,2.0,31,2,1.0,0,49,Male,Mombasa,2023
+CUST0951,Promising,Newer customers with high initial engagement or spending potential.,521934.65,3,1.67,70,0,1.0,0,19,Other,Kisumu,2023
+CUST0801,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1270788.61,3,2.0,244,1,0.0,0,68,Male,Mombasa,2023
+CUST0220,High-Value,Customers with high total spending and frequent purchases.,1558816.24,5,1.77,105,2,1.0,0,43,Male,Nakuru,2023
+CUST0344,High-Value,Customers with high total spending and frequent purchases.,2266851.38,7,1.82,29,3,-0.2,0,26,Other,Nakuru,2023
+CUST0731,New,"Recently acquired customers, often with 1-2 purchases.",1902004.74,3,2.08,152,0,1.0,0,75,Female,Eldoret,2023
+CUST0620,Loyal,"Consistent purchasers, frequent interactions.",2011265.81,5,2.06,59,2,0.78,0,26,Female,Kisumu,2023
+CUST0730,High-Value,Customers with high total spending and frequent purchases.,3920139.09,6,1.79,6,2,0.82,0,72,Other,Kisumu,2023
+CUST0959,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1860429.8,6,1.57,98,3,-0.2,1,66,Male,Kisumu,2023
+CUST0879,New,"Recently acquired customers, often with 1-2 purchases.",2128027.19,6,1.47,196,1,0.67,0,73,Female,Mombasa,2023
+CUST0721,Loyal,"Consistent purchasers, frequent interactions.",366994.84,2,1.67,142,0,1.0,0,26,Male,Kisumu,2024
+CUST0185,High-Value,Customers with high total spending and frequent purchases.,2114557.73,9,1.19,0,5,0.57,0,38,Male,Mombasa,2023
+CUST0574,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2415486.63,4,1.8,70,4,-0.33,0,33,Female,Eldoret,2023
+CUST0919,New,"Recently acquired customers, often with 1-2 purchases.",272875.32,2,1.0,310,1,-1.0,0,25,Female,Kisumu,2023
+CUST0485,New,"Recently acquired customers, often with 1-2 purchases.",831146.04,1,3.25,167,2,0.0,1,60,Male,Eldoret,2023
+CUST0851,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2720750.58,3,1.82,196,1,1.0,0,41,Female,Mombasa,2023
+CUST0337,Loyal,"Consistent purchasers, frequent interactions.",3665104.51,5,2.21,45,1,0.6,0,56,Male,Nairobi,2023
+CUST0943,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",996403.03,4,2.0,100,3,-0.5,0,44,Female,Kisumu,2023
+CUST0929,Loyal,"Consistent purchasers, frequent interactions.",1830478.08,5,1.72,22,0,1.0,0,28,Female,Eldoret,2023
+CUST0728,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2664353.42,7,1.53,318,5,-0.11,1,75,Female,Eldoret,2023
+CUST0130,New,"Recently acquired customers, often with 1-2 purchases.",3311735.09,7,2.18,346,6,0.56,1,58,Other,Kisumu,2023
+CUST0352,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",988074.43,3,1.8,427,0,1.0,0,48,Other,Kisumu,2023
+CUST0387,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3169153.64,4,1.65,283,2,0.5,1,63,Other,Eldoret,2023
+CUST0616,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2105644.29,5,1.69,242,0,1.0,1,66,Other,Mombasa,2023
+CUST0830,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2090244.67,4,1.5,399,1,0.75,0,25,Male,Eldoret,2023
+CUST0036,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1201695.7,5,1.55,368,2,0.6,0,75,Male,Eldoret,2023
+CUST0508,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1258520.52,1,2.4,657,2,0.0,1,60,Female,Nakuru,2023
+CUST0916,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",869639.01,3,1.89,220,0,1.0,0,50,Male,Nairobi,2023
+CUST0808,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2603585.43,4,2.92,208,1,0.71,0,21,Female,Mombasa,2023
+CUST0551,New,"Recently acquired customers, often with 1-2 purchases.",2384507.44,5,1.82,234,1,0.6,0,69,Male,Mombasa,2023
+CUST0255,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3228229.84,5,2.28,104,3,0.33,1,37,Other,Mombasa,2023
+CUST0018,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1086449.75,3,1.64,403,3,0.33,1,48,Male,Eldoret,2023
+CUST0182,Loyal,"Consistent purchasers, frequent interactions.",920372.3,2,1.8,94,0,1.0,0,36,Female,Nairobi,2023
+CUST0920,New,"Recently acquired customers, often with 1-2 purchases.",4776317.9,9,1.9,240,5,0.38,1,66,Female,Nairobi,2023
+CUST0027,New,"Recently acquired customers, often with 1-2 purchases.",3341911.84,4,2.43,48,2,0.56,1,65,Other,Nairobi,2023
+CUST0190,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1467295.52,2,2.17,311,0,1.0,0,29,Male,Kisumu,2023
+CUST0944,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2265289.79,5,1.71,627,2,0.67,0,43,Male,Nairobi,2023
+CUST0652,Loyal,"Consistent purchasers, frequent interactions.",3142146.8,5,1.87,78,2,0.67,0,60,Female,Mombasa,2023
+CUST0005,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1737445.0,3,1.64,271,2,1.0,0,18,Other,Nakuru,2023
+CUST0331,Loyal,"Consistent purchasers, frequent interactions.",2201774.19,5,1.81,84,2,0.82,0,40,Male,Kisumu,2023
+CUST0266,High-Value,Customers with high total spending and frequent purchases.,4893517.3,6,2.1,3,0,1.0,0,26,Male,Nairobi,2023
+CUST0001,New,"Recently acquired customers, often with 1-2 purchases.",957468.54,3,1.2,135,2,0.75,0,21,Male,Nairobi,2023
+CUST0826,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2644876.49,4,1.79,242,1,0.71,0,49,Other,Mombasa,2023
+CUST0017,High-Value,Customers with high total spending and frequent purchases.,2082556.19,6,1.74,12,2,0.78,0,20,Male,Mombasa,2023
+CUST0475,Loyal,"Consistent purchasers, frequent interactions.",3526051.04,5,2.35,2,2,0.56,0,26,Other,Mombasa,2023
+CUST0837,Promising,Newer customers with high initial engagement or spending potential.,2794050.61,3,1.86,17,1,0.33,0,44,Male,Kisumu,2023
+CUST0972,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1910633.86,4,1.57,160,0,1.0,1,68,Other,Eldoret,2023
+CUST0161,High-Value,Customers with high total spending and frequent purchases.,4281640.35,8,1.83,45,3,0.64,0,69,Other,Nairobi,2023
+CUST0901,Promising,Newer customers with high initial engagement or spending potential.,1178312.69,3,1.57,12,0,1.0,0,46,Other,Mombasa,2023
+CUST0865,New,"Recently acquired customers, often with 1-2 purchases.",1367328.42,5,2.27,183,1,0.6,0,72,Female,Kisumu,2023
+CUST0375,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2594336.44,5,1.76,1,2,1.0,1,75,Other,Nairobi,2023
+CUST0646,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2049617.0,4,1.54,27,3,0.4,0,68,Female,Mombasa,2023
+CUST0543,New,"Recently acquired customers, often with 1-2 purchases.",1856723.96,7,1.81,172,1,1.0,0,50,Male,Kisumu,2023
+CUST0626,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",753811.68,2,1.8,365,2,0.0,1,27,Male,Kisumu,2023
+CUST0096,Promising,Newer customers with high initial engagement or spending potential.,502511.94,3,2.14,8,1,0.0,0,28,Male,Eldoret,2023
+CUST0775,High-Value,Customers with high total spending and frequent purchases.,7215013.32,7,2.32,43,5,0.83,1,34,Other,Nairobi,2023
+CUST0435,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",434064.83,1,1.67,301,1,1.0,1,21,Other,Eldoret,2024
+CUST0164,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3310394.86,4,2.12,49,5,0.78,1,25,Male,Kisumu,2023
+CUST0649,Promising,Newer customers with high initial engagement or spending potential.,1345698.89,2,3.2,71,0,1.0,0,70,Other,Eldoret,2023
+CUST0090,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1076987.21,4,1.2,20,3,0.2,0,41,Female,Mombasa,2023
+CUST0742,High-Value,Customers with high total spending and frequent purchases.,4662846.47,6,1.87,17,0,1.0,0,31,Female,Mombasa,2023
+CUST0370,High-Value,Customers with high total spending and frequent purchases.,4540630.85,6,2.0,33,0,1.0,0,37,Female,Nairobi,2023
+CUST0301,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",333854.49,2,1.75,777,0,1.0,0,69,Other,Kisumu,2023
+CUST0151,Loyal,"Consistent purchasers, frequent interactions.",2505763.98,5,1.6,39,1,0.71,0,49,Male,Mombasa,2023
+CUST0273,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3728604.88,7,1.94,213,8,0.33,0,50,Other,Nakuru,2023
+CUST0887,High-Value,Customers with high total spending and frequent purchases.,1748796.02,7,1.71,30,6,0.0,0,29,Male,Eldoret,2023
+CUST0186,Promising,Newer customers with high initial engagement or spending potential.,2480382.65,5,1.53,8,2,1.0,0,45,Male,Eldoret,2023
+CUST0201,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1171146.54,2,2.0,255,0,1.0,0,52,Female,Kisumu,2023
+CUST0562,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",345300.04,2,4.0,345,1,1.0,0,28,Female,Kisumu,2023
+CUST0902,New,"Recently acquired customers, often with 1-2 purchases.",1517579.14,4,1.79,321,2,0.2,0,45,Male,Mombasa,2023
+CUST0314,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",841248.09,3,2.0,81,0,1.0,1,38,Male,Nairobi,2023
+CUST0897,Loyal,"Consistent purchasers, frequent interactions.",2579453.15,6,1.86,89,0,1.0,0,58,Male,Mombasa,2023
+CUST0240,Loyal,"Consistent purchasers, frequent interactions.",4947094.38,6,1.91,42,3,0.57,0,50,Male,Eldoret,2023
+CUST0839,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",376264.68,1,2.33,707,0,1.0,1,63,Female,Kisumu,2023
+CUST0434,Promising,Newer customers with high initial engagement or spending potential.,1919923.21,4,1.92,36,0,1.0,0,48,Male,Nakuru,2023
+CUST0484,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2503223.69,3,2.08,442,2,0.5,0,39,Male,Nairobi,2023
+CUST0196,Promising,Newer customers with high initial engagement or spending potential.,1558127.61,4,1.38,49,0,0.67,0,23,Female,Eldoret,2023
+CUST0971,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3388831.54,5,2.12,279,1,0.71,1,18,Other,Eldoret,2023
+CUST0607,New,"Recently acquired customers, often with 1-2 purchases.",2541529.04,3,1.83,68,2,0.0,1,41,Other,Nairobi,2024
+CUST0176,New,"Recently acquired customers, often with 1-2 purchases.",434987.63,3,1.83,115,1,0.33,0,33,Male,Kisumu,2023
+CUST0445,Loyal,"Consistent purchasers, frequent interactions.",3473275.3,5,1.71,1,2,0.82,0,69,Other,Nairobi,2023
+CUST0680,High-Value,Customers with high total spending and frequent purchases.,1907004.89,4,2.27,127,0,1.0,0,59,Female,Eldoret,2023
+CUST0706,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4239851.58,6,1.91,87,3,1.0,0,35,Other,Nakuru,2023
+CUST0426,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",746112.84,1,2.6,777,2,1.0,0,24,Other,Nakuru,2023
+CUST0495,Loyal,"Consistent purchasers, frequent interactions.",2658991.43,6,1.47,26,3,0.67,0,22,Other,Mombasa,2023
+CUST0494,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",623398.09,2,2.0,669,2,0.0,1,44,Other,Eldoret,2023
+CUST0519,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2562214.58,3,2.14,348,2,0.71,0,28,Other,Nairobi,2023
+CUST0941,Promising,Newer customers with high initial engagement or spending potential.,2530073.35,5,2.0,21,1,1.0,0,31,Other,Nakuru,2023
+CUST0262,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1989226.68,3,2.62,210,2,1.0,1,42,Other,Mombasa,2023
+CUST0068,New,"Recently acquired customers, often with 1-2 purchases.",1056500.5,4,1.8,379,1,1.0,0,37,Other,Kisumu,2023
+CUST0539,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2136490.81,4,2.06,76,3,0.2,0,33,Other,Nairobi,2023
+CUST0594,Loyal,"Consistent purchasers, frequent interactions.",2609865.42,5,1.88,1,1,1.0,0,66,Female,Mombasa,2023
+CUST0556,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",338233.27,4,2.4,222,3,-0.2,0,29,Male,Eldoret,2023
+CUST0126,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",204558.69,1,1.75,716,0,1.0,1,25,Male,Kisumu,2023
+CUST0059,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4465766.19,5,2.0,236,2,0.33,1,38,Other,Eldoret,2023
+CUST0394,Loyal,"Consistent purchasers, frequent interactions.",2942512.79,6,1.8,24,3,0.38,0,26,Other,Mombasa,2023
+CUST0110,Promising,Newer customers with high initial engagement or spending potential.,1424092.5,2,2.12,40,1,0.33,0,51,Other,Nakuru,2023
+CUST0389,Loyal,"Consistent purchasers, frequent interactions.",1488416.42,5,1.92,10,0,1.0,0,35,Female,Kisumu,2023
+CUST0596,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",750344.2,3,1.57,232,1,0.33,0,34,Male,Kisumu,2023
+CUST0160,Promising,Newer customers with high initial engagement or spending potential.,208930.2,2,1.33,35,0,1.0,0,21,Female,Eldoret,2023
+CUST0156,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1470905.42,3,2.0,152,2,1.0,1,58,Male,Nakuru,2023
+CUST0536,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1223394.37,2,1.33,580,1,1.0,0,63,Other,Nakuru,2023
+CUST0609,New,"Recently acquired customers, often with 1-2 purchases.",2211785.66,6,1.59,93,1,0.56,0,43,Other,Eldoret,2023
+CUST0002,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3035721.38,5,2.12,283,1,1.0,0,28,Other,Kisumu,2023
+CUST0787,New,"Recently acquired customers, often with 1-2 purchases.",627754.6,1,2.0,249,0,1.0,0,75,Male,Nakuru,2023
+CUST0926,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2145024.29,5,1.62,210,0,1.0,1,50,Female,Eldoret,2023
+CUST0051,New,"Recently acquired customers, often with 1-2 purchases.",3790763.83,6,1.59,171,0,0.6,1,45,Male,Kisumu,2023
+CUST0900,Loyal,"Consistent purchasers, frequent interactions.",887628.52,4,1.67,4,2,0.6,0,61,Female,Eldoret,2023
+CUST0576,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1513101.51,3,1.67,67,3,1.0,0,18,Other,Eldoret,2023
+CUST0183,High-Value,Customers with high total spending and frequent purchases.,3068278.11,7,2.0,6,1,1.0,0,33,Male,Kisumu,2023
+CUST0206,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1863809.68,3,2.0,386,1,0.33,0,55,Female,Nairobi,2023
+CUST0701,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1054444.19,3,1.89,221,1,0.5,1,57,Male,Kisumu,2023
+CUST0891,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4682578.29,5,1.96,12,4,0.43,0,33,Other,Eldoret,2023
+CUST0166,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2721651.66,5,1.71,124,3,0.33,1,60,Male,Mombasa,2023
+CUST0918,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1087533.51,6,1.92,282,1,0.33,0,32,Other,Mombasa,2023
+CUST0723,High-Value,Customers with high total spending and frequent purchases.,2290125.8,5,1.53,107,2,0.67,0,62,Other,Eldoret,2023
+CUST0726,Loyal,"Consistent purchasers, frequent interactions.",1253115.73,3,1.86,122,1,1.0,0,54,Male,Nakuru,2023
+CUST0889,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1484177.08,4,1.5,8,1,1.0,1,20,Other,Nairobi,2023
+CUST0869,Promising,Newer customers with high initial engagement or spending potential.,2762014.83,3,2.0,65,1,1.0,0,20,Male,Mombasa,2023
+CUST0548,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",4229338.24,5,2.12,460,3,0.33,0,38,Female,Mombasa,2023
+CUST0041,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",691533.86,2,1.38,578,2,1.0,0,46,Other,Nairobi,2023
+CUST0487,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1335198.19,3,1.78,472,1,0.0,1,56,Female,Nakuru,2023
+CUST0908,New,"Recently acquired customers, often with 1-2 purchases.",1647865.28,2,2.29,261,1,1.0,0,50,Other,Nairobi,2024
+CUST0224,Promising,Newer customers with high initial engagement or spending potential.,1324857.34,3,2.0,83,0,1.0,0,42,Male,Nairobi,2023
+CUST0640,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2139131.39,3,2.22,112,3,0.14,1,18,Male,Kisumu,2023
+CUST0783,Loyal,"Consistent purchasers, frequent interactions.",2448052.33,6,1.44,73,1,1.0,0,18,Other,Nairobi,2023
+CUST0204,Loyal,"Consistent purchasers, frequent interactions.",2826838.85,6,1.78,1,2,1.0,0,49,Male,Nakuru,2023
+CUST0333,New,"Recently acquired customers, often with 1-2 purchases.",1352443.91,3,3.17,210,1,0.33,0,73,Other,Nairobi,2024
+CUST0054,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",965887.01,3,1.22,437,1,0.6,1,33,Male,Eldoret,2023
+CUST0455,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1100038.79,1,2.5,852,1,1.0,0,74,Other,Nairobi,2023
+CUST0774,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2732073.28,5,2.14,101,1,1.0,0,70,Male,Mombasa,2023
+CUST0285,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",617155.21,1,2.5,626,0,1.0,1,75,Male,Nakuru,2023
+CUST0729,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2633198.75,5,2.55,8,4,0.6,0,58,Other,Nairobi,2023
+CUST0868,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1842660.37,4,1.57,215,1,1.0,0,64,Male,Mombasa,2023
+CUST0528,Loyal,"Consistent purchasers, frequent interactions.",1585747.26,5,1.8,29,1,0.5,0,71,Other,Nakuru,2024
+CUST0179,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1479008.62,5,2.1,560,1,0.33,0,36,Male,Nakuru,2023
+CUST0768,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",947644.34,2,2.75,378,0,1.0,1,60,Other,Eldoret,2023
+CUST0745,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1279515.39,5,2.0,182,2,0.5,0,41,Other,Kisumu,2023
+CUST0235,High-Value,Customers with high total spending and frequent purchases.,4773689.75,6,2.05,14,3,0.6,0,67,Male,Kisumu,2023
+CUST0989,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2821277.41,4,2.0,371,2,0.71,0,42,Other,Nairobi,2023
+CUST0323,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1998849.37,4,2.09,213,2,-0.33,1,37,Female,Eldoret,2023
+CUST0986,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2384687.69,4,1.86,644,1,0.33,1,69,Male,Eldoret,2023
+CUST0194,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",944805.73,1,1.4,398,1,1.0,0,40,Male,Nairobi,2023
+CUST0195,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2850259.2,5,1.75,142,4,0.4,0,50,Male,Nakuru,2023
+CUST0400,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2083029.45,3,2.22,101,1,1.0,1,53,Female,Eldoret,2023
+CUST0468,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2195701.17,4,1.93,209,2,0.67,0,68,Female,Kisumu,2023
+CUST0107,New,"Recently acquired customers, often with 1-2 purchases.",450134.42,1,1.5,265,1,0.33,1,58,Male,Nairobi,2023
+CUST0252,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",985129.21,4,1.75,112,2,0.67,1,61,Female,Eldoret,2023
+CUST0689,New,"Recently acquired customers, often with 1-2 purchases.",671742.61,2,1.75,759,0,1.0,1,58,Female,Nairobi,2023
+CUST0141,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",292517.26,2,1.25,650,0,0.5,1,60,Other,Eldoret,2023
+CUST0208,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",785696.63,2,2.38,549,2,0.5,0,44,Other,Nairobi,2023
+CUST0300,Promising,Newer customers with high initial engagement or spending potential.,1711855.7,5,1.9,66,2,-0.5,0,33,Female,Mombasa,2023
+CUST0714,Promising,Newer customers with high initial engagement or spending potential.,486563.78,2,2.0,61,0,1.0,0,72,Other,Eldoret,2023
+CUST0249,High-Value,Customers with high total spending and frequent purchases.,4193175.88,7,2.04,0,5,0.5,0,62,Other,Eldoret,2023
+CUST0367,Loyal,"Consistent purchasers, frequent interactions.",4423143.29,7,2.22,16,6,0.27,1,60,Female,Nakuru,2023
+CUST0993,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2643452.08,5,1.67,76,4,0.4,0,21,Female,Nairobi,2023
+CUST0564,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1084882.81,3,2.0,115,0,1.0,1,22,Male,Nakuru,2023
+CUST0030,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1221132.28,3,1.7,299,2,0.43,1,51,Male,Nakuru,2023
+CUST0598,Promising,Newer customers with high initial engagement or spending potential.,1226087.8,3,2.0,45,0,1.0,0,40,Other,Nairobi,2023
+CUST0841,Promising,Newer customers with high initial engagement or spending potential.,1444172.89,3,2.0,79,0,1.0,0,31,Female,Nakuru,2023
+CUST0998,High-Value,Customers with high total spending and frequent purchases.,3984178.52,8,1.87,17,2,0.8,0,71,Female,Mombasa,2023
+CUST0762,Promising,Newer customers with high initial engagement or spending potential.,2299830.56,3,1.75,50,2,0.0,0,61,Female,Kisumu,2023
+CUST0094,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3269081.24,5,2.5,138,2,1.0,1,32,Male,Mombasa,2023
+CUST0438,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",225001.46,2,2.0,247,0,0.0,0,48,Male,Nairobi,2023
+CUST0215,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1632755.25,4,2.14,264,1,1.0,1,61,Male,Kisumu,2023
+CUST0274,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",3323393.31,4,2.12,444,3,0.78,1,52,Male,Kisumu,2023
+CUST0342,High-Value,Customers with high total spending and frequent purchases.,4733652.38,6,2.11,34,4,0.56,0,41,Other,Nakuru,2023
+CUST0677,Promising,Newer customers with high initial engagement or spending potential.,4526774.34,4,2.33,48,2,1.0,0,70,Female,Nakuru,2023
+CUST0638,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1303583.35,2,2.0,376,0,1.0,0,70,Other,Mombasa,2023
+CUST0427,Promising,Newer customers with high initial engagement or spending potential.,1414240.3,3,1.46,5,0,1.0,0,62,Other,Eldoret,2023
+CUST0855,Promising,Newer customers with high initial engagement or spending potential.,1518514.03,3,2.0,32,2,0.33,0,36,Male,Eldoret,2023
+CUST0021,New,"Recently acquired customers, often with 1-2 purchases.",2032323.9,4,2.2,105,3,-0.2,0,47,Female,Kisumu,2023
+CUST0690,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2035380.82,7,1.6,104,3,0.5,1,49,Other,Mombasa,2023
+CUST0293,Loyal,"Consistent purchasers, frequent interactions.",1194815.13,2,2.12,100,1,1.0,0,71,Female,Kisumu,2023
+CUST0645,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1759832.52,3,2.13,609,5,0.33,0,70,Male,Kisumu,2023
+CUST0384,Promising,Newer customers with high initial engagement or spending potential.,1365307.45,3,2.0,4,0,1.0,0,32,Female,Eldoret,2023
+CUST0836,Promising,Newer customers with high initial engagement or spending potential.,2752385.93,3,2.11,3,1,1.0,0,56,Other,Nakuru,2023
+CUST0304,Loyal,"Consistent purchasers, frequent interactions.",1990104.2,4,1.82,94,0,1.0,0,40,Male,Nairobi,2024
+CUST0212,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1382566.07,4,2.43,226,1,1.0,1,35,Female,Mombasa,2023
+CUST0750,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2537305.31,4,1.94,209,3,0.45,0,72,Male,Eldoret,2023
+CUST0136,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",24460.57,1,1.0,277,0,1.0,1,70,Male,Mombasa,2023
+CUST0817,Loyal,"Consistent purchasers, frequent interactions.",2978066.39,4,2.4,12,1,1.0,0,25,Female,Mombasa,2023
+CUST0956,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2015879.85,3,1.5,578,2,0.14,1,35,Female,Mombasa,2023
+CUST0966,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",550910.78,1,2.0,263,0,1.0,0,41,Male,Eldoret,2023
+CUST0127,Loyal,"Consistent purchasers, frequent interactions.",2595269.61,6,1.55,2,1,0.8,0,29,Male,Mombasa,2023
+CUST0117,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1544839.87,2,2.29,447,1,0.2,1,24,Other,Mombasa,2023
+CUST0315,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",193860.8,1,2.0,702,0,0.33,0,51,Female,Kisumu,2023
+CUST0988,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2191460.76,5,1.81,152,2,1.0,1,20,Male,Mombasa,2023
+CUST0872,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",58528.41,1,3.0,934,0,1.0,1,63,Female,Nakuru,2023
+CUST0608,Promising,Newer customers with high initial engagement or spending potential.,596573.67,2,2.0,45,0,1.0,0,33,Female,Mombasa,2023
+CUST0376,Promising,Newer customers with high initial engagement or spending potential.,1142600.75,3,1.56,49,1,0.67,0,45,Other,Mombasa,2023
+CUST0843,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",575672.6,1,1.2,750,0,1.0,0,54,Other,Eldoret,2023
+CUST0917,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1637235.43,3,2.25,506,1,1.0,0,42,Female,Nairobi,2023
+CUST0746,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1858132.19,3,2.14,44,3,0.25,0,34,Other,Mombasa,2023
+CUST0744,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1109704.1,2,2.0,71,0,1.0,1,33,Female,Mombasa,2023
+CUST0058,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",483812.85,2,1.8,276,0,0.5,0,40,Other,Kisumu,2023
+CUST0078,New,"Recently acquired customers, often with 1-2 purchases.",402705.13,1,2.0,118,1,1.0,0,55,Male,Nairobi,2023
+CUST0399,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1210120.18,2,1.57,623,1,1.0,0,57,Male,Kisumu,2023
+CUST0073,Loyal,"Consistent purchasers, frequent interactions.",1359763.66,2,1.5,120,0,1.0,0,19,Other,Eldoret,2025
+CUST0461,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1330446.01,2,1.67,627,2,0.5,1,53,Female,Mombasa,2023
+CUST0599,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",152255.52,1,1.5,429,0,1.0,0,21,Female,Nairobi,2023
+CUST0024,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1965379.7,5,1.56,77,2,1.0,1,56,Female,Nairobi,2023
+CUST0288,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",413101.56,2,1.67,369,0,1.0,0,64,Other,Mombasa,2024
+CUST0820,New,"Recently acquired customers, often with 1-2 purchases.",1390593.3,4,1.67,306,1,1.0,0,67,Other,Eldoret,2023
+CUST0771,New,"Recently acquired customers, often with 1-2 purchases.",727096.69,2,1.43,370,3,0.0,0,29,Other,Nairobi,2023
+CUST0066,New,"Recently acquired customers, often with 1-2 purchases.",1774001.03,4,2.15,266,1,0.71,1,61,Male,Kisumu,2023
+CUST0955,New,"Recently acquired customers, often with 1-2 purchases.",484202.85,1,2.0,418,0,0.0,1,67,Other,Nakuru,2024
+CUST0724,New,"Recently acquired customers, often with 1-2 purchases.",394681.64,2,1.6,813,0,0.5,0,19,Male,Kisumu,2023
+CUST0048,New,"Recently acquired customers, often with 1-2 purchases.",211976.55,1,2.33,217,1,-1.0,1,18,Male,Mombasa,2024
+CUST0003,New,"Recently acquired customers, often with 1-2 purchases.",2525908.65,5,1.62,100,2,1.0,1,69,Other,Mombasa,2023
+CUST0124,New,"Recently acquired customers, often with 1-2 purchases.",96336.86,2,2.0,265,0,1.0,0,44,Female,Nakuru,2023
+CUST0802,Promising,Newer customers with high initial engagement or spending potential.,906635.12,2,1.43,45,2,0.2,0,41,Female,Nairobi,2024
+CUST0207,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",103548.57,3,1.33,410,1,-1.0,0,42,Other,Nairobi,2023
+CUST0686,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",30664.74,1,2.0,934,1,0.0,1,35,Female,Nairobi,2023
+CUST0949,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",328276.12,2,1.75,276,0,1.0,0,61,Female,Nairobi,2024
+CUST0512,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",573296.27,2,1.62,92,0,1.0,0,64,Female,Kisumu,2023
+CUST0511,New,"Recently acquired customers, often with 1-2 purchases.",1604790.74,2,2.0,692,0,1.0,1,46,Female,Kisumu,2023
+CUST0026,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",493070.28,1,1.6,214,1,0.6,1,33,Other,Nairobi,2023
+CUST0055,Loyal,"Consistent purchasers, frequent interactions.",1790069.94,3,1.88,147,1,0.0,0,22,Female,Nakuru,2023
+CUST0683,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1063146.64,3,1.89,45,3,0.0,0,23,Other,Eldoret,2023
+CUST0527,New,"Recently acquired customers, often with 1-2 purchases.",364556.97,1,2.0,240,1,0.0,0,40,Male,Nairobi,2024
+CUST0396,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",858072.13,2,1.43,812,1,0.5,1,55,Other,Nairobi,2023
+CUST0568,Loyal,"Consistent purchasers, frequent interactions.",824025.23,4,1.75,12,2,1.0,0,20,Male,Eldoret,2023
+CUST0358,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1096859.09,1,1.67,616,0,0.0,1,69,Male,Nakuru,2023
+CUST0043,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",127551.12,1,1.5,252,0,0.0,0,70,Other,Nakuru,2024
+CUST0666,Promising,Newer customers with high initial engagement or spending potential.,1406846.88,2,3.0,12,0,1.0,0,71,Female,Mombasa,2023
+CUST0751,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",1025996.29,3,2.1,27,3,1.0,0,36,Female,Mombasa,2023
+CUST0411,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",2326252.1,3,1.75,567,0,1.0,1,48,Female,Kisumu,2023
+CUST0319,Promising,Newer customers with high initial engagement or spending potential.,1416775.1,3,1.73,43,0,1.0,0,42,Other,Kisumu,2024
+CUST0892,Promising,Newer customers with high initial engagement or spending potential.,573431.71,2,1.33,17,0,1.0,0,68,Female,Kisumu,2023
+CUST0009,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",485842.02,2,1.6,226,0,0.0,0,31,Other,Nairobi,2023
+CUST0906,New,"Recently acquired customers, often with 1-2 purchases.",147225.89,1,2.0,108,0,1.0,0,58,Female,Nairobi,2023
+CUST0545,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",719743.8,2,1.6,221,0,1.0,0,19,Female,Kisumu,2023
+CUST0303,New,"Recently acquired customers, often with 1-2 purchases.",493911.95,1,1.25,754,1,1.0,0,53,Female,Mombasa,2023
+CUST0316,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",457625.17,2,1.25,461,0,1.0,0,58,Male,Kisumu,2023
+CUST0063,Promising,Newer customers with high initial engagement or spending potential.,1433278.39,2,2.14,39,1,0.33,0,63,Male,Kisumu,2023
+CUST0870,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",90949.35,1,3.0,307,0,1.0,0,60,Other,Nakuru,2023
+CUST0863,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",722521.02,1,3.25,99,1,0.0,1,24,Male,Kisumu,2023
+CUST0781,Churn Risk,"Customers showing signs of disengagement, high recency or returns.",929429.85,1,3.0,351,0,1.0,1,30,Other,Mombasa,2023
+CUST0563,New,"Recently acquired customers, often with 1-2 purchases.",254409.1,1,1.0,877,0,1.0,0,48,Other,Nakuru,2023

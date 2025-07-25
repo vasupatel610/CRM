@@ -163,60 +163,104 @@ class MarketingDashboard:
         return fig
     
     def create_best_time_channel_chart(self):
-        """Create bar chart for best time/channel detection"""
+        """
+        Create bar chart for best time/channel detection, including hourly comparison
+        for 'product_in_cart' events.
+        """
+
+        import pandas as pd
+        import plotly.graph_objects as go
+        from plotly.subplots import make_subplots
+
         # Create subplots
         fig = make_subplots(
             rows=1, cols=2,
-            subplot_titles=('Best Hours for Engagement', 'Platform Performance (Positive Sentiment)'), # Clarified title
+            subplot_titles=('Hourly Engagement & Cart Additions', 'Platform Performance (Positive Sentiment)'),
             specs=[[{'secondary_y': False}, {'secondary_y': False}]]
         )
-        
-        # Best hours analysis - Ensure 'hour' column exists and is numeric
-        if 'hour' in self.journey_df.columns:
-            hourly_stats = self.journey_df.groupby('hour').agg(
+
+        # --- Best hours analysis using stage_date ---
+        if 'stage_date' in self.journey_df.columns:
+            self.journey_df['hour'] = pd.to_datetime(self.journey_df['stage_date']).dt.hour
+
+        # Ensure full hour range from 0 to 23
+        full_hours = pd.DataFrame({'hour': range(24)})
+
+        # Filter for 'product_in_cart' == 'Yes'
+        if 'hour' in self.journey_df.columns and 'product_in_cart' in self.journey_df.columns:
+            hourly_product_in_cart = (
+                self.journey_df[self.journey_df['product_in_cart'] == 'Yes']
+                .groupby('hour')['customer_id'].count()
+                .reset_index()
+                .rename(columns={'customer_id': 'cart_adds'})
+            )
+        else:
+            hourly_product_in_cart = pd.DataFrame(columns=['hour', 'cart_adds'])
+
+        # Opens and clicks by hour
+        hourly_engagement = (
+            self.journey_df.groupby('hour')
+            .agg(
                 opens=('campaign_open', lambda x: (x == 'Yes').sum()),
                 clicks=('campaign_click', lambda x: (x == 'Yes').sum())
-            ).reset_index()
-            hourly_stats['hour'] = hourly_stats['hour'].astype(int) # Ensure hour is int for plotting
-            hourly_stats.sort_values('hour', inplace=True) # Sort by hour
-        else:
-            hourly_stats = pd.DataFrame({'hour': [], 'opens': [], 'clicks': []}) # Empty DataFrame if column missing
-        
-        # Add hourly engagement chart
-        if not hourly_stats.empty:
-            fig.add_trace(
-                go.Bar(
-                    x=hourly_stats['hour'],
-                    y=hourly_stats['opens'],
-                    name='Opens',
-                    marker_color='lightblue',
-                    yaxis='y',
-                    offsetgroup=1
-                ),
-                row=1, col=1
             )
-            
-            fig.add_trace(
-                go.Bar(
-                    x=hourly_stats['hour'],
-                    y=hourly_stats['clicks'],
-                    name='Clicks',
-                    marker_color='orange',
-                    yaxis='y',
-                    offsetgroup=2
-                ),
-                row=1, col=1
-            )
-        
-        # Platform performance from sentiment data - Ensure 'social_media_platform' and 'review_sentiment' exist
+            .reset_index()
+        )
+
+        # Merge all metrics with full 0–23 hour list
+        hourly_stats = (
+            full_hours
+            .merge(hourly_engagement, on='hour', how='left')
+            .merge(hourly_product_in_cart, on='hour', how='left')
+            .fillna(0)
+        )
+
+        # Sort by hour
+        hourly_stats['hour'] = hourly_stats['hour'].astype(int)
+        hourly_stats = hourly_stats.sort_values('hour')
+
+        # Add engagement bars to subplot
+        fig.add_trace(
+            go.Bar(
+                x=hourly_stats['hour'],
+                y=hourly_stats['opens'],
+                name='Opens',
+                marker_color='lightblue',
+                offsetgroup=1
+            ),
+            row=1, col=1
+        )
+
+        fig.add_trace(
+            go.Bar(
+                x=hourly_stats['hour'],
+                y=hourly_stats['clicks'],
+                name='Clicks',
+                marker_color='orange',
+                offsetgroup=2
+            ),
+            row=1, col=1
+        )
+
+        fig.add_trace(
+            go.Bar(
+                x=hourly_stats['hour'],
+                y=hourly_stats['cart_adds'],
+                name='Product in Cart Adds',
+                marker_color='purple',
+                offsetgroup=3
+            ),
+            row=1, col=1
+        )
+
+        # --- Platform performance from sentiment data ---
         if 'social_media_platform' in self.sentiment_df.columns and 'review_sentiment' in self.sentiment_df.columns:
             platform_sentiment = self.sentiment_df.groupby('social_media_platform').agg(
                 positive_sentiment=('review_sentiment', lambda x: (x == 'positive').sum() / len(x) * 100 if len(x) > 0 else 0)
-            ).round(1).reset_index()
-            platform_sentiment = platform_sentiment.sort_values('positive_sentiment', ascending=False) # Sort for better readability
+            ).round(1).reset_index().sort_values('positive_sentiment', ascending=False)
         else:
-            platform_sentiment = pd.DataFrame({'social_media_platform': [], 'positive_sentiment': []}) # Empty DataFrame
-        
+            platform_sentiment = pd.DataFrame({'social_media_platform': [], 'positive_sentiment': []})
+
         if not platform_sentiment.empty:
             fig.add_trace(
                 go.Bar(
@@ -228,97 +272,167 @@ class MarketingDashboard:
                 ),
                 row=1, col=2
             )
-        
-        # Update layout
-        fig.update_xaxes(title_text="Hour of Day", row=1, col=1, type='category') # Use type 'category' for discrete hours
+
+        # Layout updates
+        fig.update_xaxes(title_text="Hour of Day", row=1, col=1, type='category')
         fig.update_xaxes(title_text="Social Platform", row=1, col=2, type='category')
         fig.update_yaxes(title_text="Engagement Count", row=1, col=1)
         fig.update_yaxes(title_text="Positive Sentiment (%)", row=1, col=2)
-        
+
         fig.update_layout(
-            title="Best Time/Channel Detection for Ads",
-            height=400,
+            title="Best Time/Channel Detection for Marketing Activities",
+            height=500,
             showlegend=True,
-            legend=dict(x=0.02, y=0.98),
+            legend=dict(x=0.01, y=0.99),
             margin=dict(l=40, r=40, t=60, b=40),
-            barmode='group' # Ensure bars for opens and clicks are grouped
+            barmode='group'
         )
-        
+
         return fig
+
+
     
     def create_churn_segment_pie_chart(self):
-        """Create pie chart for segment recommendation based on behavior & predicted churn"""
-        # Define segmentation logic
-        def assign_segment(row):
-            prob = row.get('churn_probability', 0)
-            spent = row.get('total_spent', 0)
-            days = row.get('days_since_last_transaction', np.inf)
+        """Create pie chart for segment recommendations based on emerging customer patterns
+        using journey_entry.csv fields."""
 
-            if prob >= 0.8 and spent >= 1000 and days <= 30:
-                return 'Engaged High Risk'    # High spend, recent, but likely to churn
-            elif prob >= 0.8:
-                return 'At-Risk Low Engagement'  # Likely churners who haven’t spent or engaged recently
-            elif prob >= 0.4 and spent >= 1000:
-                return 'Loyal Medium Risk'     # Good spenders with moderate churn risk
-            elif prob >= 0.4:
-                return 'Churn Watch'           # Moderate risk, low engagement
-            elif spent >= 1000:
-                return 'Valued Low Risk'       # High spenders with low churn probability
+        # Define the full set of funnel stages for consistent ordering and indexing
+        funnel_stages = ["Lead", "Awareness", "Consideration", "Purchase", "Service", "Loyalty", "Advocacy"]
+        stage_to_numeric = {stage: i for i, stage in enumerate(funnel_stages)}
+
+        # --- Aggregate Journey Data per Customer from journey_entry.csv ---
+        # Ensure customer_id, stage, campaign_open, campaign_click, conversion_flag, product_in_cart, customer_age are present
+        required_journey_cols = ['customer_id', 'stage', 'campaign_open', 'campaign_click', 'conversion_flag', 'product_in_cart', 'customer_age']
+        
+        # Filter out rows with NaNs in critical columns for aggregation
+        journey_data_for_segmentation = self.journey_df.dropna(subset=required_journey_cols).copy()
+
+        if journey_data_for_segmentation.empty:
+            fig = go.Figure()
+            fig.add_annotation(text="No valid Journey Data for Segmentation",
+                               xref="paper", yref="paper",
+                               x=0.5, y=0.5, showarrow=False,
+                               font=dict(size=16, color="red"))
+            return fig
+
+        # Map stage to numeric index for finding max stage reached
+        journey_data_for_segmentation['stage_index'] = journey_data_for_segmentation['stage'].map(stage_to_numeric).fillna(-1)
+
+        # Aggregate journey metrics per customer
+        customer_journey_summary = journey_data_for_segmentation.groupby('customer_id').agg(
+            max_stage_index=('stage_index', 'max'),
+            total_campaign_opens=('campaign_open', lambda x: (x == 'Yes').sum()),
+            total_campaign_clicks=('campaign_click', lambda x: (x == 'Yes').sum()),
+            total_product_in_cart_events=('product_in_cart', lambda x: (x == 'Yes').sum()),
+            any_conversion=('conversion_flag', lambda x: (x == 'Yes').any().astype(int)),
+            avg_customer_age=('customer_age', 'mean'), # Average age if customer appears multiple times
+            total_journey_entries=('journey_id', 'count') # Count of individual entries for total engagement
+        ).reset_index()
+
+        # Map max_stage_index back to stage name for readability in segment logic
+        customer_journey_summary['max_stage_reached'] = customer_journey_summary['max_stage_index'].apply(
+            lambda x: funnel_stages[x] if x != -1 else 'No Journey Progress'
+        )
+
+        # --- Define Segmentation Logic (based primarily on journey data) ---
+        def assign_journey_segment(row):
+            max_stage = row['max_stage_reached']
+            opens = row['total_campaign_opens']
+            clicks = row['total_campaign_clicks']
+            in_cart_events = row['total_product_in_cart_events']
+            converted = row['any_conversion']
+            age = row['avg_customer_age'] # Age is available but not explicitly used for primary segmentation
+            total_entries = row['total_journey_entries']
+
+            # Segment 1: Converted & Loyal (High Value Journey Completion)
+            if converted == 1 and max_stage in ['Purchase', 'Service', 'Loyalty', 'Advocacy']:
+                return 'Converted & Loyal'
+            
+            # Segment 2: Cart Abandoners (High Intent, Unconverted)
+            elif converted == 0 and in_cart_events > 0 and max_stage in ['Consideration', 'Purchase']:
+                return 'Cart Abandoners'
+
+            # Segment 3: Highly Engaged Prospects (Active Mid-Funnel)
+            elif converted == 0 and clicks > 0 and max_stage in ['Awareness', 'Consideration']:
+                return 'Highly Engaged Prospects'
+            
+            # Segment 4: Early Stage Explorers (Initial Engagement)
+            elif converted == 0 and opens > 0 and max_stage in ['Lead', 'Awareness'] and clicks == 0:
+                return 'Early Stage Explorers'
+
+            # Segment 5: Disengaged/Stagnant (Low Engagement Journey)
+            # This segment applies if there are recorded entries but no meaningful engagement
+            elif converted == 0 and opens == 0 and clicks == 0 and in_cart_events == 0 and total_entries > 0:
+                return 'Disengaged/Stagnant'
+            
+            # Segment 6: New or No Activity (Customers with no discernible journey pattern or very few entries)
+            # This handles customers who might be in churn_df but have no/minimal journey_entry data,
+            # or those who only have 'Lead' entries with no engagement.
             else:
-                return 'Stable Low Risk'       # Low churn and low spend
+                return 'New or No Journey Activity'
 
-        # Ensure numeric fields are present & clean
-        seg_df = self.churn_df.copy()
-        seg_df['total_spent'] = pd.to_numeric(seg_df.get('total_spent', 0), errors='coerce').fillna(0)
-        seg_df['days_since_last_transaction'] = pd.to_numeric(
-            seg_df.get('days_since_last_transaction', np.inf), errors='coerce'
-        ).fillna(np.inf)
-        seg_df['churn_probability'] = pd.to_numeric(seg_df.get('churn_probability', 0), errors='coerce').fillna(0)
-
-        # Assign segments
-        seg_df['segment'] = seg_df.apply(assign_segment, axis=1)
+        customer_journey_summary['segment'] = customer_journey_summary.apply(assign_journey_segment, axis=1)
 
         # Count segments
-        segment_counts = seg_df['segment'].value_counts().reindex([
-            'Engaged High Risk',
-            'At-Risk Low Engagement',
-            'Loyal Medium Risk',
-            'Churn Watch',
-            'Valued Low Risk',
-            'Stable Low Risk'
-        ], fill_value=0)
+        segment_counts = customer_journey_summary['segment'].value_counts()
+
+        # Define a consistent order and colors for the segments
+        # Order to prioritize conversion, then engagement/intent, then lower engagement
+        ordered_segments = [
+            'Converted & Loyal',
+            'Cart Abandoners',
+            'Highly Engaged Prospects',
+            'Early Stage Explorers',
+            'Disengaged/Stagnant',
+            'New or No Journey Activity'
+        ]
+        
+        # Reindex to ensure all segments appear, filling missing with 0
+        segment_counts = segment_counts.reindex(ordered_segments, fill_value=0)
+        # Filter out segments with 0 counts for cleaner visualization
+        segment_counts = segment_counts[segment_counts > 0]
+
+        # Define colors (ensure good contrast and logical association)
+        segment_colors = {
+            'Converted & Loyal': '#2ca02c', # Green - Success
+            'Cart Abandoners': '#ff7f0e', # Orange - High Intent Problem
+            'Highly Engaged Prospects': '#1f77b4', # Blue - Active Potential
+            'Early Stage Explorers': '#9467bd', # Purple - Initial Interest
+            'Disengaged/Stagnant': '#d62728', # Red - Problematic
+            'New or No Journey Activity': '#7f7f7f' # Grey - Unknown/Inactive
+        }
+
+        # Ensure colors match the segments present in the data
+        current_segment_colors = [segment_colors[s] for s in segment_counts.index]
 
         # Build pie chart
         fig = go.Figure(data=[go.Pie(
             labels=segment_counts.index,
             values=segment_counts.values,
             hole=0.4,
-            marker_colors=[
-                '#d62728',  # Engaged High Risk (red)
-                '#ff7f0e',  # At-Risk Low Engagement (orange)
-                '#bcbd22',  # Loyal Medium Risk (yellow-green)
-                '#e377c2',  # Churn Watch (pink)
-                '#2ca02c',  # Valued Low Risk (green)
-                '#1f77b4'   # Stable Low Risk (blue)
-            ],
+            marker_colors=current_segment_colors,
             textinfo='label+percent',
-            textposition='inside'
+            textposition='inside',
+            sort=False # Keep the defined order
         )])
 
         # Add center annotation
         fig.update_layout(
-            title="Customer Segmentation by Behavior & Churn Risk",
+            title="Customer Segmentation by Emerging Journey Patterns",
             annotations=[dict(
-                text='Segments',
+                text='Customer<br>Segments',
                 x=0.5, y=0.5,
                 font_size=14, showarrow=False
             )],
             height=400,
             margin=dict(l=20, r=20, t=60, b=20),
-            showlegend=False
+            showlegend=True
         )
 
         return fig
+
+
+
         
     def create_churn_density_plot(self):
         """Create density plot for customer churn prediction"""
@@ -444,41 +558,114 @@ class MarketingDashboard:
         return fig
 
     
-    def create_top_customers_histogram(self):
-        """Create histogram for at-risk customer demographics (Spending-Based Age Groups)"""
-        # Focus on high-risk customers, ensuring 'spending_quartile' and 'risk_level' exist
-        high_risk_customers = self.churn_df[self.churn_df['risk_level'] == 'High Risk'].dropna(subset=['spending_quartile'])
+    def create_at_risk_customer_top_10_age_histogram(self):
+        """Create histogram bar chart for top 10 at-risk customers by age"""
         
-        # Create spending-based age groups
-        age_group_counts = high_risk_customers['spending_quartile'].value_counts().sort_index() # Sort by index for ordered age groups
+        # Filter at-risk customers based on risk_level or high churn_probability
+        # Using multiple criteria for robustness
+        at_risk_customers = self.churn_df[
+            (self.churn_df['risk_level'] == 'High Risk') | 
+            (self.churn_df['churn_probability'] >= 0.8)
+        ].copy()
         
-        if age_group_counts.empty:
+        # Clean and validate data
+        at_risk_customers['churn_probability'] = pd.to_numeric(
+            at_risk_customers['churn_probability'], errors='coerce'
+        ).fillna(0)
+        at_risk_customers['customer_age'] = pd.to_numeric(
+            at_risk_customers['customer_age'], errors='coerce'
+        ).fillna(35)  # Default age if missing
+        
+        # Get top 10 at-risk customers sorted by churn probability
+        top_10_at_risk = at_risk_customers.nlargest(10, 'churn_probability')
+        
+        if top_10_at_risk.empty:
             fig = go.Figure()
-            fig.add_annotation(text="No High-Risk Customers Data",
-                               xref="paper", yref="paper",
-                               x=0.5, y=0.5, showarrow=False,
-                               font=dict(size=16, color="red"))
+            fig.add_annotation(
+                text="No At-Risk Customers Data Available",
+                xref="paper", yref="paper",
+                x=0.5, y=0.5, showarrow=False,
+                font=dict(size=16, color="red")
+            )
         else:
+            # Create age bins for better visualization
+            age_bins = [20, 25, 30, 35, 40, 45, 50, 55, 60, 65, 70]
+            top_10_at_risk['age_group'] = pd.cut(
+                top_10_at_risk['customer_age'], 
+                bins=age_bins, 
+                labels=[f"{age_bins[i]}-{age_bins[i+1]}" for i in range(len(age_bins)-1)],
+                include_lowest=True
+            )
+            
+            # Count customers in each age group
+            age_group_counts = top_10_at_risk['age_group'].value_counts().sort_index()
+            
+            # Create bar chart
             fig = go.Figure(data=[
                 go.Bar(
-                    x=age_group_counts.index,
+                    x=age_group_counts.index.astype(str),
                     y=age_group_counts.values,
-                    marker_color=['#ff9999', '#ffcc99', '#99ccff', '#cc99ff'], # Colors for quartiles
+                    marker_color='#e74c3c',  # Red color for at-risk theme
                     text=age_group_counts.values,
-                    textposition='auto'
+                    textposition='auto',
+                    hovertemplate='<b>Age Group: %{x}</b><br>' +
+                                'Count: %{y}<br>' +
+                                '<extra></extra>'
                 )
             ])
             
+            # Add individual customer markers for detailed view
+            fig.add_trace(
+                go.Scatter(
+                    x=[f"{int(age//5)*5}-{int(age//5)*5+5}" for age in top_10_at_risk['customer_age']],
+                    y=[0.1] * len(top_10_at_risk),  # Small offset from x-axis
+                    mode='markers',
+                    marker=dict(
+                        size=8,
+                        color=top_10_at_risk['churn_probability'],
+                        colorscale='Reds',
+                        showscale=True,
+                        colorbar=dict(title="Churn Probability"),
+                        symbol='diamond'
+                    ),
+                    text=[f"ID: {cid}<br>Age: {age}<br>Churn Prob: {prob:.2f}" 
+                        for cid, age, prob in zip(
+                            top_10_at_risk['customer_id'],
+                            top_10_at_risk['customer_age'],
+                            top_10_at_risk['churn_probability']
+                        )],
+                    hovertemplate='<b>%{text}</b><extra></extra>',
+                    name='Individual Customers',
+                    showlegend=True
+                )
+            )
+        
+        # Update layout
         fig.update_layout(
-            title="At-Risk Customers by Demographics (Spending-Based Age Groups)",
-            xaxis_title="Age Groups (Based on Spending Patterns)",
-            yaxis_title="Number of High-Risk Customers",
+            title="Top 10 At-Risk Customers - Age Distribution",
+            xaxis_title="Age Groups",
+            yaxis_title="Number of At-Risk Customers",
             height=400,
             margin=dict(l=40, r=40, t=60, b=40),
-            showlegend=False
+            showlegend=True,
+            legend=dict(x=0.02, y=0.98),
+            plot_bgcolor='rgba(240,240,240,0.5)',
+            font=dict(size=12)
+        )
+        
+        # Customize axes
+        fig.update_xaxes(
+            tickangle=45,
+            showgrid=True,
+            gridcolor='rgba(128,128,128,0.2)'
+        )
+        fig.update_yaxes(
+            showgrid=True,
+            gridcolor='rgba(128,128,128,0.2)'
         )
         
         return fig
+
     
     def create_journey_funnel(self):
         """Create funnel chart for customer journey"""
@@ -666,7 +853,7 @@ class MarketingDashboard:
         segment_pie_fig = self.create_churn_segment_pie_chart()
         density_fig = self.create_churn_density_plot()
         scatter_fig = self.create_churn_ltv_scatter()
-        histogram_fig = self.create_top_customers_histogram()
+        histogram_fig = self.create_at_risk_customer_top_10_age_histogram()
         funnel_fig = self.create_journey_funnel()
         dropoff_fig = self.create_early_dropoffs_chart()
         social_fig = self.create_social_media_trends_chart()
