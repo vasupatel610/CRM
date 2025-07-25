@@ -30,7 +30,7 @@ def feature_engineering(data):
     
     # Ensure numeric columns are properly typed
     numeric_columns = ['quantity', 'unit_price', 'discount_applied', 'grand_total', 
-                      'net_price', 'customer_age', 'target_multiplier', 'latitude', 'longitude']
+                       'net_price', 'customer_age', 'target_multiplier', 'latitude', 'longitude']
     
     for col in numeric_columns:
         if col in data.columns:
@@ -68,7 +68,7 @@ def feature_engineering(data):
     
     # Categorical aggregations (count unique)
     categorical_columns = ['product_id', 'product_category', 'branch_id', 'staff_id', 
-                          'channel_id', 'payment_mode']
+                           'channel_id', 'payment_mode']
     for col in categorical_columns:
         if col in data.columns:
             agg_dict[col] = 'nunique'
@@ -106,31 +106,23 @@ def feature_engineering(data):
             customer_features['transaction_date_count'] / customer_features['customer_lifetime_days']
         ).fillna(0)
     
-    # Define churn target variable
+    # Define churn target variable - MODIFIED CHURN CONDITIONS
     churn_conditions = []
     
-    # Condition 1: High return rate (>30%)
-    if 'is_returned_mean' in customer_features.columns:
-        churn_conditions.append(customer_features['is_returned_mean'] > 0.3)
-    
-    # Condition 2: No transaction in last 90 days
+    # Condition 1: No transaction in last 120 days (increased from 90)
     if 'days_since_last_transaction' in customer_features.columns:
-        churn_conditions.append(customer_features['days_since_last_transaction'] > 90)
+        churn_conditions.append(customer_features['days_since_last_transaction'] > 120)
     
-    # Condition 3: Low transaction frequency (less than once per month)
+    # Condition 2: Low transaction frequency (less than twice per 3 months ~ 0.02 transactions/day)
     if 'transaction_frequency' in customer_features.columns:
-        churn_conditions.append(customer_features['transaction_frequency'] < 0.033)
+        churn_conditions.append(customer_features['transaction_frequency'] < 0.02)
     
-    # Condition 4: Only one transaction (never came back)
-    if 'transaction_date_count' in customer_features.columns:
-        churn_conditions.append(customer_features['transaction_date_count'] == 1)
-    
-    # Combine conditions (customer is churned if any condition is met)
+    # Combine conditions (customer is churned if ANY condition is met)
     if churn_conditions:
         customer_features['churn'] = np.logical_or.reduce(churn_conditions).astype(int)
     else:
         # Fallback: use recency as main churn indicator
-        customer_features['churn'] = (customer_features.get('days_since_last_transaction', 0) > 60).astype(int)
+        customer_features['churn'] = (customer_features.get('days_since_last_transaction', 0) > 90).astype(int) # Fallback increased as well
     
     # Get customer age from original data (take first occurrence)
     if 'customer_age' in data.columns:
@@ -151,8 +143,8 @@ def prepare_features_for_modeling(customer_features):
     # Dynamically select numeric feature columns (exclude customer_id, churn, and date columns)
     exclude_columns = ['customer_id', 'churn', 'transaction_date_min', 'transaction_date_max']
     feature_columns = [col for col in customer_features.columns 
-                      if col not in exclude_columns and 
-                      customer_features[col].dtype in ['int64', 'float64']]
+                       if col not in exclude_columns and 
+                       customer_features[col].dtype in ['int64', 'float64']]
     
     print(f"Selected features: {feature_columns}")
     
@@ -194,14 +186,19 @@ def train_models(X, y):
             n_artificial = min(len(y) // 10, 50)  # Create 10% artificial churned customers, max 50
             artificial_indices = np.random.choice(y.index, n_artificial, replace=False)
             y.loc[artificial_indices] = 1
-        
+        else: # Only churned customers
+            n_artificial = min(len(y) // 10, 50)
+            artificial_indices = np.random.choice(y.index, n_artificial, replace=False)
+            y.loc[artificial_indices] = 0
+            
     # Split data with stratification if possible
     try:
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, random_state=42, stratify=y
         )
     except ValueError:
-        # If stratification fails, do regular split
+        # If stratification fails, do regular split (less ideal for imbalanced data)
+        print("Warning: Stratification failed, performing non-stratified split.")
         X_train, X_test, y_train, y_test = train_test_split(
             X, y, test_size=0.2, random_state=42
         )
@@ -265,10 +262,12 @@ def generate_predictions(model, customer_features, X_scaled, output_path):
     results['actual_churn'] = customer_features['churn']
     results['predicted_churn'] = predictions
     results['churn_probability'] = prediction_probabilities
+    # MODIFIED RISK LEVEL BINS
     results['risk_level'] = pd.cut(
         prediction_probabilities,
-        bins=[0, 0.3, 0.7, 1.0],
-        labels=['Low Risk', 'Medium Risk', 'High Risk']
+        bins=[0, 0.4, 0.75, 1.0], # Adjusted bins
+        labels=['Low Risk', 'Medium Risk', 'High Risk'],
+        include_lowest=True # Include lowest value in first bin
     )
     
     # Add key customer metrics (if available)
@@ -300,8 +299,8 @@ def main():
     Main function to run the churn prediction pipeline
     """
     # File paths
-    input_file = r"D:\Mockup\data\synthetic_transaction_data.csv"
-    output_file = r"D:\Mockup\data\customer_churn_predictions.csv"
+    input_file = "synthetic_transaction_data.csv"
+    output_file = "customer_churn_predictions.csv"
     
     try:
         # Load and preprocess data
