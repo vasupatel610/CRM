@@ -523,87 +523,89 @@ class MarketingDashboard:
         return fig
     
     def create_early_dropoffs_chart(self):
-        """Create stacked bar chart for early drop-offs"""
-        # Filter out NaN stages and ensure conversion_flag is meaningful
-        valid_journey_df = self.journey_df.dropna(subset=['stage', 'conversion_flag']).copy()
+            """Create stacked bar chart for early drop-offs, breaking down 'Dropped Off' by product_in_cart status."""
+            # Update stage_order to include 'Advocacy' as per data generation script
+            stage_order = ['Lead', 'Awareness', 'Consideration', 'Purchase', 'Service', 'Loyalty', 'Advocacy']
 
-        # Calculate conversion and drop-off by stage
-        # Use pivot_table to handle counts for 'Yes' and 'No' in 'conversion_flag'
-        if not valid_journey_df.empty:
-            # Ensure 'conversion_flag' has 'Yes'/'No' or equivalent values
-            valid_journey_df['converted_flag'] = valid_journey_df['conversion_flag'].apply(lambda x: 1 if x == 'Yes' else 0)
-            
-            # Group by stage to get total customers and converted customers
-            stage_summary = valid_journey_df.groupby('stage').agg(
-                total_customers=('customer_id', 'count'),
-                converted_customers=('converted_flag', 'sum') # Use the new numeric column
-            ).reset_index()
-            
-            stage_summary['dropped_off'] = stage_summary['total_customers'] - stage_summary['converted_customers']
-            
-            # Define the complete set of categories for the 'stage' column
-            stage_order = ['Lead', 'Awareness', 'Consideration', 'Purchase', 'Service', 'Loyalty']
-            
-            # Convert 'stage' to a Categorical type with ALL possible categories
-            stage_summary['stage'] = pd.Categorical(stage_summary['stage'], categories=stage_order, ordered=True)
-            
-            # Reindex to ensure all stages are present, filling missing stages with 0 for counts
-            # The fill_value here applies to the *numeric* columns, not the categorical 'stage' column directly.
-            # We will fillna on the numeric columns *after* reindexing.
-            stage_summary = stage_summary.set_index('stage').reindex(stage_order).reset_index()
-            
-            # Now, fill NaNs in numeric columns (converted_customers, dropped_off) with 0
-            stage_summary[['converted_customers', 'dropped_off', 'total_customers']] = stage_summary[['converted_customers', 'dropped_off', 'total_customers']].fillna(0)
-            
-            # Ensure these columns are integer type after filling NaNs
-            stage_summary['converted_customers'] = stage_summary['converted_customers'].astype(int)
-            stage_summary['dropped_off'] = stage_summary['dropped_off'].astype(int)
-            stage_summary['total_customers'] = stage_summary['total_customers'].astype(int)
+            # Filter out NaN stages and ensure necessary columns are present
+            required_cols = ['stage', 'conversion_flag', 'product_in_cart', 'customer_id']
+            valid_journey_df = self.journey_df.dropna(subset=required_cols).copy()
 
+            if valid_journey_df.empty:
+                fig = go.Figure()
+                fig.add_annotation(text="No Early Drop-offs Data",
+                                xref="paper", yref="paper",
+                                x=0.5, y=0.5, showarrow=False,
+                                font=dict(size=16, color="red"))
+                return fig
 
-        else:
-            stage_summary = pd.DataFrame(columns=['stage', 'total_customers', 'converted_customers', 'dropped_off'])
-        
-        if stage_summary.empty or (stage_summary['converted_customers'].sum() == 0 and stage_summary['dropped_off'].sum() == 0):
+            # --- Calculate Converted Customers ---
+            # Converted customers are those with 'conversion_flag' == 'Yes'
+            converted_counts = valid_journey_df[valid_journey_df['conversion_flag'] == 'Yes'] \
+                                .groupby('stage')['customer_id'].count().reindex(stage_order, fill_value=0)
+
+            # --- Calculate Dropped Off Customers by product_in_cart status ---
+            # Dropped off customers are those with 'conversion_flag' == 'No'
+            dropped_off_df = valid_journey_df[valid_journey_df['conversion_flag'] == 'No']
+
+            # Group dropped-off customers by stage and product_in_cart status
+            dropped_off_summary = dropped_off_df.groupby(['stage', 'product_in_cart'])['customer_id'].count().unstack(fill_value=0)
+
+            # Ensure 'Yes' and 'No' columns exist for product_in_cart, fill with 0 if not
+            if 'Yes' not in dropped_off_summary.columns:
+                dropped_off_summary['Yes'] = 0
+            if 'No' not in dropped_off_summary.columns:
+                dropped_off_summary['No'] = 0
+            
+            # Reindex to ensure all stages are present for dropped_off_summary
+            dropped_off_summary = dropped_off_summary.reindex(stage_order, fill_value=0)
+
+            # Prepare data for plotting
+            stages = converted_counts.index
+
             fig = go.Figure()
-            fig.add_annotation(text="No Early Drop-offs Data",
-                               xref="paper", yref="paper",
-                               x=0.5, y=0.5, showarrow=False,
-                               font=dict(size=16, color="red"))
-        else:
-            fig = go.Figure()
-            
-            # Add converted customers
+
+            # Add Converted customers trace
             fig.add_trace(go.Bar(
                 name='Converted',
-                x=stage_summary['stage'],
-                y=stage_summary['converted_customers'],
-                marker_color='#2ecc71',
-                text=stage_summary['converted_customers'],
+                x=stages,
+                y=converted_counts.values,
+                marker_color='#2ecc71', # Green
+                text=converted_counts.values,
                 textposition='inside'
             ))
-            
-            # Add dropped off customers
+
+            # Add Dropped Off (Product in Cart: Yes) trace
             fig.add_trace(go.Bar(
-                name='Dropped Off',
-                x=stage_summary['stage'],
-                y=stage_summary['dropped_off'],
-                marker_color='#e74c3c',
-                text=stage_summary['dropped_off'],
+                name='Dropped Off (In Cart)',
+                x=stages,
+                y=dropped_off_summary['Yes'],
+                marker_color='#e74c3c', # Red
+                text=dropped_off_summary['Yes'],
                 textposition='inside'
             ))
+
+            # Add Dropped Off (Product in Cart: No) trace
+            fig.add_trace(go.Bar(
+                name='Dropped Off (No Cart)',
+                x=stages,
+                y=dropped_off_summary['No'],
+                marker_color='#f39c12', # Orange/Amber
+                text=dropped_off_summary['No'],
+                textposition='inside'
+            ))
+                
+            fig.update_layout(
+                title="Early Drop-offs by Customer Journey Stage (Breakdown by Product in Cart)",
+                barmode='stack', # This ensures 'In Cart' and 'No Cart' stack on top of each other
+                height=400,
+                xaxis_title="Journey Stage",
+                yaxis_title="Number of Customers",
+                margin=dict(l=40, r=40, t=60, b=40),
+                legend=dict(x=0.02, y=0.98)
+            )
             
-        fig.update_layout(
-            title="Early Drop-offs by Customer Journey Stage",
-            barmode='stack',
-            height=400,
-            xaxis_title="Journey Stage",
-            yaxis_title="Number of Customers",
-            margin=dict(l=40, r=40, t=60, b=40),
-            legend=dict(x=0.02, y=0.98)
-        )
-        
-        return fig
+            return fig
     
     def create_social_media_trends_chart(self):
         """Create horizontal bar chart for social media most frequent hashtags"""

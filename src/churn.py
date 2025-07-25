@@ -299,8 +299,8 @@ def main():
     Main function to run the churn prediction pipeline
     """
     # File paths
-    input_file = "synthetic_transaction_data.csv"
-    output_file = "customer_churn_predictions.csv"
+    input_file = "D:\Mockup\data\synthetic_transaction_data.csv"
+    output_file = "D:\Mockup\data\customer_churn_predictions.csv"
     
     try:
         # Load and preprocess data
