@@ -31,7 +31,6 @@ electronic_products = [
 ]
 
 # Product category mapping
-# Product category mapping
 product_category_map = {
     "iPhone 15 Pro": "Mobile & Computing", "Samsung Galaxy S24": "Mobile & Computing",
     "MacBook Air M3": "Mobile & Computing", "Dell XPS 13": "Mobile & Computing",
@@ -57,7 +56,7 @@ product_category_map = {
     "Sonos One": "Entertainment & Gaming",
     
     "Dyson V15 Detect": "Smart Home & Appliances",
-    "Roomba i7+": "Smart Home & Appliances", # Corrected this line
+    "Roomba i7+": "Smart Home & Appliances",
     "Philips Air Fryer": "Smart Home & Appliances", "Instant Pot Duo": "Smart Home & Appliances",
     "KitchenAid Mixer": "Smart Home & Appliances", "Echo Dot 5th Gen": "Smart Home & Appliances",
     "Google Nest Hub": "Smart Home & Appliances", "Ring Video Doorbell": "Smart Home & Appliances",
@@ -65,7 +64,6 @@ product_category_map = {
     "Wyze Cam v3": "Smart Home & Appliances", "Eufy Security": "Smart Home & Appliances",
     "Tesla Model Y Charger": "Smart Home & Appliances"
 }
-
 
 # Generate mapping tables
 customer_ids = [f"CUST{str(i).zfill(4)}" for i in range(1, num_customers + 1)]
@@ -301,11 +299,11 @@ customer_data['is_churned'] = customer_data['churn_probability'].apply(lambda p:
 df = df.merge(customer_data[['customer_id', 'is_churned']], on='customer_id', how='left')
 df['is_churned'] = df.groupby('customer_id')['is_churned'].transform('first')
 
-
 # Save main transaction data
 output_file = "synthetic_transaction_data.csv"
 df.to_csv(output_file, index=False)
 print(f"Dataset saved to: {output_file}")
+
 # ============================================================================
 # GENERATE SENTIMENT.CSV
 # ============================================================================
@@ -349,7 +347,6 @@ neutral_long_reviews = [
     "The product performs adequately for basic tasks but doesn't excel in any particular area. Build quality is standard - not bad but not impressive either. Setup was straightforward enough. It's an okay purchase if you need something functional without premium expectations.",
     "Reasonable product that does the job without any major issues, though it's not particularly exciting or innovative. The price point seems fair for what you get. Some features work better than others. Overall, it's a safe but unremarkable choice."
 ]
-
 
 # Dynamic phrase components for creating varied reviews
 intro_phrases = [
@@ -465,11 +462,10 @@ sentiment_df['customer_age'] = sentiment_df['customer_id'].map(customer_age_map)
 sentiment_df.to_csv("sentiment.csv", index=False)
 print("sentiment.csv created successfully!")
 
-
 # ============================================================================
-# GENERATE JOURNEY_ENTRY.CSV
+# GENERATE JOURNEY_ENTRY.CSV WITH CHANNEL_ID, SOCIAL_MEDIA_PLATFORM, AND STORE_SALES
 # ============================================================================
-print("Generating journey_entry.csv with campaign and hashtag correlation...")
+print("Generating journey_entry.csv with campaign, hashtag correlation, channel_id, social_media_platform, and store_sales...")
 
 # First, create a mapping of customer-product combinations to their sentiment data
 sentiment_mapping = {}
@@ -478,8 +474,18 @@ if 'sentiment_df' in locals():
         key = (row['customer_id'], row['product_id'])
         sentiment_mapping[key] = {
             'campaign_name': row['campaign_name'],
-            'hashtags': row['hashtags']
+            'hashtags': row['hashtags'],
+            'social_media_platform': row['social_media_platform']  # Added social media platform mapping
         }
+
+# Create a mapping of customer-product combinations to their transaction channel
+transaction_channel_mapping = {}
+for _, row in df.iterrows():
+    key = (row['customer_id'], row['product_id'])
+    # If multiple transactions exist for same customer-product, use the most recent channel
+    if key not in transaction_channel_mapping:
+        transaction_channel_mapping[key] = row['channel_id']
+    # Could also use most frequent channel or latest channel based on transaction_date
 
 funnel_stages = ["Lead", "Awareness", "Consideration", "Purchase", "Service", "Loyalty", "Advocacy"]
 num_journeys = 2500
@@ -494,14 +500,30 @@ for _ in range(num_journeys):
     journey_id = str(uuid.uuid4())
     base_date = datetime(2023,1,1) + timedelta(days=random.randint(0,600))
     
-    # Get campaign and hashtag data if available from sentiment
+    # Get campaign, hashtag and social media platform data if available from sentiment
     sentiment_key = (cust, prod)
     if sentiment_key in sentiment_mapping:
         campaign_name = sentiment_mapping[sentiment_key]['campaign_name']
         hashtags = sentiment_mapping[sentiment_key]['hashtags']
+        social_media_platform = sentiment_mapping[sentiment_key]['social_media_platform']
     else:
         campaign_name = random.choice(campaign_names)
         hashtags = ' '.join(random.sample(hashtags_choices, random.randint(2,3)))
+        social_media_platform = random.choice(social_media_platforms)
+    
+    # Get channel_id from transaction data if available, otherwise assign randomly
+    if sentiment_key in transaction_channel_mapping:
+        channel_id = transaction_channel_mapping[sentiment_key]
+    else:
+        # Assign channel based on stage and some logic
+        # For early stages (Lead, Awareness), Online is more common
+        # For Purchase and later stages, all channels are possible
+        channel_weights = {
+            "Online": 0.6,   # Higher probability for digital journey stages
+            "In-Store": 0.25, # Moderate probability
+            "B2B": 0.15      # Lower probability for individual customer journeys
+        }
+        channel_id = random.choices(list(channel_weights.keys()), weights=list(channel_weights.values()))[0]
     
     # Get product name using the product_id
     product_name = product_name_map.get(prod, "Unknown Product")
@@ -549,7 +571,6 @@ for _ in range(num_journeys):
             conversion_prob_increase = 0.05 # 5% higher chance of conversion in 2025 (cumulative)
             cart_prob_increase = 0.10 # 10% higher chance of adding to cart in 2025 (cumulative)
 
-
         if stage == "Lead":
             # Apply increased probability for campaign_open
             if random.random() < (0.80 + open_prob_increase):
@@ -572,12 +593,21 @@ for _ in range(num_journeys):
         product_in_cart_current_prob = min(1.0, product_in_cart_base_prob + cart_prob_increase)
         product_in_cart = np.random.choice(["Yes", "No"], p=[product_in_cart_current_prob, 1 - product_in_cart_current_prob])
 
+        # Calculate store_sales value - 30% chance for In-Store channel
+        store_sales = 0.0
+        if channel_id == "In-Store" and random.random() < 0.30:
+            # Generate a store sales value based on product price range
+            product_base_price = product_base_price_map.get(prod, 50000)  # Default fallback price
+            # Store sales could be 0.5x to 2x the product base price
+            store_sales = round(random.uniform(product_base_price * 0.5, product_base_price * 2.0), 2)
 
         journey_data.append({
             "journey_id": journey_id,
             "customer_id": cust,
             "product_id": prod,
             "product_name": product_name,
+            "channel_id": channel_id,
+            "social_media_platform": social_media_platform,  # ADDED SOCIAL MEDIA PLATFORM
             "stage": stage,
             "stage_date": entry_date,
             "campaign_name": campaign_name,
@@ -585,14 +615,14 @@ for _ in range(num_journeys):
             "campaign_open": campaign_open,
             "campaign_click": campaign_click,
             "conversion_flag": conversion_flag,
-            "product_in_cart": product_in_cart
+            "product_in_cart": product_in_cart,
+            "store_sales": store_sales  # ADDED STORE SALES VALUE
         })
 
 journey_df = pd.DataFrame(journey_data)
 journey_df['customer_age'] = journey_df['customer_id'].map(customer_age_map)
 journey_df.to_csv("journey_entry.csv", index=False)
 print("journey_entry.csv created successfully!")
-
 
 # ============================================================================
 # GENERATE CUSTOMER_SEGMENTATION.CSV
@@ -602,21 +632,21 @@ print("Generating customer_segmentation.csv with positive variation...")
 # --- Load Existing Data and Convert Date Columns ---
 # This section is the primary fix for the TypeError
 try:
-    df = pd.read_csv("synthetic_transaction_data.csv")
+    df = pd.read_csv("synthetic_transaction_data.csv") if 'df' not in locals() else df
     df['transaction_date'] = pd.to_datetime(df['transaction_date'])
 except FileNotFoundError:
     print("synthetic_transaction_data.csv not found. Please run the main data generator script first.")
     exit()
 
 try:
-    journey_df = pd.read_csv("journey_entry.csv")
+    journey_df = pd.read_csv("journey_entry.csv") if 'journey_df' not in locals() else journey_df
     journey_df['stage_date'] = pd.to_datetime(journey_df['stage_date']) # FIX: Convert to datetime
 except FileNotFoundError:
     print("journey_entry.csv not found. Please run the main data generator script first.")
     exit()
 
 try:
-    sentiment_df = pd.read_csv("sentiment.csv")
+    sentiment_df = pd.read_csv("sentiment.csv") if 'sentiment_df' not in locals() else sentiment_df
     sentiment_df['date'] = pd.to_datetime(sentiment_df['date']) # FIX: Convert to datetime
 except FileNotFoundError:
     print("sentiment.csv not found. Please run the main data generator script first.")
@@ -624,7 +654,6 @@ except FileNotFoundError:
 
 # Ensure customer_id is consistent across dataframes
 customer_ids = df['customer_id'].unique()
-
 
 segment_names = ["New", "Churn Risk", "Loyal", "High-Value", "Promising"]
 segment_descriptions = {
@@ -755,7 +784,6 @@ for cust_id in customer_ids:
         # Fallback to general probabilities for less clear-cut cases
         segment = random.choices(list(current_segment_probabilities.keys()), weights=list(current_segment_probabilities.values()))[0]
 
-
     customer_segment_data.append({
         "customer_id": cust_id,
         "segment_name": segment,
@@ -776,7 +804,6 @@ for cust_id in customer_ids:
 customer_segment_df = pd.DataFrame(customer_segment_data)
 customer_segment_df.to_csv("customer_segmentation.csv", index=False)
 print("customer_segmentation.csv created successfully!")
-
 
 # ============================================================================
 # GENERATE EMERGING_JOURNEY_PATTERNS.CSV
@@ -857,11 +884,3 @@ for (cust_id, prod_id, journey_id), group in journey_df.groupby(['customer_id', 
 emerging_journey_df = pd.DataFrame(journey_patterns)
 emerging_journey_df.to_csv("emerging_journey_patterns.csv", index=False)
 print("emerging_journey_patterns.csv created successfully!")
-
-
-print("\n=== ALL FILES GENERATED ===")
-print("1. synthetic_transaction_data.csv - Main transaction dataset (includes 'is_churned' and 'customer_age' columns)")
-print("2. sentiment.csv - Customer sentiment and social media data (includes 'product_name' and 'customer_age' column)")
-print("3. journey_entry.csv - Customer journey funnel data (includes campaign metrics, conversion flag, 'product_name', 'product_in_cart', and 'customer_age' column)")
-print("4. customer_segmentation.csv - Customer segments with enhanced probabilities for high-value segments over time.")
-print("5. emerging_journey_patterns.csv - Customer journey patterns with improved success and engagement metrics over time.")
