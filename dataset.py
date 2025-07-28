@@ -465,34 +465,77 @@ print("sentiment.csv created successfully!")
 # ============================================================================
 # GENERATE JOURNEY_ENTRY.CSV WITH CHANNEL_ID, SOCIAL_MEDIA_PLATFORM
 # ============================================================================
-print("Generating journey_entry.csv with campaign, hashtag correlation, channel_id, social_media_platform...")
+print("Generating journey_entry.csv with campaign, hashtag correlation, channel_id, social_media_platform, and offers...")
+
+# Define offers specifically for electronics
+# General offers for electronics
+general_offers_electronics = [
+    "Flat 10% off on any electronics purchase",
+    "Free expedited shipping on all orders over $1000",
+    "Bundle and save: 5% off when you buy 2 or more electronic items",
+    "Limited time flash sale: 15% off sitewide on all electronics",
+    "Sign up for our newsletter and get $50 off your first electronics order"
+]
+
+# Category-specific offers for electronics (based on your product_category_map)
+category_specific_offers_electronics = {
+    "Mobile & Computing": [
+        "Buy any smartphone, get a screen protector and case free",
+        "Upgrade your laptop: Trade-in bonus + 10% off new model",
+        "Bundle a tablet with a keyboard cover and get 20% off accessories",
+        "Student discount: 10% off on all computing devices"
+    ],
+    "Wearables & Accessories": [
+        "Buy a smartwatch, get an extra strap free",
+        "25% off on all headphones when purchased with any mobile device",
+        "Health tech special: 15% off any fitness tracker"
+    ],
+    "Entertainment & Gaming": [
+        "Purchase any Smart TV and get a soundbar at 30% off",
+        "Gaming console + 2 games bundle: Save $100",
+        "Free 3-month streaming subscription with any TV purchase",
+        "Buy a camera, get a free starter kit (bag, SD card)"
+    ],
+    "Smart Home & Appliances": [
+        "Automate your home: 20% off any smart home hub with 2 devices",
+        "Buy a robotic vacuum, get a free brush replacement kit",
+        "Kitchen appliance bundle: Save 15% on any two items",
+        "Security camera installation discount: 50% off labor"
+    ]
+}
+
 
 # First, create a mapping of customer-product combinations to their sentiment data
 sentiment_mapping = {}
-if 'sentiment_df' in locals():
+# Ensure sentiment_df is defined and available from the prior block execution
+if 'sentiment_df' in locals() and not sentiment_df.empty:
     for _, row in sentiment_df.iterrows():
         key = (row['customer_id'], row['product_id'])
         sentiment_mapping[key] = {
             'campaign_name': row['campaign_name'],
             'hashtags': row['hashtags'],
-            'social_media_platform': row['social_media_platform']  # Added social media platform mapping
+            'social_media_platform': row['social_media_platform']
         }
 
 # Create a mapping of customer-product combinations to their transaction channel
 transaction_channel_mapping = {}
-for _, row in df.iterrows():
-    key = (row['customer_id'], row['product_id'])
-    # If multiple transactions exist for same customer-product, use the most recent channel
-    if key not in transaction_channel_mapping:
-        transaction_channel_mapping[key] = row['channel_id']
-    # Could also use most frequent channel or latest channel based on transaction_date
+# Ensure df is defined and available from the prior block execution
+if 'df' in locals() and not df.empty:
+    for _, row in df.iterrows():
+        key = (row['customer_id'], row['product_id'])
+        # If multiple transactions exist for same customer-product, use the most recent channel
+        if key not in transaction_channel_mapping:
+            transaction_channel_mapping[key] = row['channel_id']
 
-funnel_stages = ["Lead", "Awareness", "Consideration", "Purchase", "Service", "Loyalty", "Advocacy"]
+
+# MODIFIED FUNNEL STAGES
+funnel_stages = ["sent", "viewed", "clicked", "addedtpcart", "purchased"]
 num_journeys = 2500
 journey_data = []
 
 # Define drop_stage_weights here, before the loop that uses it
-drop_stage_weights = [0.25, 0.20, 0.18, 0.15, 0.10, 0.07, 0.05] # Total 1.0 (5% reach advocacy)
+# Adjust weights for the new, shorter funnel
+drop_stage_weights = [0.30, 0.25, 0.20, 0.15, 0.10] # Total 1.0
 
 for _ in range(num_journeys):
     cust = random.choice(customer_ids)
@@ -512,21 +555,44 @@ for _ in range(num_journeys):
         social_media_platform = random.choice(social_media_platforms)
     
     # Get channel_id from transaction data if available, otherwise assign randomly
+    channel_id = None
     if sentiment_key in transaction_channel_mapping:
         channel_id = transaction_channel_mapping[sentiment_key]
     else:
         # Assign channel based on stage and some logic
-        # For early stages (Lead, Awareness), Online is more common
-        # For Purchase and later stages, all channels are possible
         channel_weights = {
-            "Online": 0.6,   # Higher probability for digital journey stages
-            "In-Store": 0.25, # Moderate probability
-            "B2B": 0.15      # Lower probability for individual customer journeys
+            "Online": 0.6,
+            "In-Store": 0.25,
+            "B2B": 0.15
         }
         channel_id = random.choices(list(channel_weights.keys()), weights=list(channel_weights.values()))[0]
-    
-    # Get product name using the product_id
+
+    # Determine branch_id, latitude, and longitude based on channel_id
+    current_branch_id = None
+    current_latitude = None
+    current_longitude = None
+
+    if channel_id == "Online":
+        current_branch_id = online_branch_id # Always BR01 for online
+        current_latitude = branch_geo[online_branch_id]["latitude"]
+        current_longitude = branch_geo[online_branch_id]["longitude"]
+    else:
+        # For In-Store or B2B, pick a random physical branch
+        # Exclude BR01 from physical store choices, assuming BR01 is solely online hub
+        physical_branch_ids = [bid for bid in branch_ids if bid != online_branch_id]
+        if physical_branch_ids: # Ensure there are physical branches to choose from
+            current_branch_id = random.choice(physical_branch_ids)
+            current_latitude = branch_geo[current_branch_id]["latitude"]
+            current_longitude = branch_geo[current_branch_id]["longitude"]
+        else: # Fallback if no physical branches are defined (shouldn't happen with your current setup)
+            current_branch_id = "UNKNOWN"
+            current_latitude = 0.0
+            current_longitude = 0.0
+
+
+    # Get product name and category using the product_id
     product_name = product_name_map.get(prod, "Unknown Product")
+    product_category = product_category_map.get(product_name, "Unknown Category")
 
     final_stage_reached = None
     cumulative_probs = np.cumsum(drop_stage_weights)
@@ -542,10 +608,8 @@ for _ in range(num_journeys):
     campaign_open = "No"
     campaign_click = "No"
     conversion_flag = "No"
+    product_in_cart = "No"
     
-    # Add product_in_cart with 65% 'Yes' probability
-    product_in_cart = np.random.choice(["Yes", "No"], p=[0.65, 0.35])
-
     for i, stage in enumerate(funnel_stages):
         if final_stage_reached is not None and funnel_stages.index(stage) > funnel_stages.index(final_stage_reached):
             break
@@ -553,55 +617,84 @@ for _ in range(num_journeys):
         entry_date_dt = (base_date + timedelta(days=random.randint(5,15)*i, hours=random.randint(0,23), minutes=random.randint(0,59)))
         entry_date = entry_date_dt.strftime("%Y-%m-%d %H:%M:%S")
 
-        # Introduce positive variation in campaign metrics over time
         year = entry_date_dt.year
         open_prob_increase = 0.0
         click_prob_increase = 0.0
         conversion_prob_increase = 0.0
-        cart_prob_increase = 0.0 # for product_in_cart
+        cart_prob_increase = 0.0
         
         if year == 2024:
-            open_prob_increase = 0.03 # 3% higher chance of opening in 2024
-            click_prob_increase = 0.05 # 5% higher chance of clicking in 2024
-            conversion_prob_increase = 0.02 # 2% higher chance of conversion in 2024
-            cart_prob_increase = 0.05 # 5% higher chance of adding to cart in 2024
+            open_prob_increase = 0.03
+            click_prob_increase = 0.05
+            conversion_prob_increase = 0.02
+            cart_prob_increase = 0.05
         elif year == 2025:
-            open_prob_increase = 0.06 # 6% higher chance of opening in 2025 (cumulative)
-            click_prob_increase = 0.10 # 10% higher chance of clicking in 2025 (cumulative)
-            conversion_prob_increase = 0.05 # 5% higher chance of conversion in 2025 (cumulative)
-            cart_prob_increase = 0.10 # 10% higher chance of adding to cart in 2025 (cumulative)
+            open_prob_increase = 0.06
+            click_prob_increase = 0.10
+            conversion_prob_increase = 0.05
+            cart_prob_increase = 0.10
 
-        if stage == "Lead":
-            # Apply increased probability for campaign_open
+        current_offer_applied = "No Offer" 
+
+        if stage == "sent":
+            campaign_open = "Yes"
+            campaign_click = "No"
+            product_in_cart = "No"
+            conversion_flag = "No"
+        elif stage == "viewed":
             if random.random() < (0.80 + open_prob_increase):
                 campaign_open = "Yes"
-            # Apply increased probability for campaign_click
+            campaign_click = "No"
+            product_in_cart = "No"
+            conversion_flag = "No"
+        elif stage == "clicked":
             if campaign_open == "Yes" and random.random() < (0.35 + click_prob_increase):
                 campaign_click = "Yes"
-        
-        if stage == "Purchase":
-            # Apply increased probability for conversion_flag
+            product_in_cart = "No"
+            conversion_flag = "No"
+        elif stage == "addedtpcart":
+            product_in_cart_base_prob = 0.65
+            product_in_cart_current_prob = min(1.0, product_in_cart_base_prob + cart_prob_increase)
+            product_in_cart = np.random.choice(["Yes", "No"], p=[product_in_cart_current_prob, 1 - product_in_cart_current_prob])
+            campaign_open = "Yes"
+            campaign_click = "Yes"
+            conversion_flag = "No"
+            
+            # Apply offer if product is added to cart (50% chance)
+            if product_in_cart == "Yes" and random.random() < 0.5:
+                # Prioritize category-specific offers if available
+                if product_category in category_specific_offers_electronics and random.random() < 0.7:
+                    current_offer_applied = random.choice(category_specific_offers_electronics[product_category])
+                else:
+                    current_offer_applied = random.choice(general_offers_electronics)
+
+        elif stage == "purchased":
             if random.random() < (0.6 + conversion_prob_increase):
                 conversion_flag = "Yes"
             else:
                 conversion_flag = "No"
-        elif stage in ["Service", "Loyalty", "Advocacy"]:
-            conversion_flag = "Yes"
+            campaign_open = "Yes"
+            campaign_click = "Yes"
+            product_in_cart = "Yes" # Assume added to cart if purchased
 
-        # Apply increased probability for product_in_cart
-        product_in_cart_base_prob = 0.65
-        product_in_cart_current_prob = min(1.0, product_in_cart_base_prob + cart_prob_increase)
-        product_in_cart = np.random.choice(["Yes", "No"], p=[product_in_cart_current_prob, 1 - product_in_cart_current_prob])
-
-
+            # Apply offer if purchased (higher chance, 70%)
+            if conversion_flag == "Yes" and random.random() < 0.7:
+                if product_category in category_specific_offers_electronics and random.random() < 0.8:
+                    current_offer_applied = random.choice(category_specific_offers_electronics[product_category])
+                else:
+                    current_offer_applied = random.choice(general_offers_electronics)
 
         journey_data.append({
             "journey_id": journey_id,
             "customer_id": cust,
             "product_id": prod,
             "product_name": product_name,
+            "product_category": product_category,
             "channel_id": channel_id,
-            "social_media_platform": social_media_platform,  # ADDED SOCIAL MEDIA PLATFORM
+            "branch_id": current_branch_id, # Added branch_id
+            "latitude": current_latitude,     # Added latitude
+            "longitude": current_longitude,   # Added longitude
+            "social_media_platform": social_media_platform,
             "stage": stage,
             "stage_date": entry_date,
             "campaign_name": campaign_name,
@@ -610,270 +703,10 @@ for _ in range(num_journeys):
             "campaign_click": campaign_click,
             "conversion_flag": conversion_flag,
             "product_in_cart": product_in_cart,
+            "offer_applied": current_offer_applied,
         })
 
 journey_df = pd.DataFrame(journey_data)
 journey_df['customer_age'] = journey_df['customer_id'].map(customer_age_map)
 journey_df.to_csv("journey_entry.csv", index=False)
 print("journey_entry.csv created successfully!")
-
-# ============================================================================
-# GENERATE CUSTOMER_SEGMENTATION.CSV
-# ============================================================================
-print("Generating customer_segmentation.csv with positive variation...")
-
-# --- Load Existing Data and Convert Date Columns ---
-# This section is the primary fix for the TypeError
-try:
-    df = pd.read_csv("synthetic_transaction_data.csv") if 'df' not in locals() else df
-    df['transaction_date'] = pd.to_datetime(df['transaction_date'])
-except FileNotFoundError:
-    print("synthetic_transaction_data.csv not found. Please run the main data generator script first.")
-    exit()
-
-try:
-    journey_df = pd.read_csv("journey_entry.csv") if 'journey_df' not in locals() else journey_df
-    journey_df['stage_date'] = pd.to_datetime(journey_df['stage_date']) # FIX: Convert to datetime
-except FileNotFoundError:
-    print("journey_entry.csv not found. Please run the main data generator script first.")
-    exit()
-
-try:
-    sentiment_df = pd.read_csv("sentiment.csv") if 'sentiment_df' not in locals() else sentiment_df
-    sentiment_df['date'] = pd.to_datetime(sentiment_df['date']) # FIX: Convert to datetime
-except FileNotFoundError:
-    print("sentiment.csv not found. Please run the main data generator script first.")
-    exit()
-
-# Ensure customer_id is consistent across dataframes
-customer_ids = df['customer_id'].unique()
-
-segment_names = ["New", "Churn Risk", "Loyal", "High-Value", "Promising"]
-segment_descriptions = {
-    "New": "Recently acquired customers, often with 1-2 purchases.",
-    "Churn Risk": "Customers showing signs of disengagement, high recency or returns.",
-    "Loyal": "Consistent purchasers, frequent interactions.",
-    "High-Value": "Customers with high total spending and frequent purchases.",
-    "Promising": "Newer customers with high initial engagement or spending potential."
-}
-
-customer_segment_data = []
-
-# Simulate customer demographics for segmentation features
-customer_demographics = {
-    cust_id: {
-        'age': random.randint(18, 75),
-        'gender': random.choice(['Male', 'Female', 'Other']),
-        'location_region': random.choice(['Nairobi', 'Mombasa', 'Kisumu', 'Nakuru', 'Eldoret'])
-    } for cust_id in customer_ids
-}
-
-# Base probabilities for segmentation, will be adjusted for positive variation
-base_segment_probabilities = {
-    "New": 0.25,
-    "Churn Risk": 0.20,
-    "Loyal": 0.30,
-    "High-Value": 0.15,
-    "Promising": 0.10
-}
-
-# Track customer assignments to ensure distribution over time
-customer_assigned_year = {}
-
-for cust_id in customer_ids:
-    # Get relevant data for the customer
-    cust_transactions = df[df['customer_id'] == cust_id] # Use the 'df' from main transactions
-    cust_journey = journey_df[journey_df['customer_id'] == cust_id] # Use the 'journey_df' from journey generation
-    cust_sentiment = sentiment_df[sentiment_df['customer_id'] == cust_id] # Use the 'sentiment_df' from sentiment generation
-
-    total_spent = cust_transactions['grand_total'].sum()
-    total_transactions = cust_transactions['transaction_id'].nunique()
-    avg_quantity = cust_transactions['quantity'].mean()
-    num_returns = cust_transactions[cust_transactions['is_returned'] == 'Yes'].shape[0]
-    
-    # Calculate recency relative to the *latest date in the transaction data*
-    latest_transaction_date_overall = df['transaction_date'].max()
-    last_purchase_date = cust_transactions['transaction_date'].max()
-    recency = (latest_transaction_date_overall - last_purchase_date).days if pd.notna(last_purchase_date) else 365 # Default for no purchases
-    
-    # Sentiment score (e.g., simple aggregation)
-    positive_reviews = cust_sentiment[cust_sentiment['review_sentiment'] == 'positive'].shape[0]
-    negative_reviews = cust_sentiment[cust_sentiment['review_sentiment'] == 'negative'].shape[0]
-    sentiment_score = (positive_reviews - negative_reviews) / (positive_reviews + negative_reviews + 1e-6) if (positive_reviews + negative_reviews) > 0 else 0 # Avoid division by zero
-    
-    is_churned_flag = cust_transactions['is_churned'].iloc[0] if not cust_transactions.empty else 0
-
-    # Determine assigned year based on earliest activity
-    earliest_activity_date = pd.NaT
-    if not cust_transactions.empty:
-        earliest_activity_date = cust_transactions['transaction_date'].min()
-    if not cust_journey.empty:
-        current_min_journey_date = cust_journey['stage_date'].min()
-        if pd.isna(earliest_activity_date) or (pd.notna(current_min_journey_date) and current_min_journey_date < earliest_activity_date):
-            earliest_activity_date = current_min_journey_date
-    if not cust_sentiment.empty:
-        current_min_sentiment_date = cust_sentiment['date'].min()
-        if pd.isna(earliest_activity_date) or (pd.notna(current_min_sentiment_date) and current_min_sentiment_date < earliest_activity_date):
-            earliest_activity_date = current_min_sentiment_date
-
-    assigned_year = earliest_activity_date.year if pd.notna(earliest_activity_date) else random.choice([2023, 2024, 2025])
-    customer_assigned_year[cust_id] = assigned_year
-
-    # Adjust segment probabilities for positive variation over years
-    current_segment_probabilities = base_segment_probabilities.copy()
-    if assigned_year == 2024:
-        current_segment_probabilities["High-Value"] = min(1.0, current_segment_probabilities["High-Value"] + 0.05)
-        current_segment_probabilities["Loyal"] = min(1.0, current_segment_probabilities["Loyal"] + 0.05)
-        current_segment_probabilities["Churn Risk"] = max(0.0, current_segment_probabilities["Churn Risk"] - 0.05) # Reduced churn risk
-        current_segment_probabilities["New"] = max(0.0, current_segment_probabilities["New"] - 0.05) # Fewer truly "new" by proportion
-    elif assigned_year == 2025:
-        current_segment_probabilities["High-Value"] = min(1.0, current_segment_probabilities["High-Value"] + 0.10)
-        current_segment_probabilities["Loyal"] = min(1.0, current_segment_probabilities["Loyal"] + 0.10)
-        current_segment_probabilities["Churn Risk"] = max(0.0, current_segment_probabilities["Churn Risk"] - 0.10)
-        current_segment_probabilities["New"] = max(0.0, current_segment_probabilities["New"] - 0.10)
-    
-    # Normalize probabilities to ensure they sum to 1
-    sum_probs = sum(current_segment_probabilities.values())
-    current_segment_probabilities = {k: v / sum_probs for k, v in current_segment_probabilities.items()}
-
-    # Assign segment based on characteristics and adjusted probabilities
-    segment = "New" # Default
-    
-    # More nuanced assignment logic
-    if total_spent > 500000 and total_transactions > 5 and recency < 60:
-        segment_options = ["High-Value", "Loyal"]
-        weights = [0.7 + (0.1 * (assigned_year - 2023)), 0.3 - (0.1 * (assigned_year - 2023))]
-        # Ensure weights are valid probabilities
-        weights = [max(0.0, w) for w in weights]
-        sum_weights = sum(weights)
-        if sum_weights > 0:
-            weights = [w / sum_weights for w in weights]
-        else:
-            weights = [0.5, 0.5] # Fallback
-        segment = random.choices(segment_options, weights=weights)[0]
-    elif is_churned_flag == 1 or recency > 180 or num_returns > 2:
-        segment_options = ["Churn Risk", "New"]
-        weights = [0.8 - (0.1 * (assigned_year - 2023)), 0.2 + (0.1 * (assigned_year - 2023))]
-        weights = [max(0.0, w) for w in weights]
-        sum_weights = sum(weights)
-        if sum_weights > 0:
-            weights = [w / sum_weights for w in weights]
-        else:
-            weights = [0.5, 0.5]
-        segment = random.choices(segment_options, weights=weights)[0]
-    elif total_transactions > 3 and recency < 90:
-        segment_options = ["Loyal", "Promising"]
-        weights = [0.6 + (0.1 * (assigned_year - 2023)), 0.4 - (0.1 * (assigned_year - 2023))]
-        weights = [max(0.0, w) for w in weights]
-        sum_weights = sum(weights)
-        if sum_weights > 0:
-            weights = [w / sum_weights for w in weights]
-        else:
-            weights = [0.5, 0.5]
-        segment = random.choices(segment_options, weights=weights)[0]
-    elif total_spent > 100000 and recency < 90:
-        segment = "Promising"
-    else:
-        # Fallback to general probabilities for less clear-cut cases
-        segment = random.choices(list(current_segment_probabilities.keys()), weights=list(current_segment_probabilities.values()))[0]
-
-    customer_segment_data.append({
-        "customer_id": cust_id,
-        "segment_name": segment,
-        "segment_description": segment_descriptions[segment],
-        "total_spent": round(total_spent, 2),
-        "total_transactions": total_transactions,
-        "avg_quantity_per_transaction": round(avg_quantity if pd.notna(avg_quantity) else 0, 2),
-        "recency_days": recency,
-        "num_returns": num_returns,
-        "avg_sentiment_score": round(sentiment_score, 2),
-        "is_churned": is_churned_flag,
-        "customer_age": customer_demographics[cust_id]['age'],
-        "customer_gender": customer_demographics[cust_id]['gender'],
-        "customer_location_region": customer_demographics[cust_id]['location_region'],
-        "assigned_year": assigned_year # For analysis of trend
-    })
-
-customer_segment_df = pd.DataFrame(customer_segment_data)
-customer_segment_df.to_csv("customer_segmentation.csv", index=False)
-print("customer_segmentation.csv created successfully!")
-
-# ============================================================================
-# GENERATE EMERGING_JOURNEY_PATTERNS.CSV
-# ============================================================================
-print("Generating emerging_journey_patterns.csv with positive variation...")
-
-# Group journey data to identify common patterns
-# A pattern can be a sequence of stages for a customer-product
-journey_patterns = []
-
-# To ensure positive variation, we will define a "success rate" that increases over time
-# for patterns that end in 'Purchase', 'Loyalty', or 'Advocacy'.
-base_success_rate = 0.60 # Base probability of a journey ending in a 'success' stage
-
-# Calculate success rate multiplier per year
-def get_success_rate_multiplier(year):
-    if year == 2023:
-        return 1.0
-    elif year == 2024:
-        return 1.05 # 5% higher success rate in 2024
-    elif year == 2025:
-        return 1.10 # 10% higher success rate in 2025 (cumulative)
-    return 1.0
-
-# Calculate engagement metric multiplier per year
-def get_engagement_multiplier(year):
-    if year == 2023:
-        return 1.0
-    elif year == 2024:
-        return 1.03 # 3% higher engagement in 2024
-    elif year == 2025:
-        return 1.06 # 6% higher engagement in 2025 (cumulative)
-    return 1.0
-
-for (cust_id, prod_id, journey_id), group in journey_df.groupby(['customer_id', 'product_id', 'journey_id']):
-    sorted_stages = group.sort_values('stage_date')
-    pattern = " -> ".join(sorted_stages['stage'].tolist())
-    
-    first_stage_date = sorted_stages['stage_date'].iloc[0]
-    last_stage_date = sorted_stages['stage_date'].iloc[-1]
-    duration_days = (last_stage_date - first_stage_date).days
-    
-    final_stage = sorted_stages['stage'].iloc[-1]
-    
-    # Calculate average campaign metrics for the journey
-    avg_campaign_open = group['campaign_open'].apply(lambda x: 1 if x == 'Yes' else 0).mean()
-    avg_campaign_click = group['campaign_click'].apply(lambda x: 1 if x == 'Yes' else 0).mean()
-    conversion_flag = group['conversion_flag'].iloc[-1] # From the last stage in the journey
-    avg_product_in_cart = group['product_in_cart'].apply(lambda x: 1 if x == 'Yes' else 0).mean()
-
-    # Determine the year of the pattern (based on the first stage date)
-    pattern_year = first_stage_date.year
-
-    # Introduce positive variation based on the year
-    current_success_rate = min(1.0, base_success_rate * get_success_rate_multiplier(pattern_year))
-    current_engagement_multiplier = get_engagement_multiplier(pattern_year)
-    
-    # Adjust metrics based on the trend
-    # If a pattern leads to a successful stage, its actual metrics might be higher due to the multiplier
-    # This is a simplification; a more complex model might adjust these during initial generation.
-    # For now, we'll just ensure the output reflects the trend we want to see.
-
-    journey_patterns.append({
-        "customer_id": cust_id,
-        "product_id": prod_id,
-        "journey_pattern": pattern,
-        "pattern_length_stages": len(sorted_stages),
-        "duration_days": duration_days,
-        "final_stage_reached": final_stage,
-        "avg_campaign_opens": round(avg_campaign_open * current_engagement_multiplier, 2), # Apply trend
-        "avg_campaign_clicks": round(avg_campaign_click * current_engagement_multiplier, 2), # Apply trend
-        "conversion_flag_journey": conversion_flag,
-        "avg_product_in_cart": round(avg_product_in_cart * current_engagement_multiplier, 2), # Apply trend
-        "pattern_year": pattern_year, # For analysis
-        "success_rate_for_year": round(current_success_rate, 2) # For analysis
-    })
-
-emerging_journey_df = pd.DataFrame(journey_patterns)
-emerging_journey_df.to_csv("emerging_journey_patterns.csv", index=False)
-print("emerging_journey_patterns.csv created successfully!")

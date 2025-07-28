@@ -53,13 +53,11 @@ def plot_funnel_chart(df):
     funnel_stages = ['Sent', 'Viewed', 'Clicked', 'AddedToCart', 'Purchased-Loyalty']
     # Map journey stages to funnel stages for aggregation
     stage_mapping = {
-        'Lead': 'Sent',
-        'Awareness': 'Viewed',
-        'Consideration': 'Clicked',
-        'Interest': 'Clicked', # Assuming interest also implies a click
-        'Evaluation': 'AddedToCart',
-        'Purchase': 'Purchased-Loyalty',
-        'Loyalty': 'Purchased-Loyalty'
+        'sent': 'sent',  
+        'viewed': 'viewed',
+        'clicked': 'clicked',
+        'addedtpcart': 'addedtpcart',
+        'purchased': 'purchased',
     }
     df['mapped_stage'] = df['stage'].map(stage_mapping)
 
@@ -153,22 +151,60 @@ def plot_customer_segments_pie(customer_churn_df, journey_entry_df):
     return plotly_fig_to_base64(fig)
 
 
-# 3.4 Localized offers at branch performance (geo view)
 def plot_localized_offers_performance(df):
-    # As exact geo data is not available, we'll simulate by aggregating by channel_id
-    # assuming some channels represent "branches" or localized offers.
-    # We'll show conversion rate by channel where localized offers might be relevant.
-    localized_offers_data = df.groupby('channel_id')['conversion_flag'].apply(lambda x: (x == 'Yes').sum() / len(x) if len(x) > 0 else 0).reset_index()
-    localized_offers_data.columns = ['Channel', 'Conversion Rate']
+    # Filter for entries where an offer was actually applied
+    offers_df = df[df['offer_applied'] != 'No Offer'].copy()
 
-    fig, ax = plt.subplots(figsize=(8, 5))
-    sns.barplot(x='Channel', y='Conversion Rate', data=localized_offers_data, ax=ax, palette='viridis')
-    ax.set_title('Conversion Rate by Channel (Simulated Localized Offers)')
-    ax.set_ylabel('Conversion Rate')
-    ax.set_xlabel('Channel')
-    plt.xticks(rotation=45, ha='right')
-    plt.tight_layout()
-    return fig_to_base64(fig)
+    if offers_df.empty:
+        # Create a dummy plot or return a message if no offer data is available
+        fig = go.Figure()
+        fig.add_annotation(
+            text="No data available for offers applied. Please ensure 'offer_applied' column has values other than 'No Offer'.",
+            xref="paper", yref="paper",
+            x=0.5, y=0.5, showarrow=False,
+            font=dict(size=16, color="red")
+        )
+        fig.update_layout(title_text='Localized Offers Performance (No Data)', height=400, width=600)
+        return plotly_fig_to_base64(fig)
+
+    # Aggregate data by branch_id, latitude, and longitude
+    # Calculate total offers applied and offers leading to conversion
+    branch_offers_performance = offers_df.groupby(['branch_id', 'latitude', 'longitude']).agg(
+        total_offers_applied=('offer_applied', 'count'),
+        conversions_with_offer=('conversion_flag', lambda x: (x == 'Yes').sum())
+    ).reset_index()
+
+    # Calculate conversion rate for offers
+    branch_offers_performance['conversion_rate_with_offer'] = branch_offers_performance.apply(
+        lambda row: (row['conversions_with_offer'] / row['total_offers_applied']) if row['total_offers_applied'] > 0 else 0,
+        axis=1
+    )
+
+    # Create an interactive map plot
+    fig = px.scatter_mapbox(
+        branch_offers_performance,
+        lat="latitude",
+        lon="longitude",
+        size="total_offers_applied", # Size of marker by number of offers applied
+        color="conversion_rate_with_offer", # Color by conversion rate with offer
+        color_continuous_scale=px.colors.sequential.Viridis, # Choose a color scale
+        size_max=30, # Max size of markers
+        zoom=5, # Initial zoom level for Kenya
+        center={"lat": -1.286389, "lon": 36.817223}, # Center map around Nairobi, Kenya
+        mapbox_style="open-street-map", # Use OpenStreetMap style
+        hover_name="branch_id", # Show branch ID on hover
+        hover_data={
+            "latitude": False, # Hide lat/lon in hover info
+            "longitude": False,
+            "total_offers_applied": True,
+            "conversions_with_offer": True,
+            "conversion_rate_with_offer": ":.2%" # Format as percentage
+        },
+        title='Localized Offers Performance by Branch Location'
+    )
+
+    fig.update_layout(margin={"r":0,"t":50,"l":0,"b":0})
+    return plotly_fig_to_base64(fig)
 
 
 # 3.5 Churn prediction vs LTV (Scatter plot)
