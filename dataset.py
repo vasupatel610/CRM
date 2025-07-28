@@ -463,9 +463,9 @@ sentiment_df.to_csv("sentiment.csv", index=False)
 print("sentiment.csv created successfully!")
 
 # ============================================================================
-# GENERATE JOURNEY_ENTRY.CSV WITH CHANNEL_ID, SOCIAL_MEDIA_PLATFORM, AND STORE_SALES
+# GENERATE JOURNEY_ENTRY.CSV WITH CHANNEL_ID, SOCIAL_MEDIA_PLATFORM
 # ============================================================================
-print("Generating journey_entry.csv with campaign, hashtag correlation, channel_id, social_media_platform, and store_sales...")
+print("Generating journey_entry.csv with campaign, hashtag correlation, channel_id, social_media_platform...")
 
 # First, create a mapping of customer-product combinations to their sentiment data
 sentiment_mapping = {}
@@ -593,13 +593,7 @@ for _ in range(num_journeys):
         product_in_cart_current_prob = min(1.0, product_in_cart_base_prob + cart_prob_increase)
         product_in_cart = np.random.choice(["Yes", "No"], p=[product_in_cart_current_prob, 1 - product_in_cart_current_prob])
 
-        # Calculate store_sales value - 30% chance for In-Store channel
-        store_sales = 0.0
-        if channel_id == "In-Store" and random.random() < 0.30:
-            # Generate a store sales value based on product price range
-            product_base_price = product_base_price_map.get(prod, 50000)  # Default fallback price
-            # Store sales could be 0.5x to 2x the product base price
-            store_sales = round(random.uniform(product_base_price * 0.5, product_base_price * 2.0), 2)
+
 
         journey_data.append({
             "journey_id": journey_id,
@@ -616,7 +610,6 @@ for _ in range(num_journeys):
             "campaign_click": campaign_click,
             "conversion_flag": conversion_flag,
             "product_in_cart": product_in_cart,
-            "store_sales": store_sales  # ADDED STORE SALES VALUE
         })
 
 journey_df = pd.DataFrame(journey_data)
