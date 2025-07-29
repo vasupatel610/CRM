@@ -1076,7 +1076,7 @@ issue_categories_map = { # Renamed to avoid conflict with variable `category`
     "Service Delay": ["Long Wait Time", "Slow Resolution", "Agent Unresponsive"]
 }
 resolution_statuses = ["Resolved", "Pending", "Escalated", "Unresolved"]
-agent_ids = [f"AGT{str(i).zfill(3)}" for i in range(1, 61)] # 60 agents
+agent_ids = [f"AGT{str(i).zfill(3)}" for i in range(1, 10)] # 60 agents
 
 # --- Load existing data for consistency ---
 try:
@@ -1193,7 +1193,7 @@ for _ in range(num_after_sales_interactions):
     
     # Base probabilities for issue categories
     issue_prob_dist = {
-        "Product Defect": 0.15, "Technical Support": 0.20, "Billing Inquiry": 0.10,
+        "Product Defect": 0.15, "Technical Support": 0.20, "Billing Inquiry": 0.10, # <-- This key is "Billing Inquiry"
         "Order Status": 0.10, "Return/Refund": 0.10, "General Inquiry": 0.25, "Service Delay": 0.10
     }
 
@@ -1211,6 +1211,12 @@ for _ in range(num_after_sales_interactions):
         issue_prob_dist["Technical Support"] += 0.05
         issue_prob_dist["Service Delay"] += 0.05
         issue_prob_dist["General Inquiry"] -= 0.05
+    elif product_cat == "Wearables & Accessories":
+        # You can define how probabilities should be adjusted for this category
+        issue_prob_dist["Technical Support"] += 0.08
+        issue_prob_dist["Product Defect"] += 0.03
+        issue_prob_dist["General Inquiry"] -= 0.02
+        issue_prob_dist["Billing Inquiry"] += 0.01 # <--- Changed to "Billing Inquiry"
 
     # Normalize probabilities
     total_prob = sum(issue_prob_dist.values())
@@ -1264,7 +1270,7 @@ for _ in range(num_after_sales_interactions):
     call_duration_seconds = 0
     queue_time_seconds = 0
     if interaction_type in ["Call", "Chat"]:
-        call_duration_seconds = resolution_time * 60 + random.randint(0, 59) # Convert minutes to seconds
+        call_duration_seconds = resolution_time * 60 + random.randint(0, 10) # Convert minutes to seconds
         queue_time_seconds = random.randint(0, 180) # 0-3 minutes in queue typically
         if sla_met == "No" or resolution_status != "Resolved": # Longer queue time if SLA missed or unresolved
             queue_time_seconds += random.randint(60, 480) # Add 1-8 more minutes
@@ -1273,6 +1279,7 @@ for _ in range(num_after_sales_interactions):
         "interaction_id": interaction_id,
         "customer_id": cust_id,
         "product_id": prod_id,
+        "product_name": product_name_map.get(prod_id, "Unknown Product"), 
         "product_category": product_cat, # Added for direct use in dashboard
         "interaction_date": interaction_date_dt.strftime("%Y-%m-%d %H:%M:%S"),
         "interaction_type": interaction_type,
