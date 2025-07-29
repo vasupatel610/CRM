@@ -307,16 +307,332 @@ print(f"Dataset saved to: {output_file}")
 # ============================================================================
 # GENERATE SENTIMENT.CSV
 # ============================================================================
+
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+import random
+import uuid
+
+# Configuration
+num_transactions = 5000
+max_lines_per_transaction = 5
+num_customers = 1000
+num_products = 50
+num_branches = 10
+channels = ["Online", "In-Store", "B2B"]
+payment_modes = ["Cash", "Card", "BNPL"]
+
+# Define a yearly growth rate for quantities or overall sales value
+yearly_sales_growth_rate = 1.10 # 10% growth year-over-year
+
+# Electronic products list (50 products)
+electronic_products = [
+    "iPhone 15 Pro", "Samsung Galaxy S24", "MacBook Air M3", "Dell XPS 13", "HP Pavilion",
+    "Sony WH-1000XM5", "AirPods Pro", "JBL Flip 6", "Canon EOS R6", "Nikon D7500",
+    "iPad Pro 12.9", "Samsung Tab S9", "Microsoft Surface", "Asus ROG Laptop", "Lenovo ThinkPad",
+    "Apple Watch Series 9", "Samsung Galaxy Watch", "Fitbit Charge 6", "Garmin Venu 3", "OnePlus Watch",
+    "LG OLED TV 55", "Samsung QLED 65", "Sony Bravia 43", "TCL 4K Smart TV", "Hisense ULED",
+    "PlayStation 5", "Xbox Series X", "Nintendo Switch", "Steam Deck", "Asus ROG Ally",
+    "Dyson V15 Detect", "Roomba i7+", "Philips Air Fryer", "Instant Pot Duo", "KitchenAid Mixer",
+    "Bose SoundLink", "Marshall Acton", "Sonos One", "Echo Dot 5th Gen", "Google Nest Hub",
+    "Ring Video Doorbell", "Arlo Pro 4", "Nest Cam", "Wyze Cam v3", "Eufy Security",
+    "Tesla Model Y Charger", "Anker PowerBank", "Belkin Wireless Charger", "Logitech MX Master", "Razer DeathAdder"
+]
+
+# Product category mapping
+product_category_map = {
+    "iPhone 15 Pro": "Mobile & Computing", "Samsung Galaxy S24": "Mobile & Computing",
+    "MacBook Air M3": "Mobile & Computing", "Dell XPS 13": "Mobile & Computing",
+    "HP Pavilion": "Mobile & Computing", "Microsoft Surface": "Mobile & Computing",
+    "Asus ROG Laptop": "Mobile & Computing", "Lenovo ThinkPad": "Mobile & Computing",
+    "iPad Pro 12.9": "Mobile & Computing", "Samsung Tab S9": "Mobile & Computing",
+    "Logitech MX Master": "Mobile & Computing", "Razer DeathAdder": "Mobile & Computing",
+    "Anker PowerBank": "Mobile & Computing", "Belkin Wireless Charger": "Mobile & Computing",
+    
+    "Apple Watch Series 9": "Wearables & Accessories", "Samsung Galaxy Watch": "Wearables & Accessories",
+    "Fitbit Charge 6": "Wearables & Accessories", "Garmin Venu 3": "Wearables & Accessories",
+    "OnePlus Watch": "Wearables & Accessories", "AirPods Pro": "Wearables & Accessories",
+    "Sony WH-1000XM5": "Wearables & Accessories",
+    
+    "LG OLED TV 55": "Entertainment & Gaming", "Samsung QLED 65": "Entertainment & Gaming",
+    "Sony Bravia 43": "Entertainment & Gaming", "TCL 4K Smart TV": "Entertainment & Gaming",
+    "Hisense ULED": "Entertainment & Gaming", "PlayStation 5": "Entertainment & Gaming",
+    "Xbox Series X": "Entertainment & Gaming", "Nintendo Switch": "Entertainment & Gaming",
+    "Steam Deck": "Entertainment & Gaming", "Asus ROG Ally": "Entertainment & Gaming",
+    "JBL Flip 6": "Entertainment & Gaming", "Canon EOS R6": "Entertainment & Gaming",
+    "Nikon D7500": "Entertainment & Gaming",
+    "Bose SoundLink": "Entertainment & Gaming", "Marshall Acton": "Entertainment & Gaming",
+    "Sonos One": "Entertainment & Gaming",
+    
+    "Dyson V15 Detect": "Smart Home & Appliances",
+    "Roomba i7+": "Smart Home & Appliances",
+    "Philips Air Fryer": "Smart Home & Appliances", "Instant Pot Duo": "Smart Home & Appliances",
+    "KitchenAid Mixer": "Smart Home & Appliances", "Echo Dot 5th Gen": "Smart Home & Appliances",
+    "Google Nest Hub": "Smart Home & Appliances", "Ring Video Doorbell": "Smart Home & Appliances",
+    "Arlo Pro 4": "Smart Home & Appliances", "Nest Cam": "Smart Home & Appliances",
+    "Wyze Cam v3": "Smart Home & Appliances", "Eufy Security": "Smart Home & Appliances",
+    "Tesla Model Y Charger": "Smart Home & Appliances"
+}
+
+# Generate mapping tables
+customer_ids = [f"CUST{str(i).zfill(4)}" for i in range(1, num_customers + 1)]
+product_ids = [f"PROD{str(i).zfill(3)}" for i in range(1, num_products + 1)]
+branch_ids = [f"BR{str(i).zfill(2)}" for i in range(1, num_branches + 1)]
+
+product_name_map = {product_ids[i]: electronic_products[i] for i in range(num_products)}
+
+online_branch_id = "BR01"
+online_staff_id = "STF01"
+staff_ids = {branch_id: f"STF{branch_id[-2:]}" for branch_id in branch_ids}
+
+# Base price mapping
+product_price_ranges = {name: (min_p, max_p) for name, (min_p, max_p) in zip(electronic_products, [
+    (120000,180000),(90000,150000),(150000,250000),(80000,150000),(70000,160000),
+    (40000,60000),(35000,50000),(12000,18000),(250000,350000),(120000,180000),
+    (140000,220000),(100000,170000),(90000,180000),(150000,400000),(80000,190000),
+    (60000,80000),(25000,45000),(20000,30000),(60000,75000),(15000,25000),
+    (120000,250000),(180000,300000),(50000,90000),(40000,80000),(70000,200000),
+    (70000,90000),(65000,85000),(40000,60000),(80000,120000),(130000,160000),
+    (100000,150000),(70000,120000),(15000,30000),(20000,45000),(60000,90000),
+    (25000,70000),(30000,50000),(25000,40000),(10000,15000),(30000,45000),
+    (15000,30000),(40000,60000),(20000,35000),(8000,15000),(9000,20000),
+    (50000,80000),(6000,20000),(4000,18000),(10000,18000),(5000,12000)
+])}
+
+product_base_price_map = {
+    pid: round(random.uniform(product_price_ranges[product_name_map[pid]][0], product_price_ranges[product_name_map[pid]][1]), 2)
+    for pid in product_ids
+}
+product_unit_price_map = {pid: product_base_price_map[pid] for pid in product_ids}
+
+month_weights = {
+    1: 0.8, 2: 0.7, 3: 1.0, 4: 1.1, 5: 0.9, 6: 1.3,
+    7: 1.4, 8: 1.0, 9: 1.2, 10: 1.5, 11: 1.7, 12: 2.0
+}
+current_date = datetime.now().date()
+date_pool = []
+for year in [2023, 2024, 2025]:
+    # Adjust number of entries in date_pool to simulate more transactions in later years
+    base_num_days_per_month = 300
+    if year == 2023:
+        year_multiplier_for_transactions = 1.0
+    elif year == 2024:
+        year_multiplier_for_transactions = yearly_sales_growth_rate # 10% more transactions in 2024
+    elif year == 2025:
+        year_multiplier_for_transactions = yearly_sales_growth_rate ** 2 # 21% more transactions in 2025 (cumulative)
+
+    for month, weight in month_weights.items():
+        for _ in range(int(weight * base_num_days_per_month * year_multiplier_for_transactions)):
+            day = random.randint(1, 28)
+            date = datetime(year, month, day).date()
+            if date <= current_date: # Ensure transaction date is not in the future
+                date_pool.append(datetime(year, month, day, random.randint(8,20), random.randint(0,59), random.randint(0,59)))
+
+channel_quantity_weights = {
+    "Online": [0.6, 0.3, 0.08, 0.02],
+    "B2B": [0.3, 0.4, 0.25, 0.05],
+    "In-Store": [0.4, 0.35, 0.2, 0.05]
+}
+
+# Generate customer ages
+customer_age_map = {cust_id: random.randint(18, 75) for cust_id in customer_ids}
+
+data = []
+for _ in range(num_transactions):
+    transaction_id = str(uuid.uuid4())
+    transaction_date = random.choice(date_pool)
+    customer_id = random.choice(customer_ids)
+    channel_id = random.choice(channels)
+
+    branch_id = online_branch_id if channel_id == "Online" else random.choice(branch_ids)
+    staff_id = online_staff_id if channel_id == "Online" else staff_ids[branch_id]
+
+    allowed_payments = ["Cash", "Card"] if channel_id == "In-Store" else (["Card", "BNPL"] if channel_id == "Online" else payment_modes)
+    payment_mode = random.choice(allowed_payments)
+    voucher_redeemed_flag = np.random.choice(["Yes", "No"], p=[0.25, 0.75])
+    is_upsell = np.random.choice(["Yes", "No"], p=[0.3, 0.7])
+    is_returned = "No"
+
+    num_lines = random.randint(1, max_lines_per_transaction)
+    used_products = set()
+
+    for line_num in range(1, num_lines + 1):
+        product_id = random.choice([pid for pid in product_ids if pid not in used_products])
+        used_products.add(product_id)
+
+        unit_price = product_unit_price_map[product_id]
+        
+        # Apply a price increase based on the year to simulate positive revenue variation
+        price_year_multiplier = 1.0
+        if transaction_date.year == 2024:
+            price_year_multiplier = 1.05 # 5% price increase in 2024
+        elif transaction_date.year == 2025:
+            price_year_multiplier = 1.10 # 10% price increase in 2025 (cumulative)
+        unit_price = round(unit_price * price_year_multiplier, 2)
+
+        quantity = np.random.choice([1, 2, 3, 5], p=channel_quantity_weights[channel_id])
+        # Apply quantity increase for later years
+        if transaction_date.year == 2024:
+            quantity = int(quantity * 1.05) # ~5% quantity increase
+        elif transaction_date.year == 2025:
+            quantity = int(quantity * 1.10) # ~10% quantity increase (cumulative)
+        quantity = max(1, quantity) # Ensure quantity is at least 1
+
+        discount_rate_on_line = np.random.choice([0, 0.02, 0.05, 0.1, 0.15], p=[0.6, 0.15, 0.1, 0.1, 0.05])
+        discount_applied = round(discount_rate_on_line * unit_price * quantity, 2)
+        product_name = product_name_map[product_id]
+        product_category = product_category_map[product_name]
+
+        data.append({
+            "transaction_id": transaction_id,    
+            "transaction_line_id": f"{transaction_id[:8]}-{line_num}",
+            "customer_id": customer_id,
+            "product_id": product_id,
+            "product_name": product_name,
+            "product_category": product_category_map[product_name_map[product_id]],
+            "branch_id": branch_id,
+            "staff_id": staff_id,
+            "channel_id": channel_id,
+            "transaction_date": transaction_date.strftime("%Y-%m-%d %H:%M:%S"),
+            "quantity": quantity,
+            "unit_price": unit_price,
+            "discount_applied": discount_applied,
+            "payment_mode": payment_mode,
+            "voucher_redeemed_flag": voucher_redeemed_flag,
+            "is_upsell": is_upsell,
+            "is_returned": is_returned
+        })
+
+df = pd.DataFrame(data)
+df["grand_total"] = (df["unit_price"] * df["quantity"]) - df["discount_applied"]
+df["net_price"] = df["grand_total"] / df["quantity"]
+df["transaction_date"] = pd.to_datetime(df["transaction_date"])
+df["month"] = df["transaction_date"].dt.month
+
+# Add customer age to the DataFrame
+df["customer_age"] = df["customer_id"].map(customer_age_map)
+
+# Add returned flags
+for month in df["month"].unique():
+    month_idx = df[df["month"] == month].index
+    rate = random.uniform(0.08, 0.18)
+    n_return = int(rate * len(month_idx))
+    if n_return > 0:
+        returned_idx = np.random.choice(month_idx, n_return, replace=False)
+        df.loc[returned_idx, "is_returned"] = "Yes"
+
+# Monthly targets with year-over-year growth
+monthly_target_base_multipliers = {
+    1: 1.10, 2: 1.15, 3: 1.05, 4: 1.08, 5: 1.12, 6: 0.95,
+    7: 0.98, 8: 1.02, 9: 1.00, 10: 1.04, 11: 1.06, 12: 1.07
+}
+def get_target_multiplier_with_growth(month, year):
+    base_multiplier = monthly_target_base_multipliers.get(month, 1.0)
+    year_factor = 1.0
+    if year == 2024:
+        year_factor = 1.03 # 3% higher targets in 2024
+    elif year == 2025:
+        year_factor = 1.06 # 6% higher targets in 2025 (cumulative)
+    return base_multiplier * year_factor
+
+df["target_multiplier"] = df.apply(lambda row: get_target_multiplier_with_growth(row['month'], row['transaction_date'].year), axis=1)
+
+# Add geolocation
+random.seed(42)
+branch_ids_unique = df["branch_id"].unique()
+kenya_locations = [
+    {"lat": -1.2921, "lon": 36.8219}, {"lat": -1.3731, "lon": 36.8569}, {"lat": -4.0435, "lon": 39.6682},
+    {"lat": -0.3031, "lon": 35.2961}, {"lat": -0.0917, "lon": 34.7680}, {"lat": -0.4906, "lon": 35.2719},
+    {"lat": 0.5143, "lon": 35.2698}, {"lat": -1.5177, "lon": 37.2634}, {"lat": -0.6743, "lon": 34.5615},
+    {"lat": -3.2175, "lon": 40.1167}
+]
+
+branch_geo = {}
+for i, branch_id in enumerate(branch_ids_unique):
+    if i < len(kenya_locations):
+        lat_variation = random.uniform(-0.01, 0.01)
+        lon_variation = random.uniform(-0.01, 0.01)
+        branch_geo[branch_id] = {
+            "latitude": round(kenya_locations[i]["lat"] + lat_variation, 6),
+            "longitude": round(kenya_locations[i]["lon"] + lon_variation, 6)
+        }
+    else:
+        branch_geo[branch_id] = {
+            "latitude": round(random.uniform(-4.5, 1.0), 6),
+            "longitude": round(random.uniform(33.9, 41.9), 6)
+        }
+
+df["latitude"] = df["branch_id"].map(lambda x: branch_geo[x]["latitude"])
+df["longitude"] = df["branch_id"].map(lambda x: branch_geo[x]["longitude"])
+
+# --- Add Churn Flag to synthetic_transaction_data.csv ---
+# Calculate recency (days since last purchase) and total returns per customer
+customer_last_purchase = df.groupby('customer_id')['transaction_date'].max()
+customer_total_returns = df[df['is_returned'] == 'Yes'].groupby('customer_id').size().fillna(0)
+customer_data = pd.DataFrame(customer_ids, columns=['customer_id'])
+
+customer_data['last_purchase_date'] = customer_data['customer_id'].map(customer_last_purchase)
+customer_data['total_returns'] = customer_data['customer_id'].map(customer_total_returns).fillna(0)
+customer_data['customer_age'] = customer_data['customer_id'].map(customer_age_map)
+
+# Calculate recency in days relative to the latest transaction date in the dataset
+latest_transaction_date = df['transaction_date'].max()
+customer_data['recency'] = (latest_transaction_date - customer_data['last_purchase_date']).dt.days
+
+# Define churn probability based on recency, returns, and age
+def get_churn_probability(row):
+    prob = 0.05 # Base churn probability
+    if row['recency'] > 250:
+        prob += 0.35
+    elif row['recency'] > 120:
+        prob += 0.20
+    elif row['recency'] > 60:
+        prob += 0.10
+    
+    if row['total_returns'] >= 5:
+        prob += 0.30
+    elif row['total_returns'] >= 2:
+        prob += 0.15
+        
+    if row['customer_age'] >= 65:
+        prob += 0.10
+    elif row['customer_age'] <= 22:
+        prob += 0.07
+    
+    return min(prob, 0.9)
+
+customer_data['churn_probability'] = customer_data.apply(get_churn_probability, axis=1)
+customer_data['is_churned'] = customer_data['churn_probability'].apply(lambda p: 1 if random.random() < p else 0)
+
+# Map churn status back to the main DataFrame
+df = df.merge(customer_data[['customer_id', 'is_churned']], on='customer_id', how='left')
+df['is_churned'] = df.groupby('customer_id')['is_churned'].transform('first')
+
+# Save main transaction data
+output_file = "synthetic_transaction_data.csv"
+df.to_csv(output_file, index=False)
+print(f"Dataset saved to: {output_file}")
+
+# ============================================================================
+# GENERATE SENTIMENT.CSV
+# ============================================================================
 import nltk
-nltk.download('vader_lexicon')
+try:
+    nltk.data.find('sentiment/vader_lexicon.zip')
+except nltk.downloader.DownloadError:
+    nltk.download('vader_lexicon')
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 # Initialize sentiment analyzer
 sia = SentimentIntensityAnalyzer()
 print("Generating sentiment.csv with correlated long and dynamic reviews...")
 
 # First, get actual customer-product combinations from transaction data
-customer_product_purchases = df[['customer_id', 'product_id', 'transaction_date', 'is_returned']].drop_duplicates()
-print(f"Found {len(customer_product_purchases)} unique customer-product purchase combinations")
+# Filter for transactions on or before today's date
+df['transaction_date'] = pd.to_datetime(df['transaction_date'])
+customer_product_purchases = df[df['transaction_date'].dt.date <= current_date][['customer_id', 'product_id', 'transaction_date', 'is_returned']].drop_duplicates()
+print(f"Found {len(customer_product_purchases)} unique customer-product purchase combinations for reviews.")
+
 
 social_media_platforms = ["Twitter", "Facebook", "Instagram", "TikTok", "Google", "YouTube"]
 hashtags_choices = ["#electronics", "#newtech", "#gadgetreview", "#productlove", "#techdeals", "#unboxing", "#smartlife", "#innovate"]
@@ -423,6 +739,10 @@ for _, purchase in purchases_to_review.iterrows():
     
     # Review date should be after purchase date (1-45 days later for more realistic timing)
     review_date = purchase_date + timedelta(days=random.randint(1, 45))
+    
+    # Ensure review_date is not after current_date
+    if review_date.date() > current_date:
+        review_date = datetime.combine(current_date, datetime.min.time()) # Set to current date 00:00:00
     
     # Sentiment bias based on return status and some randomness
     if is_returned == "Yes":
