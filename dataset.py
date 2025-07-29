@@ -469,40 +469,53 @@ print("Generating journey_entry.csv with campaign, hashtag correlation, channel_
 
 # Define offers specifically for electronics
 # General offers for electronics
-general_offers_electronics = [
-    "Flat 10% off on any electronics purchase",
-    "Free expedited shipping on all orders over $1000",
-    "Bundle and save: 5% off when you buy 2 or more electronic items",
-    "Limited time flash sale: 15% off sitewide on all electronics",
-    "Sign up for our newsletter and get $50 off your first electronics order"
-]
+general_offers_electronics_map = {
+    "Flat 10% off on any electronics purchase": "ELEC10",
+    "Free expedited shipping on all orders over KES10000": "FREESHIP10K",
+    "Bundle and save: 5% off when you buy 2 or more electronic items": "BUNDLE5",
+    "Limited time flash sale: 15% off sitewide on all electronics": "FLASH15",
+    "Sign up for our newsletter and get KES50 off your first electronics order": "NEWS50"
+}
 
 # Category-specific offers for electronics (based on your product_category_map)
-category_specific_offers_electronics = {
-    "Mobile & Computing": [
-        "Buy any smartphone, get a screen protector and case free",
-        "Upgrade your laptop: Trade-in bonus + 10% off new model",
-        "Bundle a tablet with a keyboard cover and get 20% off accessories",
-        "Student discount: 10% off on all computing devices"
-    ],
-    "Wearables & Accessories": [
-        "Buy a smartwatch, get an extra strap free",
-        "25% off on all headphones when purchased with any mobile device",
-        "Health tech special: 15% off any fitness tracker"
-    ],
-    "Entertainment & Gaming": [
-        "Purchase any Smart TV and get a soundbar at 30% off",
-        "Gaming console + 2 games bundle: Save $100",
-        "Free 3-month streaming subscription with any TV purchase",
-        "Buy a camera, get a free starter kit (bag, SD card)"
-    ],
-    "Smart Home & Appliances": [
-        "Automate your home: 20% off any smart home hub with 2 devices",
-        "Buy a robotic vacuum, get a free brush replacement kit",
-        "Kitchen appliance bundle: Save 15% on any two items",
-        "Security camera installation discount: 50% off labor"
-    ]
+category_specific_offers_electronics_map = {
+    "Mobile & Computing": {
+        "Buy any smartphone, get a screen protector and case free": "MOBACCSS",
+        "Upgrade your laptop: Trade-in bonus + 10% off new model": "LAPTOPUPG",
+        "Bundle a tablet with a keyboard cover and get 20% off accessories": "TABBUNDLE",
+        "Student discount: 10% off on all computing devices": "STUDENTCOMP"
+    },
+    "Wearables & Accessories": {
+        "Buy a smartwatch, get an extra strap free": "WATCHSTRAP",
+        "25% off on all headphones when purchased with any mobile device": "HDPBUNDLE",
+        "Health tech special: 15% off any fitness tracker": "FITNESS15"
+    },
+    "Entertainment & Gaming": {
+        "Purchase any Smart TV and get a soundbar at 30% off": "TVSOUND30",
+        "Gaming console + 2 games bundle: Save KES1000": "GAMECONS",
+        "Free 3-month streaming subscription with any TV purchase": "TVSTREAM",
+        "Buy a camera, get a free starter kit (bag, SD card)": "CAMKIT"
+    },
+    "Smart Home & Appliances": {
+        "Automate your home: 20% off any smart home hub with 2 devices": "SMARTHUB20",
+        "Buy a robotic vacuum, get a free brush replacement kit": "ROBOVAC",
+        "Kitchen appliance bundle: Save 15% on any two items": "KITCHENBND",
+        "Security camera installation discount: 50% off labor": "CAMINSTALL"
+    }
 }
+
+# Flatten the offer maps for easier random selection and lookup later
+all_offers_descriptions = list(general_offers_electronics_map.keys())
+all_offers_codes = list(general_offers_electronics_map.values())
+
+for category, offers_dict in category_specific_offers_electronics_map.items():
+    all_offers_descriptions.extend(list(offers_dict.keys()))
+    all_offers_codes.extend(list(offers_dict.values()))
+
+# Create a combined lookup for description to code
+offer_description_to_code = {desc: code for desc, code in general_offers_electronics_map.items()}
+for category, offers_dict in category_specific_offers_electronics_map.items():
+    offer_description_to_code.update(offers_dict)
 
 
 # First, create a mapping of customer-product combinations to their sentiment data
@@ -635,6 +648,7 @@ for _ in range(num_journeys):
             cart_prob_increase = 0.10
 
         current_offer_applied = "No Offer" 
+        current_offer_code = "NO_OFFER"
 
         if stage == "sent":
             campaign_open = "Yes"
@@ -663,10 +677,11 @@ for _ in range(num_journeys):
             # Apply offer if product is added to cart (50% chance)
             if product_in_cart == "Yes" and random.random() < 0.5:
                 # Prioritize category-specific offers if available
-                if product_category in category_specific_offers_electronics and random.random() < 0.7:
-                    current_offer_applied = random.choice(category_specific_offers_electronics[product_category])
+                if product_category in category_specific_offers_electronics_map and random.random() < 0.7:
+                    current_offer_applied = random.choice(list(category_specific_offers_electronics_map[product_category].keys()))
                 else:
-                    current_offer_applied = random.choice(general_offers_electronics)
+                    current_offer_applied = random.choice(list(general_offers_electronics_map.keys()))
+                current_offer_code = offer_description_to_code[current_offer_applied]
 
         elif stage == "purchased":
             if random.random() < (0.6 + conversion_prob_increase):
@@ -679,10 +694,11 @@ for _ in range(num_journeys):
 
             # Apply offer if purchased (higher chance, 70%)
             if conversion_flag == "Yes" and random.random() < 0.7:
-                if product_category in category_specific_offers_electronics and random.random() < 0.8:
-                    current_offer_applied = random.choice(category_specific_offers_electronics[product_category])
+                if product_category in category_specific_offers_electronics_map and random.random() < 0.8:
+                    current_offer_applied = random.choice(list(category_specific_offers_electronics_map[product_category].keys()))
                 else:
-                    current_offer_applied = random.choice(general_offers_electronics)
+                    current_offer_applied = random.choice(list(general_offers_electronics_map.keys()))
+                current_offer_code = offer_description_to_code[current_offer_applied]
 
         journey_data.append({
             "journey_id": journey_id,
@@ -704,6 +720,7 @@ for _ in range(num_journeys):
             "conversion_flag": conversion_flag,
             "product_in_cart": product_in_cart,
             "offer_applied": current_offer_applied,
+            "offer_code": current_offer_code, # Added offer_code
         })
 
 journey_df = pd.DataFrame(journey_data)

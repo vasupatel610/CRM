@@ -150,7 +150,8 @@ def plot_customer_segments_pie(customer_churn_df, journey_entry_df):
     fig.update_layout(height=300, margin=dict(l=20, r=20, t=40, b=20))
     return plotly_fig_to_base64(fig)
 
-
+# 3.4 Localized offers at branch performance (Simulated)
+import plotly.graph_objects as go
 def plot_localized_offers_performance(df):
     # Filter for entries where an offer was actually applied
     offers_df = df[df['offer_applied'] != 'No Offer'].copy()
