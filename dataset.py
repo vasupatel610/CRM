@@ -175,7 +175,7 @@ for _ in range(num_transactions):
         product_category = product_category_map[product_name]
 
         data.append({
-            "transaction_id": transaction_id,
+            "transaction_id": transaction_id,   
             "transaction_line_id": f"{transaction_id[:8]}-{line_num}",
             "customer_id": customer_id,
             "product_id": product_id,
@@ -307,6 +307,11 @@ print(f"Dataset saved to: {output_file}")
 # ============================================================================
 # GENERATE SENTIMENT.CSV
 # ============================================================================
+import nltk
+nltk.download('vader_lexicon')
+from nltk.sentiment.vader import SentimentIntensityAnalyzer
+# Initialize sentiment analyzer
+sia = SentimentIntensityAnalyzer()
 print("Generating sentiment.csv with correlated long and dynamic reviews...")
 
 # First, get actual customer-product combinations from transaction data
@@ -457,7 +462,9 @@ for _, purchase in purchases_to_review.iterrows():
         "review_sentiment": review_type
     })
 
+# Apply sentiment scoring
 sentiment_df = pd.DataFrame(sentiment_data)
+sentiment_df['sentiment_score'] = sentiment_df['reviews'].apply(lambda x: sia.polarity_scores(x)['compound'])
 sentiment_df['customer_age'] = sentiment_df['customer_id'].map(customer_age_map)
 sentiment_df.to_csv("sentiment.csv", index=False)
 print("sentiment.csv created successfully!")
@@ -727,3 +734,262 @@ journey_df = pd.DataFrame(journey_data)
 journey_df['customer_age'] = journey_df['customer_id'].map(customer_age_map)
 journey_df.to_csv("journey_entry.csv", index=False)
 print("journey_entry.csv created successfully!")
+
+import pandas as pd
+import numpy as np
+from datetime import datetime, timedelta
+import random
+import uuid
+
+print("Generating after_sales.csv with correlations to previous data...")
+
+# --- Configuration for After-Sales Data Generation ---
+num_after_sales_interactions = 2500 # Number of after-sales interactions to generate
+interaction_types = ["Call", "Chat", "Email", "Social Media DM", "In-Person Support"]
+issue_categories_map = { # Renamed to avoid conflict with variable `category`
+    "Product Defect": ["Hardware Failure", "Software Bug", "Manufacturing Defect"],
+    "Technical Support": ["Setup Help", "Troubleshooting", "Connectivity Issue", "Software Update", "Compatibility"],
+    "Billing Inquiry": ["Incorrect Charge", "Refund Status", "Subscription Issue", "Payment Error"],
+    "Order Status": ["Delivery Delay", "Missing Item", "Wrong Item Received", "Cancellation"],
+    "Return/Refund": ["Return Process", "Refund Delay", "Exchange Request", "Warranty Claim"],
+    "General Inquiry": ["Product Information", "Store Hours", "Warranty Info", "How-To Guide"],
+    "Service Delay": ["Long Wait Time", "Slow Resolution", "Agent Unresponsive"]
+}
+resolution_statuses = ["Resolved", "Pending", "Escalated", "Unresolved"]
+agent_ids = [f"AGT{str(i).zfill(3)}" for i in range(1, 61)] # 60 agents
+
+# --- Load existing data for consistency ---
+try:
+    df_transactions = pd.read_csv("synthetic_transaction_data.csv")
+    df_sentiment = pd.read_csv("sentiment.csv")
+    df_journey = pd.read_csv("journey_entry.csv")
+except FileNotFoundError as e:
+    print(f"Error loading required CSV: {e}. Please ensure all prior generation scripts are run.")
+    # Fallback data if files are not found (for demonstration/testing)
+    customer_ids = [f"CUST{str(i).zfill(4)}" for i in range(1, 301)]
+    product_ids = [f"PROD{str(i).zfill(3)}" for i in range(1, 51)]
+    customer_product_pairs_from_transactions = [[random.choice(customer_ids), random.choice(product_ids), datetime.now() - timedelta(days=random.randint(30, 730))] for _ in range(500)]
+    product_category_map = {f"PROD{str(i).zfill(3)}": random.choice(["Mobile & Computing", "Wearables & Accessories", "Entertainment & Gaming", "Smart Home & Appliances"]) for i in range(1, 51)}
+    customer_product_prior_sentiment_map = {}
+else:
+    # Ensure transaction_date is datetime object for comparison
+    df_transactions['transaction_date'] = pd.to_datetime(df_transactions['transaction_date'])
+    # Get unique customer-product-latest_transaction_date for after-sales correlation
+    customer_product_pairs_from_transactions = df_transactions.groupby(['customer_id', 'product_id'])['transaction_date'].max().reset_index().values.tolist()
+
+    # Combine sentiment data from both sources for prior sentiment lookup
+    # Normalize sentiment scores to a common range if needed (assuming -1 to 1 for sentiment.csv, and similar for journey_entry.csv)
+    all_sentiment_data = pd.concat([
+        df_sentiment[['customer_id', 'product_id', 'sentiment_score']].dropna(),
+        df_journey[['customer_id', 'product_id']].dropna()
+    ])
+    # Calculate average prior sentiment for each customer-product pair
+    customer_product_prior_sentiment_map = all_sentiment_data.groupby(['customer_id', 'product_id'])['sentiment_score'].mean().to_dict()
+
+    # Get product category mapping from journey_entry.csv (should be comprehensive)
+    product_category_map = df_journey.set_index('product_id')['product_category'].drop_duplicates().to_dict()
+
+# --- Helper Functions for Data Generation ---
+
+def generate_sentiment_score(base_score=0.0):
+    """Generates a sentiment score around a base, and its category."""
+    score = np.clip(random.gauss(base_score, 0.3), -1.0, 1.0) # Gaussian distribution around base
+    score = round(score, 2)
+    if score > 0.3:
+        category = "Positive"
+    elif score < -0.3:
+        category = "Negative"
+    else:
+        category = "Neutral"
+    return score, category
+
+def generate_nps_score(sentiment_cat):
+    """Generates an NPS score based on sentiment category."""
+    if sentiment_cat == "Negative":
+        return random.randint(0, 6) # Detractors
+    elif sentiment_cat == "Neutral":
+        return random.randint(7, 8) # Passives
+    else: # Positive
+        return random.randint(9, 10) # Promoters
+
+def generate_feedback_score(sentiment_cat, agent_quality=1.0):
+    """Generates a feedback score (1-5) based on sentiment and agent quality."""
+    base_score = 3.0
+    if sentiment_cat == "Negative":
+        base_score = 1.5
+    elif sentiment_cat == "Neutral":
+        base_score = 3.0
+    else: # Positive
+        base_score = 4.5
+    
+    score = random.gauss(base_score * agent_quality, 0.8)
+    return int(np.clip(round(score), 1, 5))
+
+# --- Simulate Agent Performance Baseline ---
+agent_performance_baseline = {
+    agent_id: {
+        'avg_resolution_time': random.randint(10, 50), # in minutes
+        'sla_met_prob': random.uniform(0.7, 0.98),
+        'fcr_prob': random.uniform(0.5, 0.9), # First Contact Resolution probability
+        'agent_quality_factor': random.uniform(0.8, 1.2) # Influences feedback scores
+    } for agent_id in agent_ids
+}
+
+# --- Generate After-Sales Data ---
+after_sales_data = []
+
+for _ in range(num_after_sales_interactions):
+    interaction_id = str(uuid.uuid4())
+    
+    # Pick a customer-product pair that has actually purchased
+    if customer_product_pairs_from_transactions:
+        selected_pair = random.choice(customer_product_pairs_from_transactions)
+        cust_id, prod_id, transaction_date_of_purchase = selected_pair
+    else: # Fallback if no transaction data is loaded
+        cust_id = f"CUST{str(random.randint(1, 300)).zfill(4)}"
+        prod_id = f"PROD{str(random.randint(1, 50)).zfill(3)}"
+        transaction_date_of_purchase = datetime.now() - timedelta(days=random.randint(30, 730))
+
+    # Interaction date should be AFTER the purchase date
+    min_days_after_purchase = 7 # At least a week after purchase for after-sales
+    max_days_after_purchase = 365 # Up to a year after purchase
+    interaction_date_dt = transaction_date_of_purchase + timedelta(
+        days=random.randint(min_days_after_purchase, max_days_after_purchase),
+        hours=random.randint(0, 23),
+        minutes=random.randint(0, 59)
+    )
+    # Ensure interaction date is not in the future
+    if interaction_date_dt > datetime.now():
+        interaction_date_dt = datetime.now() - timedelta(minutes=random.randint(1, 60))
+
+    interaction_type = random.choice(interaction_types)
+    agent_id = random.choice(agent_ids)
+    
+    # Get agent's baseline performance
+    agent_baseline = agent_performance_baseline[agent_id]
+
+    # --- Issue Category & Subcategory (Influenced by Product Category) ---
+    product_cat = product_category_map.get(prod_id, "General") # Get product category
+    
+    # Base probabilities for issue categories
+    issue_prob_dist = {
+        "Product Defect": 0.15, "Technical Support": 0.20, "Billing Inquiry": 0.10,
+        "Order Status": 0.10, "Return/Refund": 0.10, "General Inquiry": 0.25, "Service Delay": 0.10
+    }
+
+    # Adjust probabilities based on product category
+    if product_cat == "Mobile & Computing":
+        issue_prob_dist["Technical Support"] += 0.15
+        issue_prob_dist["Product Defect"] += 0.05
+        issue_prob_dist["General Inquiry"] -= 0.1
+    elif product_cat == "Entertainment & Gaming":
+        issue_prob_dist["Technical Support"] += 0.1
+        issue_prob_dist["Product Defect"] += 0.1
+        issue_prob_dist["General Inquiry"] -= 0.05
+    elif product_cat == "Smart Home & Appliances":
+        issue_prob_dist["Product Defect"] += 0.15
+        issue_prob_dist["Technical Support"] += 0.05
+        issue_prob_dist["Service Delay"] += 0.05
+        issue_prob_dist["General Inquiry"] -= 0.05
+
+    # Normalize probabilities
+    total_prob = sum(issue_prob_dist.values())
+    normalized_probs = {k: v / total_prob for k, v in issue_prob_dist.items()}
+    
+    category = random.choices(list(normalized_probs.keys()), weights=list(normalized_probs.values()))[0]
+    subcategory = random.choice(issue_categories_map[category])
+
+    # Resolution Status & Time (influenced by agent performance)
+    resolution_time = int(random.gauss(agent_baseline['avg_resolution_time'], 5))
+    resolution_time = max(5, resolution_time) # Minimum 5 minutes
+
+    sla_target_minutes = 30 # Example SLA target
+    sla_met = "Yes" if resolution_time <= sla_target_minutes and random.random() < agent_baseline['sla_met_prob'] else "No"
+    
+    is_fcr = "Yes" if random.random() < agent_baseline['fcr_prob'] else "No"
+    
+    is_escalated = "Yes" if (random.random() < 0.15 and sla_met == "No") or resolution_time > (sla_target_minutes * 1.5) else "No"
+
+    resolution_status = "Resolved"
+    if sla_met == "No" or is_fcr == "No" or is_escalated == "Yes" or random.random() < 0.1: # Small chance of unres/pending
+        resolution_status = random.choices(["Pending", "Escalated", "Unresolved", "Resolved"], weights=[0.15, 0.15, 0.05, 0.65])[0]
+    
+    # --- Sentiment (Influenced by Prior Sentiment and Resolution Outcome) ---
+    prior_sentiment_score = customer_product_prior_sentiment_map.get((cust_id, prod_id), 0.0) # Default to neutral if no prior sentiment
+
+    base_sentiment_for_current_interaction = prior_sentiment_score # Start with prior sentiment
+
+    if resolution_status != "Resolved" or sla_met == "No" or is_fcr == "No":
+        # If outcome is poor, bias sentiment towards negative
+        base_sentiment_for_current_interaction -= random.uniform(0.2, 0.7)
+    else: # Good outcome
+        # If outcome is good, bias sentiment towards positive
+        base_sentiment_for_current_interaction += random.uniform(0.2, 0.7)
+    
+    sentiment_score, sentiment_category = generate_sentiment_score(base_sentiment_for_current_interaction)
+    
+    # NPS (influenced by final sentiment)
+    nps_score = generate_nps_score(sentiment_category)
+
+    # Feedback Scores (influenced by final sentiment and agent quality)
+    feedback_agent = generate_feedback_score(sentiment_category, agent_baseline['agent_quality_factor'])
+    feedback_resolution = generate_feedback_score(sentiment_category) # Resolution feedback depends more on outcome
+
+    # Interaction Summary (simple placeholder)
+    summary = f"Customer reported {category.lower()} issue regarding {product_cat} product. Issue {resolution_status.lower()}."
+    if is_escalated == "Yes":
+        summary += " Escalated to Tier 2."
+    
+    # Call/Queue specific metrics
+    call_duration_seconds = 0
+    queue_time_seconds = 0
+    if interaction_type in ["Call", "Chat"]:
+        call_duration_seconds = resolution_time * 60 + random.randint(0, 59) # Convert minutes to seconds
+        queue_time_seconds = random.randint(0, 180) # 0-3 minutes in queue typically
+        if sla_met == "No" or resolution_status != "Resolved": # Longer queue time if SLA missed or unresolved
+            queue_time_seconds += random.randint(60, 480) # Add 1-8 more minutes
+
+    after_sales_data.append({
+        "interaction_id": interaction_id,
+        "customer_id": cust_id,
+        "product_id": prod_id,
+        "product_category": product_cat, # Added for direct use in dashboard
+        "interaction_date": interaction_date_dt.strftime("%Y-%m-%d %H:%M:%S"),
+        "interaction_type": interaction_type,
+        "agent_id": agent_id,
+        "issue_category": category,
+        "issue_subcategory": subcategory,
+        "resolution_status": resolution_status,
+        "resolution_time_minutes": resolution_time,
+        "sla_met": sla_met,
+        "is_first_contact_resolution": is_fcr,
+        "is_escalated": is_escalated,
+        "sentiment_score": sentiment_score,
+        "sentiment_category": sentiment_category,
+        "interaction_summary": summary,
+        "nps_score": nps_score,
+        "feedback_score_agent": feedback_agent,
+        "feedback_score_resolution": feedback_resolution,
+        "call_duration_seconds": call_duration_seconds,
+        "queue_time_seconds": queue_time_seconds,
+        # For CX Health Snapshot Radar Chart - these would be dynamic aggregations, but simulated here for data presence:
+        "num_open_issues_snapshot": random.randint(0, 2) if resolution_status != "Resolved" else 0,
+        "time_since_last_interaction_days": (datetime.now() - interaction_date_dt).days,
+        "product_ownership_flag": "Yes" # Assuming interaction means they own the product
+    })
+
+after_sales_df = pd.DataFrame(after_sales_data)
+
+# Add agent status (simulated snapshot - would be dynamic in real-time)
+agent_status_map = {agent: random.choice(["Online", "Offline"]) for agent in agent_ids}
+after_sales_df['agent_status'] = after_sales_df['agent_id'].map(agent_status_map)
+
+# Save the dataset
+output_file = "after_sales.csv"
+after_sales_df.to_csv(output_file, index=False)
+print(f"\nAfter-sales dataset successfully saved to: {output_file}")
+
+print("\n--- Sample of after_sales.csv data ---")
+print(after_sales_df.head())
+print("\n--- after_sales.csv Data Info ---")
+print(after_sales_df.info())
