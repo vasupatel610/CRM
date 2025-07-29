@@ -158,41 +158,146 @@ def plot_issue_treemap(df_after_sales):
     
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
-# --- 5. Call Queue & SLA Metrics ---
-def plot_queue_sla_metrics(df_after_sales):
-    call_interactions = df_after_sales[df_after_sales['interaction_type'].isin(["Call", "Chat"])].copy()
+# # --- 5. Call Queue & SLA Metrics ---
+# def plot_queue_sla_metrics(df_after_sales):
+#     call_interactions = df_after_sales[df_after_sales['interaction_type'].isin(["Call", "Chat"])].copy()
     
+#     daily_metrics = call_interactions.groupby(pd.Grouper(key='interaction_date', freq='D')).agg(
+#         queue_calls=('queue_time_seconds', lambda x: (x > 0).sum()),
+#         sla_met=('sla_met', lambda x: (x == 'Yes').sum()),
+#         total_calls=('interaction_id', 'count')
+#     ).reset_index()
+
+#     daily_metrics['sla_percentage'] = ((daily_metrics['sla_met'] / daily_metrics['total_calls']) * 100).fillna(0).round(2)
+
+#     fig = make_subplots(specs=[[{"secondary_y": True}]])
+
+#     fig.add_trace(
+#         go.Bar(x=daily_metrics['interaction_date'], y=daily_metrics['queue_calls'], 
+#                name='Queue Calls', marker_color='#ff7f0e'),
+#         secondary_y=False,
+#     )
+
+#     fig.add_trace(
+#         go.Scatter(x=daily_metrics['interaction_date'], y=daily_metrics['sla_percentage'], 
+#                    name='SLA %', mode='lines+markers', line_color='#2ca02c'),
+#         secondary_y=True,
+#     )
+
+#     fig.update_layout(
+#         title_text='Queue & SLA Metrics',
+#         margin=dict(l=40, r=40, t=60, b=40), 
+#         height=280,
+#         title_font_size=14
+#     )
+#     fig.update_xaxes(title_text="Date")
+#     fig.update_yaxes(title_text="Queue Calls", secondary_y=False)
+#     fig.update_yaxes(title_text="SLA %", secondary_y=True, range=[0, 100])
+    
+#     return fig.to_html(full_html=False, include_plotlyjs='cdn')
+
+import pandas as pd
+import plotly.graph_objects as go
+from plotly.subplots import make_subplots
+from datetime import datetime, timedelta # Ensure this is imported if not already
+
+# Assuming df_after_sales is a DataFrame with 'interaction_date', 'interaction_type',
+# 'queue_time_seconds', 'sla_met', 'interaction_id' columns.
+# It should be processed to have 'interaction_date' as datetime.
+
+def plot_queue_sla_metrics(df_after_sales):
+    # Ensure interaction_date is datetime and handle potential errors
+    df_after_sales['interaction_date'] = pd.to_datetime(df_after_sales['interaction_date'], errors='coerce')
+    
+    # Filter for relevant interaction types (Calls and Chats) and drop NaT dates
+    call_interactions = df_after_sales[
+        df_after_sales['interaction_type'].isin(["Call", "Chat"])
+    ].dropna(subset=['interaction_date']).copy()
+
+    # Aggregate daily metrics
     daily_metrics = call_interactions.groupby(pd.Grouper(key='interaction_date', freq='D')).agg(
-        queue_calls=('queue_time_seconds', lambda x: (x > 0).sum()),
-        sla_met=('sla_met', lambda x: (x == 'Yes').sum()),
-        total_calls=('interaction_id', 'count')
+        queue_calls=('queue_time_seconds', lambda x: (x > 0).sum()), # Count calls with queue time
+        sla_met=('sla_met', lambda x: (x == 'Yes').sum()),          # Count SLA met calls
+        total_calls=('interaction_id', 'count')                     # Count all calls/chats
     ).reset_index()
 
+    # Calculate SLA percentage, handling division by zero for days with no calls
     daily_metrics['sla_percentage'] = ((daily_metrics['sla_met'] / daily_metrics['total_calls']) * 100).fillna(0).round(2)
 
+    # --- Plotting with Plotly Graph Objects ---
     fig = make_subplots(specs=[[{"secondary_y": True}]])
 
+    # 1. Bar Chart for Queue Calls
     fig.add_trace(
-        go.Bar(x=daily_metrics['interaction_date'], y=daily_metrics['queue_calls'], 
-               name='Queue Calls', marker_color='#ff7f0e'),
+        go.Bar(
+            x=daily_metrics['interaction_date'], 
+            y=daily_metrics['queue_calls'], 
+            name='Daily Queue Calls', 
+            marker_color='#1f77b4', # A standard blue, distinct from the original orange
+            hovertemplate='<b>Date:</b> %{x|%Y-%m-%d}<br><b>Queue Calls:</b> %{y}<extra></extra>'
+        ),
         secondary_y=False,
     )
 
+    # 2. Line Chart for SLA Percentage
     fig.add_trace(
-        go.Scatter(x=daily_metrics['interaction_date'], y=daily_metrics['sla_percentage'], 
-                   name='SLA %', mode='lines+markers', line_color='#2ca02c'),
+        go.Scatter(
+            x=daily_metrics['interaction_date'], 
+            y=daily_metrics['sla_percentage'], 
+            name='Daily SLA Met (%)', 
+            mode='lines+markers', 
+            line=dict(color='#2ca02c', width=2), # Green for good performance, slightly thicker line
+            marker=dict(size=6, symbol='circle'), # Clearer markers
+            hovertemplate='<b>Date:</b> %{x|%Y-%m-%d}<br><b>SLA Met:</b> %{y:.2f}%<extra></extra>'
+        ),
         secondary_y=True,
     )
 
-    fig.update_layout(
-        title_text='Queue & SLA Metrics',
-        margin=dict(l=40, r=40, t=60, b=40), 
-        height=280,
-        title_font_size=14
+    # 3. Add an SLA Target Line (e.g., 85% or 90%)
+    # This provides a visual benchmark for performance.
+    sla_target = 85 # Define your target SLA percentage here
+    fig.add_hline(
+        y=sla_target, 
+        line_dash="dot", 
+        line_color="#d62728", # Red color for target/warning
+        annotation_text=f"SLA Target ({sla_target}%)", 
+        annotation_position="top left",
+        annotation_font_size=10,
+        secondary_y=True # Make sure it's on the correct axis
     )
-    fig.update_xaxes(title_text="Date")
-    fig.update_yaxes(title_text="Queue Calls", secondary_y=False)
-    fig.update_yaxes(title_text="SLA %", secondary_y=True, range=[0, 100])
+
+    # --- Update Layout and Axes ---
+    fig.update_layout(
+        title_text='<b>Contact Center Performance: Queue & SLA Metrics</b>', # More descriptive title
+        margin=dict(l=40, r=40, t=60, b=40), 
+        height=350, # Slightly increased height for better readability
+        title_font_size=16, # Slightly larger title font
+        legend=dict(x=0.01, y=1.1, xanchor='left', yanchor='top', orientation="h"), # Horizontal legend at top
+        plot_bgcolor='white', # Clean background
+        paper_bgcolor='white', # Clean paper background
+        hovermode="x unified" # Unify hover across both traces for a given x-point
+    )
+
+    fig.update_xaxes(
+        title_text="Date",
+        showgrid=True, gridwidth=1, gridcolor='lightgray', # Add light gridlines
+        tickformat="%b %d", # Format date ticks (e.g., Jul 29)
+        rangeslider_visible=False # Hide range slider to save space if not needed
+    )
+    
+    fig.update_yaxes(
+        title_text="Number of Calls in Queue", 
+        secondary_y=False,
+        showgrid=True, gridwidth=1, gridcolor='lightgray',
+        zeroline=True, zerolinewidth=1, zerolinecolor='lightgray'
+    )
+    
+    fig.update_yaxes(
+        title_text="SLA Met Percentage (%)", 
+        secondary_y=True, 
+        range=[0, 100], # Keep range fixed for SLA percentage
+        showgrid=False # No grid for secondary axis to avoid clutter
+    )
     
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
