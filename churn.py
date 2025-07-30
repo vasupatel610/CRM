@@ -1,6 +1,6 @@
 import pandas as pd
 import numpy as np
-from sklearn.model_selection import train_test_split
+from sklearn.model_selection import train_test_split, GridSearchCV, StratifiedKFold
 from sklearn.ensemble import RandomForestClassifier
 from sklearn.preprocessing import LabelEncoder, StandardScaler
 from sklearn.metrics import classification_report, confusion_matrix, accuracy_score
@@ -184,9 +184,10 @@ def prepare_features_for_modeling(customer_features):
 
 def train_models(X, y):
     """
-    Train multiple ML models for churn prediction
+    Train multiple ML models for churn prediction with hyperparameter tuning and cross-validation
+    to prevent overfitting.
     """
-    print("Training machine learning models...")
+    print("Training machine learning models with hyperparameter tuning and cross-validation...")
     
     # Check if we have enough samples of each class
     class_counts = y.value_counts()
@@ -207,41 +208,77 @@ def train_models(X, y):
     # Split data with stratification if possible
     try:
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42, stratify=y
+            X, y, test_size=0.3, random_state=42, stratify=y
         )
     except ValueError:
         # If stratification fails, do regular split (less ideal for imbalanced data)
         print("Warning: Stratification failed, performing non-stratified split.")
         X_train, X_test, y_train, y_test = train_test_split(
-            X, y, test_size=0.2, random_state=42
+            X, y, test_size=0.3, random_state=42
         )
     
-    # Initialize models
+    # Define models and their parameter grids for GridSearchCV
     models = {
-        'Random Forest': RandomForestClassifier(n_estimators=100, random_state=42, class_weight='balanced'),
-        'Logistic Regression': LogisticRegression(random_state=42, max_iter=1000, class_weight='balanced'),
-        'Decision Tree': DecisionTreeClassifier(random_state=42, class_weight='balanced')
+        'Random Forest': {
+            'estimator': RandomForestClassifier(random_state=42, class_weight='balanced'),
+            'param_grid': {
+                'n_estimators': [50, 100, 200],
+                'max_depth': [10, 20, None], # None means unlimited depth
+                'min_samples_leaf': [1, 2, 4],
+                'min_samples_split': [2, 5, 10]
+            }
+        },
+        'Logistic Regression': {
+            'estimator': LogisticRegression(random_state=42, max_iter=1000, class_weight='balanced'),
+            'param_grid': {
+                'C': [0.01, 0.1, 1, 10, 100], # Inverse of regularization strength
+                'penalty': ['l1', 'l2'] # L1 and L2 regularization
+            }
+        },
+        'Decision Tree': {
+            'estimator': DecisionTreeClassifier(random_state=42, class_weight='balanced'),
+            'param_grid': {
+                'max_depth': [5, 10, 20, None],
+                'min_samples_leaf': [1, 2, 4],
+                'min_samples_split': [2, 5, 10]
+            }
+        }
     }
     
-    # Train and evaluate models
     model_results = {}
     trained_models = {}
     
-    for name, model in models.items():
-        print(f"\nTraining {name}...")
+    # Use StratifiedKFold for cross-validation to maintain class distribution
+    cv = StratifiedKFold(n_splits=5, shuffle=True, random_state=42)
+    
+    for name, model_info in models.items():
+        print(f"\nPerforming GridSearchCV for {name}...")
         try:
-            model.fit(X_train, y_train)
-            y_pred = model.predict(X_test)
+            grid_search = GridSearchCV(
+                model_info['estimator'],
+                model_info['param_grid'],
+                cv=cv, # Use stratified cross-validation
+                scoring='accuracy', # Or 'f1_weighted' for imbalanced data
+                n_jobs=-1, # Use all available cores
+                verbose=1
+            )
+            
+            grid_search.fit(X_train, y_train)
+            
+            best_model = grid_search.best_estimator_
+            y_pred = best_model.predict(X_test)
             
             accuracy = accuracy_score(y_test, y_pred)
             model_results[name] = {
                 'accuracy': accuracy,
                 'predictions': y_pred,
-                'classification_report': classification_report(y_test, y_pred, zero_division=0)
+                'classification_report': classification_report(y_test, y_pred, zero_division=0),
+                'best_params': grid_search.best_params_
             }
-            trained_models[name] = model
+            trained_models[name] = best_model
             
-            print(f"{name} Accuracy: {accuracy:.4f}")
+            print(f"{name} Best Parameters: {grid_search.best_params_}")
+            print(f"{name} Accuracy on Test Set: {accuracy:.4f}")
             print(f"Classification Report:\n{classification_report(y_test, y_pred, zero_division=0)}")
             
         except Exception as e:
@@ -252,11 +289,11 @@ def train_models(X, y):
         print("Error: No models could be trained successfully.")
         return None, None, None, None, None, None
     
-    # Select best model (highest accuracy)
+    # Select best model (highest accuracy) based on test set performance
     best_model_name = max(model_results.keys(), key=lambda k: model_results[k]['accuracy'])
     best_model = trained_models[best_model_name]
     
-    print(f"\nBest performing model: {best_model_name}")
+    print(f"\nBest performing model overall (on test set): {best_model_name}")
     
     return best_model, X_train, X_test, y_train, y_test, best_model_name
 
@@ -392,7 +429,7 @@ if __name__ == "__main__":
 
 # def feature_engineering(data):
 #     """
-#     Create features for churn prediction
+#     Create features for churn prediction, including Customer Lifetime Value (CLTV)
 #     """
 #     print("Starting feature engineering...")
     
@@ -477,12 +514,25 @@ if __name__ == "__main__":
 #             customer_features['transaction_date_count'] / customer_features['customer_lifetime_days']
 #         ).fillna(0)
     
+#     # Calculate Customer Lifetime Value (CLTV)
+#     # A simple CLTV model: (Total Revenue / Customer Lifetime in Days) * 365 (annualized)
+#     if 'grand_total_sum' in customer_features.columns and 'customer_lifetime_days' in customer_features.columns:
+#         # Avoid division by zero for customers with 0 lifetime days (e.g., single transaction)
+#         customer_features['customer_lifetime_value'] = np.where(
+#             customer_features['customer_lifetime_days'] > 0,
+#             (customer_features['grand_total_sum'] / customer_features['customer_lifetime_days']) * 365,
+#             customer_features['grand_total_sum'] # If lifetime is 0, CLTV is just total spent
+#         )
+#         customer_features['customer_lifetime_value'] = customer_features['customer_lifetime_value'].fillna(0)
+#     else:
+#         customer_features['customer_lifetime_value'] = 0 # Default if columns not found
+    
 #     # Define churn target variable - MODIFIED CHURN CONDITIONS
 #     churn_conditions = []
     
 #     # Condition 1: No transaction in last 120 days (increased from 90)
 #     if 'days_since_last_transaction' in customer_features.columns:
-#         churn_conditions.append(customer_features['days_since_last_transaction'] > 120)   
+#         churn_conditions.append(customer_features['days_since_last_transaction'] > 120)  
     
 #     # Condition 2: Low transaction frequency (less than twice per 3 months ~ 0.02 transactions/day)
 #     if 'transaction_frequency' in customer_features.columns:
@@ -651,7 +701,10 @@ if __name__ == "__main__":
 #     if 'days_since_last_transaction' in customer_features.columns:
 #         results['days_since_last_transaction'] = customer_features['days_since_last_transaction']
 #     if 'customer_age' in customer_features.columns:
-#         results['customer_age'] = customer_features['customer_age']     
+#         results['customer_age'] = customer_features['customer_age']
+#     # Add Customer Lifetime Value
+#     if 'customer_lifetime_value' in customer_features.columns:
+#         results['customer_lifetime_value'] = customer_features['customer_lifetime_value']
     
 #     # Save to CSV
 #     results.to_csv(output_path, index=False)
@@ -722,3 +775,4 @@ if __name__ == "__main__":
 
 # if __name__ == "__main__":
 #     main()
+

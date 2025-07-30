@@ -343,6 +343,7 @@ def plot_churn_ltv_scatter(df):
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
 
+
 # 3.6 At risk customers histogram (age bin) (Plotly Express Histogram)
 def plot_at_risk_customers_histogram(df):
     # Ensure customer_age is numeric

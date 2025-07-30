@@ -357,20 +357,49 @@ def plot_kpi_sparklines(df_after_sales, df_sentiment):
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
 # --- 7. NPS Tracking ---
-def plot_nps_tracking(df_after_sales):
-    nps_data = df_after_sales.groupby(pd.Grouper(key='interaction_date', freq='D'))['nps_score'].mean().reset_index()
-    nps_data.columns = ['Date', 'NPS']
+# def plot_nps_tracking(df_after_sales):
+#     nps_data = df_after_sales.groupby(pd.Grouper(key='interaction_date', freq='D'))['nps_score'].mean().reset_index()
+#     nps_data.columns = ['Date', 'NPS']
     
-    fig = px.line(nps_data, x='Date', y='NPS', 
-                  title='Daily NPS Score',
-                  color_discrete_sequence=['#2ca02c'])
+#     fig = px.line(nps_data, x='Date', y='NPS', 
+#                   title='Daily NPS Score',
+#                   color_discrete_sequence=['#2ca02c'])
+#     fig.update_layout(
+#         margin=dict(l=40, r=40, t=60, b=40), 
+#         height=280,
+#         title_font_size=14
+#     )
+#     fig.update_yaxes(range=[0, 10])
+    
+#     return fig.to_html(full_html=False, include_plotlyjs='cdn')
+
+def plot_nps_tracking(df_after_sales):
+    # Ensure 'interaction_date' is datetime type
+    df_after_sales['interaction_date'] = pd.to_datetime(df_after_sales['interaction_date'])
+
+    # Get the most recent date in the data
+    latest_date = df_after_sales['interaction_date'].max()
+
+    # Calculate the date 30 days prior to the latest date
+    start_date = latest_date - pd.Timedelta(days=30)
+
+    # Filter data for the last 30 days
+    df_last_30_days = df_after_sales[(df_after_sales['interaction_date'] >= start_date) & \
+                                     (df_after_sales['interaction_date'] <= latest_date)]
+
+    nps_data = df_last_30_days.groupby(pd.Grouper(key='interaction_date', freq='D'))['nps_score'].mean().reset_index()
+    nps_data.columns = ['Date', 'NPS']
+
+    fig = px.line(nps_data, x='Date', y='NPS',
+                    title='Daily NPS Score (Last 30 Days)',
+                    color_discrete_sequence=['#2ca02c'])
     fig.update_layout(
-        margin=dict(l=40, r=40, t=60, b=40), 
+        margin=dict(l=40, r=40, t=60, b=40),
         height=280,
         title_font_size=14
     )
     fig.update_yaxes(range=[0, 10])
-    
+
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
 # --- 8. Staff Feedback ---
