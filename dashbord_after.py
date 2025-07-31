@@ -386,32 +386,190 @@ def plot_kpi_sparklines(df_after_sales, df_sentiment):
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
 # --- 7. NPS Tracking ---
+# def plot_nps_tracking(df_after_sales):
+#     # Ensure 'interaction_date' is datetime type
+#     df_after_sales['interaction_date'] = pd.to_datetime(df_after_sales['interaction_date'])
+
+#     # Get the most recent date in the data
+#     latest_date = df_after_sales['interaction_date'].max()
+
+#     # Calculate the date 30 days prior to the latest date
+#     start_date = latest_date - pd.Timedelta(days=30)
+
+#     # Filter data for the last 30 days
+#     df_last_30_days = df_after_sales[(df_after_sales['interaction_date'] >= start_date) & \
+#                                      (df_after_sales['interaction_date'] <= latest_date)]
+
+#     nps_data = df_last_30_days.groupby(pd.Grouper(key='interaction_date', freq='D'))['nps_score'].mean().reset_index()
+#     nps_data.columns = ['Date', 'NPS']
+
+#     fig = px.line(nps_data, x='Date', y='NPS',
+#                     title='Daily NPS Score (Last 30 Days)',
+#                     color_discrete_sequence=['#2ca02c'])
+#     fig.update_layout(
+#         margin=dict(l=40, r=40, t=60, b=40),
+#         height=280,
+#         title_font_size=14
+#     )
+#     fig.update_yaxes(range=[0, 10])
+
+#     return fig.to_html(full_html=False, include_plotlyjs='cdn')
+
 def plot_nps_tracking(df_after_sales):
+    """
+    Enhanced NPS tracking with customer details and 6-month activity history
+    """
+    import pandas as pd
+    import plotly.graph_objects as go
+    from plotly.subplots import make_subplots
+    from datetime import datetime, timedelta
+    
     # Ensure 'interaction_date' is datetime type
     df_after_sales['interaction_date'] = pd.to_datetime(df_after_sales['interaction_date'])
 
     # Get the most recent date in the data
     latest_date = df_after_sales['interaction_date'].max()
 
-    # Calculate the date 30 days prior to the latest date
-    start_date = latest_date - pd.Timedelta(days=30)
+    # Calculate the date 30 days prior to the latest date for NPS trend
+    start_date_30 = latest_date - pd.Timedelta(days=30)
+    
+    # Calculate the date 6 months prior for customer activity analysis
+    start_date_6m = latest_date - pd.Timedelta(days=180)
 
-    # Filter data for the last 30 days
-    df_last_30_days = df_after_sales[(df_after_sales['interaction_date'] >= start_date) & \
-                                     (df_after_sales['interaction_date'] <= latest_date)]
+    # Filter data for the last 30 days for NPS trend
+    df_last_30_days = df_after_sales[
+        (df_after_sales['interaction_date'] >= start_date_30) & 
+        (df_after_sales['interaction_date'] <= latest_date)
+    ]
 
-    nps_data = df_last_30_days.groupby(pd.Grouper(key='interaction_date', freq='D'))['nps_score'].mean().reset_index()
-    nps_data.columns = ['Date', 'NPS']
+    # Filter data for the last 6 months for customer activity
+    df_last_6_months = df_after_sales[
+        (df_after_sales['interaction_date'] >= start_date_6m) & 
+        (df_after_sales['interaction_date'] <= latest_date)
+    ]
 
-    fig = px.line(nps_data, x='Date', y='NPS',
-                    title='Daily NPS Score (Last 30 Days)',
-                    color_discrete_sequence=['#2ca02c'])
+    # Group by date and calculate NPS with customer details
+    nps_detailed = []
+    
+    for date, group in df_last_30_days.groupby(pd.Grouper(key='interaction_date', freq='D')):
+        if len(group) > 0:
+            avg_nps = group['nps_score'].mean()
+            
+            # Get customer details for this date
+            customer_details = group.groupby('customer_id').agg({
+                'nps_score': 'mean',
+                'interaction_type': lambda x: ', '.join(x.unique()),
+                'issue_category': lambda x: ', '.join(x.unique()),
+                'resolution_status': lambda x: ', '.join(x.unique())
+            }).reset_index()
+            
+            # Create customer summary string
+            customer_list = []
+            for _, customer in customer_details.iterrows():
+                customer_list.append(
+                    f"Customer {customer['customer_id']}: NPS {customer['nps_score']:.1f} "
+                    f"({customer['interaction_type']}) - {customer['issue_category']}"
+                )
+            
+            # Get 6-month activity for customers who contributed to this day's NPS
+            customer_ids = group['customer_id'].unique()
+            customer_activity_6m = df_last_6_months[
+                df_last_6_months['customer_id'].isin(customer_ids)
+            ].groupby('customer_id').agg({
+                'interaction_id': 'count',
+                'nps_score': 'mean',
+                'resolution_status': lambda x: (x == 'Resolved').sum(),
+                'interaction_type': lambda x: ', '.join(x.unique()[:3])  # Top 3 interaction types
+            }).reset_index()
+            
+            customer_activity_6m['resolution_rate'] = (
+                customer_activity_6m['resolution_status'] / customer_activity_6m['interaction_id'] * 100
+            ).round(1)
+            
+            # Create 6-month activity summary
+            activity_summary = []
+            for _, activity in customer_activity_6m.iterrows():
+                activity_summary.append(
+                    f"Customer {activity['customer_id']}: {activity['interaction_id']} interactions, "
+                    f"Avg NPS: {activity['nps_score']:.1f}, Resolution: {activity['resolution_rate']}%"
+                )
+            
+            nps_detailed.append({
+                'Date': date,
+                'NPS': avg_nps,
+                'Customer_Count': len(customer_details),
+                'Customer_Details': '<br>'.join(customer_list),
+                'Activity_6M': '<br>'.join(activity_summary)
+            })
+
+    nps_data = pd.DataFrame(nps_detailed)
+    
+    if nps_data.empty:
+        return go.Figure().to_html(full_html=False, include_plotlyjs='cdn')
+
+    # Create the enhanced plot
+    fig = go.Figure()
+
+    # Add the main NPS trend line
+    fig.add_trace(go.Scatter(
+        x=nps_data['Date'],
+        y=nps_data['NPS'],
+        mode='lines+markers',
+        name='Daily NPS',
+        line=dict(color='#2ca02c', width=3),
+        marker=dict(size=8, color='#2ca02c'),
+        customdata=list(zip(
+            nps_data['Customer_Count'],
+            nps_data['Customer_Details'],
+            nps_data['Activity_6M']
+        )),
+        hovertemplate=(
+            '<b>Date:</b> %{x|%b %d, %Y}<br>'
+            '<b>Average NPS:</b> %{y:.2f}<br>'
+            '<b>Customers:</b> %{customdata[0]}<br>'
+            '<b>Customer Details:</b><br>%{customdata[1]}<br>'
+            '<b>6-Month Activity:</b><br>%{customdata[2]}<br>'
+            '<extra></extra>'
+        )
+    ))
+
+    # Add NPS benchmark lines
+    fig.add_hline(y=9, line_dash="dash", line_color="green", 
+                  annotation_text="Promoter (9-10)", annotation_position="top left")
+    fig.add_hline(y=7, line_dash="dash", line_color="orange", 
+                  annotation_text="Passive (7-8)", annotation_position="top left")
+    fig.add_hline(y=6, line_dash="dash", line_color="red", 
+                  annotation_text="Detractor (0-6)", annotation_position="bottom left")
+
+    # Enhanced layout
     fig.update_layout(
-        margin=dict(l=40, r=40, t=60, b=40),
-        height=280,
-        title_font_size=14
+        title={
+            'text': 'Daily NPS Score with Customer Details (Last 30 Days)',
+            'x': 0.5,
+            'xanchor': 'center'
+        },
+        margin=dict(l=40, r=40, t=80, b=40),
+        height=350,
+        title_font_size=14,
+        xaxis_title="Date",
+        yaxis_title="NPS Score",
+        yaxis=dict(range=[0, 10]),
+        hovermode='x unified',
+        plot_bgcolor='white',
+        paper_bgcolor='white',
+        showlegend=True,
+        legend=dict(
+            orientation="h",
+            yanchor="bottom",
+            y=1.02,
+            xanchor="right",
+            x=1
+        )
     )
-    fig.update_yaxes(range=[0, 10])
+
+    # Add grid
+    fig.update_xaxes(showgrid=True, gridwidth=1, gridcolor='lightgray')
+    fig.update_yaxes(showgrid=True, gridwidth=1, gridcolor='lightgray')
 
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
