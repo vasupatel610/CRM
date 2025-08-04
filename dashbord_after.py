@@ -598,66 +598,256 @@ def plot_staff_feedback(df_after_sales):
     
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
+import pandas as pd
+import plotly.graph_objects as go
+import plotly.express
 # --- 9. Campaign KPIs ---
-def plot_campaign_kpis(df_journey):
-    total_sent = df_journey[df_journey['stage'] == 'sent'].shape[0]
-    total_opens = df_journey[df_journey['campaign_open'] == 'Yes'].shape[0]
-    total_clicks = df_journey[df_journey['campaign_click'] == 'Yes'].shape[0]
-    total_conversions = df_journey[df_journey['conversion_flag'] == 'Yes'].shape[0]
 
-    open_rate = (total_opens / total_sent) * 100 if total_sent > 0 else 0
-    click_rate = (total_clicks / total_opens) * 100 if total_opens > 0 else 0
-    conversion_rate = (total_conversions / total_sent) * 100 if total_sent > 0 else 0
 
+# import pandas as pd
+# import plotly.graph_objects as go
+# import plotly.express as px
+
+# def plot_branch_performance(df_transactions, df_after_sales):
+#     """
+#     Creates two gauge charts to visualize branch performance metrics:
+#     1. Issues resolved by a specific branch.
+#     2. Revenue performance of the best-performing branch.
+
+#     Args:
+#         df_transactions (pd.DataFrame): DataFrame with transaction data.
+#         df_after_sales (pd.DataFrame): DataFrame with after-sales data.
+
+#     Returns:
+#         str: HTML string of the combined Plotly figure.
+#     """
+#     # Helper to return a blank plot with a message
+#     def create_blank_plot(message):
+#         fig = go.Figure().update_layout(title_text=message,
+#                                          margin=dict(l=20, r=20, t=60, b=20), height=250, title_font_size=14)
+#         return fig.to_html(full_html=False, include_plotlyjs='cdn')
+        
+#     # --- Part 1: Calculate Resolved Issues for a specific branch ---
+#     # We will choose a branch to display. Let's pick a random one for demonstration.
+#     # In a real dashboard, you might pass a branch_id as an argument or let the user select one.
+#     if df_after_sales.empty or 'branch_id' not in df_after_sales.columns:
+#         print("Warning: Skipping resolved issues gauge. 'branch_id' column not found in df_after_sales.")
+#         resolved_issues_value = 0
+#         total_issues_value = 100
+#         branch_id_to_show = "N/A"
+#     else:
+#         # Get a list of all branches to pick one
+#         all_branches = df_after_sales['branch_id'].unique()
+#         if len(all_branches) > 0:
+#             branch_id_to_show = all_branches[0] # Pick the first branch for display
+#         else:
+#             branch_id_to_show = "N/A"
+        
+#         branch_issues = df_after_sales[df_after_sales['branch_id'] == branch_id_to_show]
+#         resolved_issues_value = (branch_issues['resolution_status'] == 'Resolved').sum()
+#         total_issues_value = branch_issues.shape[0]
+#         if total_issues_value == 0:
+#             total_issues_value = 1 # Avoid division by zero
+
+
+#     # --- Part 2: Calculate Revenue for the Best Performing Branch ---
+#     if df_transactions.empty or 'branch_id' not in df_transactions.columns:
+#         print("Warning: Skipping best-performing branch gauge. Required columns are missing in df_transactions.")
+#         best_branch_revenue = 0
+#         best_branch_id = "N/A"
+#         total_revenue = 100
+#     else:
+#         df_transactions['total_revenue'] = df_transactions['grand_total']
+#         branch_revenue = df_transactions.groupby('branch_id')['total_revenue'].sum().reset_index()
+        
+#         best_branch_row = branch_revenue.loc[branch_revenue['total_revenue'].idxmax()]
+#         best_branch_id = best_branch_row['branch_id']
+#         best_branch_revenue = best_branch_row['total_revenue']
+#         total_revenue = df_transactions['total_revenue'].sum()
+
+
+#     # --- Create Subplots for the two Gauges ---
+#     fig = make_subplots(
+#         rows=1, cols=2,
+#         specs=[[{'type': 'indicator'}, {'type': 'indicator'}]],
+#         subplot_titles=(f'Issues Resolved by Branch {branch_id_to_show}', f'Revenue for Best Performing Branch {best_branch_id}')
+#     )
+
+#     # Gauge 1: Issues Resolved
+#     fig.add_trace(go.Indicator(
+#         mode="gauge+number",
+#         value=resolved_issues_value,
+#         title={'text': "Issues Resolved", 'font': {'size': 14}},
+#         gauge={'axis': {'range': [None, total_issues_value]},
+#                'bar': {'color': "#2ca02c"}, # Green for good
+#                'steps': [
+#                    {'range': [0, total_issues_value * 0.5], 'color': "lightgray"},
+#                    {'range': [total_issues_value * 0.5, total_issues_value], 'color': "gray"}
+#                ],
+#                'threshold': {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': total_issues_value * 0.8}}
+#     ), row=1, col=1)
+
+#     # Gauge 2: Best Performing Branch Revenue
+#     fig.add_trace(go.Indicator(
+#         mode="gauge+number",
+#         value=best_branch_revenue,
+#         title={'text': "Total Revenue", 'font': {'size': 14}},
+#         gauge={'axis': {'range': [None, total_revenue]},
+#                'bar': {'color': "#1f77b4"}, # Blue for good
+#                'steps': [
+#                    {'range': [0, total_revenue * 0.5], 'color': "lightgray"},
+#                    {'range': [total_revenue * 0.5, total_revenue], 'color': "gray"}
+#                ]}
+#     ), row=1, col=2)
+
+#     fig.update_layout(
+#         title_text="<b>Branch Performance Overview</b>",
+#         title_font_size=16,
+#         margin=dict(l=20, r=20, t=60, b=20),
+#         height=300,
+#         paper_bgcolor='white',
+#         plot_bgcolor='white',
+#         font=dict(size=12, color='#333'),
+#         showlegend=False
+#     )
+#     fig.update_traces(
+#         number={'font': {'size': 20}},
+#         title_font={'size': 16}
+#     )
+#     fig.update_annotations(font_size=14)
+
+#     # Return the HTML representation of the figure
+#     return fig.to_html(full_html=False, include_plotlyjs='cdn')
+
+def plot_branch_performance(df_transactions, df_after_sales):
+    """
+    Creates a combined subplot with two gauge charts and a bar chart
+    to visualize overall branch performance.
+
+    Args:
+        df_transactions (pd.DataFrame): DataFrame with transaction data.
+        df_after_sales (pd.DataFrame): DataFrame with after-sales data.
+
+    Returns:
+        str: HTML string of the combined Plotly figure.
+    """
+    # Helper to return a blank plot with a message
+    def create_blank_plot(message):
+        fig = go.Figure().update_layout(title_text=message,
+                                         margin=dict(l=20, r=20, t=60, b=20), height=300, title_font_size=14)
+        return fig.to_html(full_html=False, include_plotlyjs='cdn')
+
+    # --- Part 1: Calculate Resolved Issues for a specific branch ---
+    resolved_issues_value = 0
+    total_issues_value = 1
+    branch_id_to_show = "N/A"
+    
+    # **Validation and data linking for after_sales data**
+    if not df_after_sales.empty and 'branch_id' in df_after_sales.columns and 'resolution_status' in df_after_sales.columns:
+        all_branches = df_after_sales['branch_id'].unique()
+        if len(all_branches) > 0:
+            branch_id_to_show = all_branches[0] # Pick the first branch for display
+            branch_issues = df_after_sales[df_after_sales['branch_id'] == branch_id_to_show]
+            resolved_issues_value = (branch_issues['resolution_status'] == 'Resolved').sum()
+            total_issues_value = branch_issues.shape[0]
+            if total_issues_value == 0:
+                total_issues_value = 1 # Avoid division by zero
+    else:
+        print("Warning: Skipping resolved issues gauge. 'branch_id' or 'resolution_status' column not found in df_after_sales.")
+
+    # --- Part 2: Calculate Revenue for all branches ---
+    best_branch_revenue = 0
+    best_branch_id = "N/A"
+    total_revenue = 1
+    
+    # **Validation and data linking for transactions data**
+    if not df_transactions.empty and 'branch_id' in df_transactions.columns and 'grand_total' in df_transactions.columns:
+        df_transactions['total_revenue'] = df_transactions['grand_total']
+        branch_revenue = df_transactions.groupby('branch_id')['total_revenue'].sum().reset_index()
+        
+        if not branch_revenue.empty:
+            best_branch_row = branch_revenue.loc[branch_revenue['total_revenue'].idxmax()]
+            best_branch_id = best_branch_row['branch_id']
+            best_branch_revenue = best_branch_row['total_revenue']
+            total_revenue = df_transactions['total_revenue'].sum()
+            # Sort the branches for the bar chart
+            branch_revenue_sorted = branch_revenue.sort_values(by='total_revenue', ascending=True)
+        else:
+            branch_revenue_sorted = pd.DataFrame(columns=['branch_id', 'total_revenue'])
+            
+    else:
+        print("Warning: Skipping branch revenue charts. Required columns are missing in df_transactions.")
+        branch_revenue_sorted = pd.DataFrame(columns=['branch_id', 'total_revenue'])
+
+    # --- Create Subplots for the three plots ---
     fig = make_subplots(
         rows=1, cols=3,
-        specs=[[{'type': 'indicator'}, {'type': 'indicator'}, {'type': 'indicator'}]],
-        subplot_titles=('Open Rate', 'Click Rate', 'Conversion')
+        specs=[[{'type': 'indicator'}, {'type': 'indicator'}, {'type': 'xy'}]],
+        subplot_titles=(
+            f'Issues Resolved by Branch {branch_id_to_show}',
+            f'Revenue for Best Branch {best_branch_id}',
+            'Revenue Contribution by Branch'
+        )
     )
 
+    # --- Plot Gauge 1: Issues Resolved ---
     fig.add_trace(go.Indicator(
-        mode="gauge+number+delta",
-        value=open_rate,
-        title={'text': "Open %"},
-        gauge={'axis': {'range': [0, 100]},
-               'bar': {'color': "#636efa"},
+        mode="gauge+number",
+        value=resolved_issues_value,
+        title={'text': "Issues Resolved", 'font': {'size': 14}},
+        gauge={'axis': {'range': [None, total_issues_value]},
+               'bar': {'color': "#2ca02c"}, # Green for good
                'steps': [
-                   {'range': [0, 40], 'color': "lightcoral"},
-                   {'range': [40, 70], 'color': "lightgray"},
-                   {'range': [70, 100], 'color': "lightgreen"}],
-               }), row=1, col=1)
+                   {'range': [0, total_issues_value * 0.5], 'color': "lightgray"},
+                   {'range': [total_issues_value * 0.5, total_issues_value], 'color': "gray"}
+               ],
+               'threshold': {'line': {'color': "red", 'width': 4}, 'thickness': 0.75, 'value': total_issues_value * 0.8}}
+    ), row=1, col=1)
 
+    # --- Plot Gauge 2: Best Performing Branch Revenue ---
     fig.add_trace(go.Indicator(
-        mode="gauge+number+delta",
-        value=click_rate,
-        title={'text': "Click %"},
-        gauge={'axis': {'range': [0, 100]},
-               'bar': {'color': "#EF553B"},
+        mode="gauge+number",
+        value=best_branch_revenue,
+        title={'text': "Total Revenue", 'font': {'size': 14}},
+        gauge={'axis': {'range': [None, total_revenue]},
+               'bar': {'color': "#1f77b4"}, # Blue for good
                'steps': [
-                   {'range': [0, 10], 'color': "lightcoral"},
-                   {'range': [10, 30], 'color': "lightgray"},
-                   {'range': [30, 100], 'color': "lightgreen"}],
-               }), row=1, col=2)
-
-    fig.add_trace(go.Indicator(
-        mode="gauge+number+delta",
-        value=conversion_rate,
-        title={'text': "Conv %"},
-        gauge={'axis': {'range': [0, 100]},
-               'bar': {'color': "#00cc96"},
-               'steps': [
-                   {'range': [0, 5], 'color': "lightcoral"},
-                   {'range': [5, 15], 'color': "lightgray"},
-                   {'range': [15, 100], 'color': "lightgreen"}],
-               }), row=1, col=3)
+                   {'range': [0, total_revenue * 0.5], 'color': "lightgray"},
+                   {'range': [total_revenue * 0.5, total_revenue], 'color': "gray"}
+               ]}
+    ), row=1, col=2)
+    
+    # --- Plot Bar Chart 3: Revenue Contribution by Branch ---
+    fig.add_trace(go.Bar(
+        x=branch_revenue_sorted['total_revenue'],
+        y=branch_revenue_sorted['branch_id'],
+        orientation='h',
+        marker_color='#FF8C00'
+    ), row=1, col=3)
 
     fig.update_layout(
-        height=280, 
-        margin=dict(l=20, r=20, t=60, b=20), 
-        title_text="Campaign Metrics",
-        title_font_size=14
+        title_text="<b>Branch Performance Overview</b>",
+        title_font_size=16,
+        margin=dict(l=20, r=20, t=60, b=20),
+        height=350,
+        paper_bgcolor='white',
+        plot_bgcolor='white',
+        font=dict(size=12, color='#333'),
+        showlegend=False
     )
     
+    # Update axes for the new bar chart
+    fig.update_xaxes(title_text='Total Revenue', row=1, col=3)
+    fig.update_yaxes(title_text='Branch ID', row=1, col=3)
+    
+    fig.update_traces(
+        selector=dict(type='indicator'),
+        number={'font': {'size': 20}},
+        title_font={'size': 16}
+    )
+    
+    fig.update_annotations(font_size=14)
+
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
 # --- Generate HTML Dashboard ---
@@ -889,7 +1079,7 @@ if __name__ == "__main__":
     plot_html_kpi_sparklines = plot_kpi_sparklines(df_after_sales, df_sentiment)
     plot_html_nps_tracking = plot_nps_tracking(df_after_sales)
     plot_html_staff_feedback = plot_staff_feedback(df_after_sales)
-    plot_html_campaign_kpis = plot_campaign_kpis(df_journey)
+    plot_html_campaign_kpis = plot_branch_performance(df_transactions, df_after_sales)
 
     plots_dict = {
         'plot_html_sentiment': plot_html_sentiment,

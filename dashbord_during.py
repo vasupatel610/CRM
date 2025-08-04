@@ -362,33 +362,112 @@ def create_loyalty_heatmap(df):
     
     return fig.to_html(div_id="loyalty_heatmap", include_plotlyjs=False)
 
+# def create_bnpl_adoption_boxplot(df):
+#     """Create BNPL adoption rate monthly boxplot"""
+#     # Calculate BNPL adoption by month and branch
+#     bnpl_data = df.groupby(['month_year', 'branch_id']).agg({
+#         'payment_mode': lambda x: (x == 'BNPL').sum(),
+#         'transaction_id': 'count',
+#         'month_name': 'first' # Get the month name for display
+#     }).reset_index()
+#     bnpl_data = bnpl_data.sort_values('month_year')
+
+#     bnpl_data['bnpl_rate'] = (bnpl_data['payment_mode'] / bnpl_data['transaction_id']) * 100
+
+#     fig = go.Figure()
+
+#     for month_year_period in bnpl_data['month_year'].unique():
+#         month_data = bnpl_data[bnpl_data['month_year'] == month_year_period]
+#         # Get the representative month_name for this month_year_period
+#         month_name_for_plot = month_data['month_name'].iloc[0] if not month_data.empty else str(month_year_period)
+#         fig.add_trace(go.Box(
+#             y=month_data['bnpl_rate'],
+#             name=month_name_for_plot, # Use month name for the boxplot group
+#             boxpoints='outliers'
+#         ))
+
+#     fig.update_layout(
+#         title="BNPL Adoption Rate (Monthly Adoption Rate Boxplot)",
+#         xaxis_title="", # Removed x-axis title
+#         yaxis_title="BNPL Adoption Rate (%)",
+#         height=250,
+#         margin=dict(l=20, r=20, t=40, b=20),
+#         plot_bgcolor='white',
+#         showlegend=False,
+#         xaxis=dict(tickangle=45)
+#     )
+
+#     return fig.to_html(div_id="bnpl_adoption", include_plotlyjs=False)
+
 def create_bnpl_adoption_boxplot(df):
-    """Create BNPL adoption rate monthly boxplot"""
-    # Calculate BNPL adoption by month and branch
-    bnpl_data = df.groupby(['month_year', 'branch_id']).agg({
-        'payment_mode': lambda x: (x == 'BNPL').sum(),
-        'transaction_line_id': 'count',
-        'month_name': 'first' # Get the month name for display
-    }).reset_index()
+    """
+    Creates a BNPL adoption rate monthly boxplot and a CSV file summary.
+
+    This function calculates the BNPL adoption rate by month and branch,
+    generates a boxplot to visualize the monthly distribution of adoption rates,
+    and saves the raw data used for the plot to a CSV file.
+
+    The CSV file, 'bnpl_adoption_summary.csv', will contain the following columns:
+    - month: The name of the month (e.g., 'January').
+    - store_id: The identifier for the branch.
+    - total_txns: The total number of transactions for that branch and month.
+    - bnpl_txns: The number of BNPL transactions for that branch and month.
+    - bnpl_adoption_rate: The calculated BNPL adoption rate as a percentage.
+    
+    Args:
+        df (pd.DataFrame): The input DataFrame containing transaction data.
+                          It is expected to have 'month_year', 'branch_id',
+                          'payment_mode', 'transaction_id', and 'month_name' columns.
+
+    Returns:
+        str: An HTML string of the generated Plotly boxplot.
+    """
+    # Calculate total transactions and BNPL transactions by month and branch
+    bnpl_data = df.groupby(['month_year', 'branch_id']).agg(
+        bnpl_txns=('payment_mode', lambda x: (x == 'BNPL').sum()),
+        total_txns=('transaction_id', 'count'),
+        month_name=('month_name', 'first')
+    ).reset_index()
+
+    # Calculate the BNPL adoption rate as a percentage
+    bnpl_data['bnpl_adoption_rate'] = (bnpl_data['bnpl_txns'] / bnpl_data['total_txns']) * 100
+
+    # Ensure the data is sorted for consistent plotting
     bnpl_data = bnpl_data.sort_values('month_year')
 
-    bnpl_data['bnpl_rate'] = (bnpl_data['payment_mode'] / bnpl_data['transaction_line_id']) * 100
+    # --- Create and Save CSV File ---
+    # Prepare the DataFrame for CSV with the specified column names
+    csv_df = bnpl_data.rename(columns={
+        'month_name': 'month',
+        'branch_id': 'store_id',
+        'bnpl_adoption_rate': 'bnpl_adoption_rate'
+    })
+    
+    # Select and reorder the final columns for the CSV
+    csv_df = csv_df[['month', 'store_id', 'total_txns', 'bnpl_txns', 'bnpl_adoption_rate']]
 
+    # Save the DataFrame to a CSV file
+    csv_df.to_csv('bnpl_adoption_summary.csv', index=False)
+    print("CSV file 'bnpl_adoption_summary.csv' has been created successfully.")
+    
+    # --- Create the Plotly Boxplot ---
     fig = go.Figure()
 
     for month_year_period in bnpl_data['month_year'].unique():
         month_data = bnpl_data[bnpl_data['month_year'] == month_year_period]
+        
         # Get the representative month_name for this month_year_period
         month_name_for_plot = month_data['month_name'].iloc[0] if not month_data.empty else str(month_year_period)
+        
         fig.add_trace(go.Box(
-            y=month_data['bnpl_rate'],
-            name=month_name_for_plot, # Use month name for the boxplot group
+            y=month_data['bnpl_adoption_rate'],
+            name=month_name_for_plot,
             boxpoints='outliers'
         ))
 
     fig.update_layout(
         title="BNPL Adoption Rate (Monthly Adoption Rate Boxplot)",
-        xaxis_title="", # Removed x-axis title
+        xaxis_title="",
         yaxis_title="BNPL Adoption Rate (%)",
         height=250,
         margin=dict(l=20, r=20, t=40, b=20),
@@ -398,6 +477,9 @@ def create_bnpl_adoption_boxplot(df):
     )
 
     return fig.to_html(div_id="bnpl_adoption", include_plotlyjs=False)
+
+
+
 
 def generate_dashboard_html(df):
     """Generate the complete 3x3 dashboard HTML"""

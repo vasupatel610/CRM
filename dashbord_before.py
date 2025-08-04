@@ -55,18 +55,18 @@ def fig_to_base64(fig):
 # --- 3. Plotting Functions for each dashboard cell ---
 
 # 3.1 Campaign dashboard - Funnel charts (Plotly Express)
-def plot_funnel_chart(df):
+def plot_funnel_chart(journey_df):
     funnel_stages_order = ['Sent', 'Viewed', 'Clicked', 'AddedToCart', 'Purchased-Loyalty']
 
-    # Count unique customers at each funnel stage
+    # Mapping logic: these are derived from the correct column names based on your data
     funnel_counts = {
-        'Sent': df[df['campaign_open'].notna()]['customer_id'].nunique(), # Customers where campaign status is logged
-        'Viewed': df[df['campaign_open'] == 'Yes']['customer_id'].nunique(),
-        'Clicked': df[df['campaign_click'] == 'Yes']['customer_id'].nunique(),
-        'AddedToCart': df[df['product_in_cart'] == 'Yes']['customer_id'].nunique(),
-        'Purchased-Loyalty': df[df['conversion_flag'] == 'Yes']['customer_id'].nunique()
+        'Sent': journey_df[journey_df['stage'].str.lower() == 'sent']['customer_id'].nunique(),
+        'Viewed': journey_df[journey_df['campaign_open'].str.lower() == 'yes']['customer_id'].nunique(),
+        'Clicked': journey_df[journey_df['campaign_click'].str.lower() == 'yes']['customer_id'].nunique(),
+        'AddedToCart': journey_df[journey_df['product_in_cart'].str.lower() == 'yes']['customer_id'].nunique(),
+        'Purchased-Loyalty': journey_df[journey_df['conversion_flag'].str.lower() == 'yes']['customer_id'].nunique(),
     }
-    
+
     funnel_data = pd.DataFrame(list(funnel_counts.items()), columns=['Stage', 'Customers'])
     funnel_data['Stage'] = pd.Categorical(funnel_data['Stage'], categories=funnel_stages_order, ordered=True)
     funnel_data = funnel_data.sort_values('Stage')
@@ -75,21 +75,24 @@ def plot_funnel_chart(df):
     fig.update_layout(height=300, margin=dict(l=20, r=20, t=40, b=20))
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
 
+
 # 3.2 Best time vs channel Heatmap (Plotly Graph Objects)
 import plotly.graph_objects as go
 
-def plot_time_channel_heatmap(df):
+def plot_time_channel_heatmap(journey_df):
     # Group and count interactions
-    heatmap_data = df.groupby(['time_group', 'social_media_platform']).size().unstack(fill_value=0)
+    heatmap_data = journey_df.groupby(['time_group', 'social_media_platform']).size().unstack(fill_value=0)
+
+    # Define order of time groups
     time_order = ['Early Morning (6-9am)', 'Business Hours (9am-4pm)', 'Evening (4-7pm)', 'Night (7pm-5am)']
     heatmap_data = heatmap_data.reindex(time_order)
-    
-    # Compute row-wise percent (as a share of all interactions in that time_group)
+
+    # Normalize rows to get percent values
     heatmap_percent = heatmap_data.div(heatmap_data.sum(axis=1), axis=0) * 100
-    
-    # Format for hover template (rounded percentages)
+
+    # Round and format text for annotations
     text_annotations = heatmap_percent.round(1).astype(str) + '%'
-    
+
     fig = go.Figure(data=go.Heatmap(
         z=heatmap_percent.values,
         x=heatmap_percent.columns,
@@ -100,15 +103,17 @@ def plot_time_channel_heatmap(df):
         hovertemplate='Channel: %{x}<br>Time: %{y}<br>Percent: %{z:.1f}%<extra></extra>',
         hoverinfo='skip'
     ))
-    
+
     fig.update_layout(
-        title='Interaction Percentage by Time Group and Channel',
-        xaxis_title='Channel',
+        title='Interaction % by Time Group and Channel (Social Media)',
+        xaxis_title='Social Media Platform',
         yaxis_title='Time Group',
         height=300,
         margin=dict(l=20, r=20, t=40, b=20)
     )
+
     return fig.to_html(full_html=False, include_plotlyjs='cdn')
+
 
 
 # 3.3 New / re-engaged / existing customers (Plotly Express Pie Chart)
