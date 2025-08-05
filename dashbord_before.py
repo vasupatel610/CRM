@@ -56,7 +56,7 @@ def fig_to_base64(fig):
 
 # 3.1 Campaign dashboard - Funnel charts (Plotly Express)
 def plot_funnel_chart(journey_df):
-    funnel_stages_order = ['Sent', 'Viewed', 'Clicked', 'AddedToCart', 'Purchased-Loyalty']
+    funnel_stages_order = ['Sent', 'Viewed', 'Clicked', 'AddedToCart', 'Purchased']
 
     # Mapping logic: these are derived from the correct column names based on your data
     funnel_counts = {
@@ -64,7 +64,7 @@ def plot_funnel_chart(journey_df):
         'Viewed': journey_df[journey_df['campaign_open'].str.lower() == 'yes']['customer_id'].nunique(),
         'Clicked': journey_df[journey_df['campaign_click'].str.lower() == 'yes']['customer_id'].nunique(),
         'AddedToCart': journey_df[journey_df['product_in_cart'].str.lower() == 'yes']['customer_id'].nunique(),
-        'Purchased-Loyalty': journey_df[journey_df['conversion_flag'].str.lower() == 'yes']['customer_id'].nunique(),
+        'Purchased': journey_df[journey_df['conversion_flag'].str.lower() == 'yes']['customer_id'].nunique(),
     }
 
     funnel_data = pd.DataFrame(list(funnel_counts.items()), columns=['Stage', 'Customers'])

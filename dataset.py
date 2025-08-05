@@ -481,6 +481,12 @@ print(f"Sentiment dataset saved with {len(sentiment_df)} reviews for actual purc
 # ============================================================================
 print("Generating journey data only for actual customer-product purchases...")
 
+import random
+import uuid
+import pandas as pd
+import numpy as np
+from datetime import timedelta
+
 # General offers for electronics
 general_offers_electronics_map = {
     "Flat 10% off on any electronics purchase": "ELEC10",
@@ -546,14 +552,31 @@ for _, row in df.iterrows():
     key = (row['customer_id'], row['product_id'])
     transaction_channel_mapping[key] = row['channel_id']
 
-# Journey funnel stages
+# Journey funnel stages with target percentages
 funnel_stages = ["sent", "viewed", "clicked", "addedtocart", "purchased"]
-# drop_stage_weights = [0.20, 0.05, 0.15, 0.30, 0.30]  # Strong loyalty pattern
-drop_stage_weights = [0.05, 0.03, 0.20, 0.50, 0.22]
+target_percentages = {
+    "sent": 1.0,      # 100%
+    "viewed": 0.95,   # 95%
+    "clicked": 0.93,  # 93%
+    "addedtocart": 0.60,  # 60%
+    "purchased": 0.35     # 35%
+}
+
+# Social media platform time variations (hours offset from base time)
+platform_time_variations = {
+    "Facebook": {"peak_hours": [8, 12, 18, 20], "offset_range": (-2, 4)},
+    "Instagram": {"peak_hours": [9, 13, 17, 21], "offset_range": (-1, 5)},
+    "Twitter": {"peak_hours": [7, 11, 15, 19], "offset_range": (-3, 3)},
+    "YouTube": {"peak_hours": [14, 16, 19, 22], "offset_range": (-1, 6)},
+    "TikTok": {"peak_hours": [10, 14, 18, 23], "offset_range": (-2, 8)},
+    "LinkedIn": {"peak_hours": [8, 10, 14, 16], "offset_range": (-1, 2)},
+    "WhatsApp": {"peak_hours": [6, 12, 18, 21], "offset_range": (-4, 4)},
+    "Snapchat": {"peak_hours": [11, 15, 19, 22], "offset_range": (-2, 6)}
+}
+
 journey_data = []
 
 # Generate journeys only for actual customer-product purchases
-# Use a subset to avoid too many journey entries
 num_journeys_from_purchases = min(3000, len(actual_purchases))
 journey_purchases = actual_purchases.sample(n=num_journeys_from_purchases, random_state=42)
 
@@ -567,7 +590,6 @@ for _, purchase_row in journey_purchases.iterrows():
     journey_id = str(uuid.uuid4())
     
     # Journey should start before the actual purchase date
-    # Generate journey base date 1-30 days before purchase
     days_before_purchase = random.randint(1, 30)
     base_date = purchase_date - timedelta(days=days_before_purchase)
     
@@ -605,30 +627,47 @@ for _, purchase_row in journey_purchases.iterrows():
     product_name = product_name_map.get(prod, "Unknown Product")
     product_category = product_category_map.get(product_name, "Unknown Category")
 
-    # Since this customer actually purchased, they should complete the full journey
-    # But we can still add some variation for realism
-    complete_journey_prob = 0.45  # 85% chance of completing full journey for actual purchasers
+    # Determine which stages this customer will complete based on target percentages
+    stages_to_complete = ["sent"]  # Everyone gets sent
     
-    if random.random() < complete_journey_prob:
-        final_stage_reached = "purchased"  # Complete journey
-    else:
-        # Incomplete journey - stop at random stage before purchase
-        final_stage_reached = random.choice(funnel_stages[:-1])
+    # Apply percentage-based progression
+    if random.random() < target_percentages["viewed"]:
+        stages_to_complete.append("viewed")
+        if random.random() < target_percentages["clicked"]:
+            stages_to_complete.append("clicked")
+            if random.random() < target_percentages["addedtocart"]:
+                stages_to_complete.append("addedtocart")
+                if random.random() < target_percentages["purchased"]:
+                    stages_to_complete.append("purchased")
 
+    # Initialize flags
     campaign_open = "No"
     campaign_click = "No"
     conversion_flag = "No"
     product_in_cart = "No"
     
-    for i, stage in enumerate(funnel_stages):
-        if final_stage_reached is not None and funnel_stages.index(stage) > funnel_stages.index(final_stage_reached):
-            break
-
-        # Journey stages should progress over time, ending before/at purchase date
-        stage_date_dt = base_date + timedelta(
-            days=random.randint(0, 5) * i,  # Shorter intervals between stages
-            hours=random.randint(0, 23),
-            minutes=random.randint(0, 59)
+    # Get platform-specific time variations
+    platform_config = platform_time_variations.get(social_media_platform, 
+                                                   {"peak_hours": [9, 15, 19], "offset_range": (-2, 4)})
+    
+    for i, stage in enumerate(stages_to_complete):
+        # Calculate stage date with platform-specific time variation
+        base_stage_date = base_date + timedelta(days=i * random.randint(0, 3))
+        
+        # Apply platform-specific time variations
+        peak_hour = random.choice(platform_config["peak_hours"])
+        time_offset = random.randint(*platform_config["offset_range"])
+        
+        stage_date_dt = base_stage_date.replace(
+            hour=max(0, min(23, peak_hour + time_offset)),
+            minute=random.randint(0, 59),
+            second=random.randint(0, 59)
+        )
+        
+        # Add some random variation to make it more realistic
+        stage_date_dt += timedelta(
+            minutes=random.randint(-30, 30),
+            seconds=random.randint(-30, 30)
         )
         
         # Ensure stage date doesn't exceed purchase date
@@ -657,32 +696,30 @@ for _, purchase_row in journey_purchases.iterrows():
         current_offer_applied = "No Offer" 
         current_offer_code = "NO_OFFER"
 
+        # Set flags based on stage progression
         if stage == "sent":
-            campaign_open = "Yes"
+            campaign_open = "No"
             campaign_click = "No"
-            product_in_cart = "No"
+            product_in_cart = "No" 
             conversion_flag = "No"
         elif stage == "viewed":
-            if random.random() < (0.60 + open_prob_increase):
-                campaign_open = "Yes"
+            campaign_open = "Yes"
             campaign_click = "No"
             product_in_cart = "No"
             conversion_flag = "No"
         elif stage == "clicked":
-            if campaign_open == "Yes" and random.random() < (0.45 + click_prob_increase):
-                campaign_click = "Yes"
+            campaign_open = "Yes"
+            campaign_click = "Yes"
             product_in_cart = "No"
             conversion_flag = "No"
         elif stage == "addedtocart":
-            product_in_cart_base_prob = 0.45
-            product_in_cart_current_prob = min(1.0, product_in_cart_base_prob + cart_prob_increase)
-            product_in_cart = np.random.choice(["Yes", "No"], p=[product_in_cart_current_prob, 1 - product_in_cart_current_prob])
             campaign_open = "Yes"
             campaign_click = "Yes"
+            product_in_cart = "Yes"
             conversion_flag = "No"
             
             # Apply offer if product is added to cart (50% chance)
-            if product_in_cart == "Yes" and random.random() < 0.5:
+            if random.random() < 0.5:
                 if product_category in category_specific_offers_electronics_map and random.random() < 0.7:
                     current_offer_applied = random.choice(list(category_specific_offers_electronics_map[product_category].keys()))
                 else:
@@ -690,11 +727,10 @@ for _, purchase_row in journey_purchases.iterrows():
                 current_offer_code = offer_description_to_code[current_offer_applied]
 
         elif stage == "purchased":
-            # Since we know this customer actually purchased, set conversion to Yes
-            conversion_flag = "Yes"
             campaign_open = "Yes"
             campaign_click = "Yes"
             product_in_cart = "Yes"
+            conversion_flag = "Yes"
 
             # Apply offer if purchased (higher chance, 85%)
             if random.random() < 0.85:
@@ -730,7 +766,24 @@ for _, purchase_row in journey_purchases.iterrows():
 journey_df = pd.DataFrame(journey_data)
 journey_df['customer_age'] = journey_df['customer_id'].map(customer_age_map)
 journey_df.to_csv("journey_entry.csv", index=False)
-print(f"Journey dataset saved with {len(journey_df)} entries from actual purchases only")
+
+# Print statistics for verification
+stage_counts = journey_df['stage'].value_counts()
+total_customers = journey_df['journey_id'].nunique()
+
+print(f"Journey dataset saved with {len(journey_df)} entries from actual purchases")
+print(f"Total unique customers: {total_customers}")
+print("\nStage distribution:")
+for stage in funnel_stages:
+    if stage in stage_counts:
+        percentage = (stage_counts[stage] / total_customers) * 100
+        print(f"{stage}: {stage_counts[stage]} ({percentage:.1f}%)")
+
+print(f"\nFlag distribution summary:")
+print(f"Campaign Open = Yes: {len(journey_df[journey_df['campaign_open'] == 'Yes'])}")
+print(f"Campaign Click = Yes: {len(journey_df[journey_df['campaign_click'] == 'Yes'])}")
+print(f"Product in Cart = Yes: {len(journey_df[journey_df['product_in_cart'] == 'Yes'])}")
+print(f"Conversion = Yes: {len(journey_df[journey_df['conversion_flag'] == 'Yes'])}")
 
 # ============================================================================
 # STEP 5: GENERATE AFTER-SALES DATA (Only for actual purchases)
